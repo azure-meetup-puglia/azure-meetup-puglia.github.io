@@ -26,6 +26,14 @@ const teamMembers: TeamMember[] = [
         job: "Azure Cloud Engineer & DevOps, Azure Italia Podcast Founder",
         photoUrl: "/img/carlo.jpeg",
         linkedin: "https://www.linkedin.com/in/carlo-sacchi/"
+    },
+    {
+        name: "Marco",
+        surname: "Mansi",
+        role: "Organizer",
+        job: "Freelance Azure Architect and Developer",
+        photoUrl: "/img/marco_mansi.jpeg",
+        linkedin: "https://www.linkedin.com/in/mansimarco/"
     }
     // Aggiungi altri membri qui
 ];

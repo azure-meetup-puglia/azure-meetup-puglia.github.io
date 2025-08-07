@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { Linkedin } from 'lucide-react';
+import Link from 'next/link';
+import { Linkedin, ArrowLeft } from 'lucide-react';
 
 interface TeamMember {
     name: string;
@@ -46,6 +47,14 @@ export default function TeamPage() {
             </Head>
 
             <div className="max-w-6xl mx-auto space-y-12">
+                <Link 
+                    href="/"
+                    className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-6"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    Torna alla Home
+                </Link>
+                
                 <h1 className="text-4xl font-bold text-blue-400 text-center">Il Team</h1>
                 <p className="text-center text-gray-400 max-w-xl mx-auto text-lg">
                     Scopri chi c'è dietro la community Azure Meetup Puglia. Persone appassionate di cloud, tecnologie Microsoft e voglia di condividere.
@@ -82,6 +91,16 @@ export default function TeamPage() {
                         </div>
                     ))}
                 </div>
+                
+                <footer className="mt-16 pt-8 pb-6 border-t border-gray-700 text-center">
+                    <Link 
+                        href="/"
+                        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Torna alla Home
+                    </Link>
+                </footer>
             </div>
         </div>
     );

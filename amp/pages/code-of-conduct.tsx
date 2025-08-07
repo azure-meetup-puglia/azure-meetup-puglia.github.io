@@ -1,5 +1,7 @@
 // pages/code-of-conduct.tsx
 import Head from 'next/head';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default function CodeOfConduct() {
     return (
@@ -9,6 +11,14 @@ export default function CodeOfConduct() {
             </Head>
 
             <div className="max-w-4xl mx-auto space-y-8">
+                <Link 
+                    href="/"
+                    className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-6"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    Torna alla Home
+                </Link>
+                
                 <h1 className="text-4xl font-bold text-blue-400 text-center">Codice di Condotta</h1>
 
                 <p>
@@ -79,6 +89,16 @@ export default function CodeOfConduct() {
                         </a>
                     </li>
                 </ul>
+                
+                <footer className="mt-16 pt-8 pb-6 border-t border-gray-700 text-center">
+                    <Link 
+                        href="/"
+                        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Torna alla Home
+                    </Link>
+                </footer>
             </div>
         </div>
     );

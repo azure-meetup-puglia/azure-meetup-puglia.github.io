@@ -290,7 +290,6 @@ const AzureMeetupPuglia: NextPage = () => {
             <nav className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-6" aria-label="Footer navigation">
               <Link
                 href="/code-of-conduct"
-                target="_blank"
                 className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
               >
                 <Code className="w-4 h-4" aria-hidden="true" />
@@ -299,7 +298,6 @@ const AzureMeetupPuglia: NextPage = () => {
               <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
               <Link
                 href="/team"
-                target="_blank"
                 className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
               >
                 <Users className="w-4 h-4" aria-hidden="true" />
@@ -308,7 +306,6 @@ const AzureMeetupPuglia: NextPage = () => {
               <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
               <Link
                 href="/media-kit"
-                target="_blank"
                 className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
               >
                 <FileText className="w-4 h-4" aria-hidden="true" />

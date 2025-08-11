@@ -153,3 +153,5 @@ DerivedData/
 custom_exclude_folder/
 legacy_temp/
 notes_and_drafts/
+CLAUDE.md
+.claude

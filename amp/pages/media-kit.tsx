@@ -18,14 +18,14 @@ const MediaKit: NextPage = () => {
       <div className="p-4 md:p-8">
         {/* Header */}
         <header className="max-w-4xl mx-auto mb-12">
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Torna alla Home
           </Link>
-          
+
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               🌐 MEDIA KIT
@@ -41,7 +41,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <Users className="w-6 h-6" />
-              📌 Chi siamo
+              Chi siamo
             </h2>
             <div className="space-y-4 text-gray-300">
               <p>
@@ -56,7 +56,7 @@ const MediaKit: NextPage = () => {
           {/* La nostra visione */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6">
-              🧭 La nostra visione
+              La nostra visione
             </h2>
             <div className="space-y-4 text-gray-300">
               <p>
@@ -78,7 +78,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <MapPin className="w-6 h-6" />
-              📍 Perché la Puglia
+              Perché la Puglia
             </h2>
             <div className="space-y-4 text-gray-300">
               <ul className="space-y-3">
@@ -92,7 +92,7 @@ const MediaKit: NextPage = () => {
           {/* Chi partecipa */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6">
-              👥 Chi partecipa
+              Chi partecipa
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -115,7 +115,7 @@ const MediaKit: NextPage = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-6 bg-blue-900/20 border border-blue-600 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-white mb-2">🤝 Collaborazioni</h3>
               <p className="text-gray-300">
@@ -128,7 +128,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <Calendar className="w-6 h-6" />
-              📆 Eventi 2025
+              Eventi 2025
             </h2>
             <div className="text-gray-300 space-y-4">
               <p className="text-lg">
@@ -151,7 +151,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <TrendingUp className="w-6 h-6" />
-              📈 Metriche & Trasparenza
+              Metriche & Trasparenza
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -183,7 +183,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <Handshake className="w-6 h-6" />
-              🤝 Partnership
+              Partnership
             </h2>
             <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4 mb-6">
               <p className="text-yellow-200 font-medium">
@@ -196,12 +196,12 @@ const MediaKit: NextPage = () => {
               <div className="bg-gray-700 p-6 rounded-lg">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <Building2 className="w-5 h-5 text-blue-400" />
-                  🏢 Host Partner
+                  Host Partner
                 </h3>
                 <p className="text-gray-300 mb-4">
                   Aziende o enti che mettono a disposizione spazi, logistica e servizi di base
                 </p>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold text-white mb-2">Cosa offre:</h4>
@@ -211,7 +211,7 @@ const MediaKit: NextPage = () => {
                       <li>• Catering o coffee break</li>
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-semibold text-white mb-2">Cosa ottiene:</h4>
                     <ul className="text-gray-300 space-y-1 text-sm">
@@ -228,12 +228,12 @@ const MediaKit: NextPage = () => {
               <div className="bg-gray-700 p-6 rounded-lg border-2 border-green-600/30">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <Gift className="w-5 h-5 text-green-400" />
-                  🎁 Sponsor Partner
+                  Sponsor Partner
                 </h3>
                 <p className="text-gray-300 mb-4">
                   <strong className="text-green-300">Include tutti i benefit dell'Host Partner</strong> + servizi premium e maggiore visibilità
                 </p>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold text-white mb-2">Servizi premium:</h4>
@@ -244,7 +244,7 @@ const MediaKit: NextPage = () => {
                       <li>• Facilities premium</li>
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-semibold text-white mb-2">Benefit esclusivi:</h4>
                     <ul className="text-gray-300 space-y-1 text-sm">
@@ -263,7 +263,7 @@ const MediaKit: NextPage = () => {
           {/* Perché diventare partner */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6">
-              🎯 Perché diventare partner
+              Perché diventare partner
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <ul className="space-y-3 text-gray-300">
@@ -281,7 +281,7 @@ const MediaKit: NextPage = () => {
           {/* Nota finale */}
           <section className="bg-blue-900/20 border border-blue-600 rounded-xl p-8 text-center">
             <h2 className="text-2xl font-semibold text-blue-400 mb-4">
-              🎓 Nota finale
+              Nota finale
             </h2>
             <div className="space-y-3 text-gray-300">
               <p>
@@ -295,7 +295,7 @@ const MediaKit: NextPage = () => {
         </main>
 
         <footer className="mt-16 pt-8 pb-6 border-t border-gray-700 text-center">
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
           >

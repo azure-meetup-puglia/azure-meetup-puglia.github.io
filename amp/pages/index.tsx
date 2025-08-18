@@ -82,8 +82,8 @@ const AzureMeetupPuglia: NextPage = () => {
       <Head>
         {/* Meta Tags Essenziali */}
         < title > Azure Meetup Puglia | Community Cloud Microsoft Azure - Bari, Lecce, Brindisi</title >
-        <meta name="description" content="Community pugliese dedicata a Microsoft Azure. Meetup tecnici, networking e formazione cloud per professionisti IT in Puglia. Eventi a Bari, Lecce, Brindisi." />
-        <meta name="keywords" content="Azure Meetup Puglia, Microsoft Azure User Group, Cloud Computing, Bari, Brindisi, Foggia, Lecce, Taranto, Barletta, Andria, Trani, Community Tech, DevOps, AI, Machine Learning, Software development, Programming, Coding" />
+        <meta name="description" content="Community tech pugliese dedicata a Microsoft Azure. Meetup tecnici, networking e formazione cloud per professionisti IT in Puglia. Eventi a Bari, Lecce, Brindisi." />
+        <meta name="keywords" content="Azure Meetup Puglia, Microsoft Azure User Group, Cloud Computing, Bari, Brindisi, Foggia, Lecce, Taranto, Barletta, Andria, Trani, Community Tech, Tecnologia, DevOps, AI, Machine Learning, Software development, Programming, Coding" />
         <meta name="author" content="Azure Meetup Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -270,9 +270,16 @@ const AzureMeetupPuglia: NextPage = () => {
             <h2 id="unisciti-title" className="text-3xl font-semibold text-center mb-10 text-blue-400">
               Entra nella Community!
             </h2>
-            <div className="flex justify-between items-stretch gap-4">
-              {communityLinks.map((link) => (
-                <div key={link.title} className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+              {communityLinks.map((link, index) => (
+                <div 
+                  key={link.title} 
+                  className={`${
+                    communityLinks.length === 3 && index === 2 
+                      ? 'sm:col-span-2 sm:max-w-md sm:mx-auto lg:col-span-1 lg:max-w-none' 
+                      : ''
+                  }`}
+                >
                   <LinkCard {...link} />
                 </div>
               ))}

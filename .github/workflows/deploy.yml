@@ -21,17 +21,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
-          # Rimuovo la cache per evitare problemi con il package-lock.json
-          # cache: npm
-      - name: Install dependencies
-        # Esegui npm install nella directory amp
-        run: cd amp && npm install
+          cache: 'npm'
+          cache-dependency-path: amp/package-lock.json
+      - name: Install dependencies with platform-specific binaries
+        run: |
+          cd amp
+          npm ci --include=optional
+          # Force install platform-specific binaries
+          npm install --force @tailwindcss/node lightningcss
       - name: Build with Next.js
         # Esegui npm run build nella directory amp
-        run: cd amp && npm run build
+        run: |
+          cd amp
+          # Set environment variables for native module compatibility
+          export NEXT_TELEMETRY_DISABLED=1
+          export TAILWIND_DISABLE_TOUCH=true
+          npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

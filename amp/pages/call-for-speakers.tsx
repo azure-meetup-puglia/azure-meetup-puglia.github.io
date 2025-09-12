@@ -133,9 +133,33 @@ const CallForSpeakers: NextPage = () => {
       const form = e.target as HTMLFormElement;
       const formDataToSend = new FormData(form);
       
+      // Debug: Log all form data
+      console.log('=== FORM DATA DEBUG ===');
+      for (const [key, value] of formDataToSend.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}:`, `File - ${value.name} (${value.size} bytes)`);
+          // If file is too large, remove it for testing
+          if (value.size > 1024 * 1024) {
+            console.log('Removing large file for testing...');
+            formDataToSend.delete(key);
+          }
+        } else {
+          console.log(`${key}:`, value);
+        }
+      }
+      
       // Web3Forms access key (append to existing FormData)
       formDataToSend.append('access_key', 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1');
       formDataToSend.append('subject', `Call for Speakers: ${formData.sessionTitle}`);
+      
+      console.log('=== FINAL FORM DATA ===');
+      for (const [key, value] of formDataToSend.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}:`, `File - ${value.name} (${value.size} bytes)`);
+        } else {
+          console.log(`${key}:`, value);
+        }
+      }
       
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',

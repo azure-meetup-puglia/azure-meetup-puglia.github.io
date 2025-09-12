@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState, FormEvent } from 'react';
-import { ArrowLeft, Users, Calendar, FileText, Upload, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, FileText, Upload, AlertCircle, CheckCircle, MapPin, Clock } from 'lucide-react';
 
 interface FormData {
   nome: string;
@@ -13,7 +13,6 @@ interface FormData {
   linkedinUrl: string;
   githubUrl: string;
   contatti: string;
-  dataEvento: string;
   file?: File;
   privacyAccepted: boolean;
 }
@@ -21,8 +20,8 @@ interface FormData {
 const CallForSpeakers: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
   
-  // Data di scadenza per la call for speakers (da modificare secondo necessità)
-  const DEADLINE = new Date('2024-12-31T23:59:59');
+  // Data di scadenza per la call for speakers
+  const DEADLINE = new Date('2025-10-15T23:59:59');
   const isExpired = new Date() > DEADLINE;
   
   const [formData, setFormData] = useState<FormData>({
@@ -34,7 +33,6 @@ const CallForSpeakers: NextPage = () => {
     linkedinUrl: '',
     githubUrl: '',
     contatti: '',
-    dataEvento: '',
     privacyAccepted: false
   });
   
@@ -115,7 +113,6 @@ const CallForSpeakers: NextPage = () => {
       formDataToSend.append('linkedin_url', formData.linkedinUrl);
       formDataToSend.append('github_url', formData.githubUrl);
       formDataToSend.append('contatti', formData.contatti);
-      formDataToSend.append('data_evento', formData.dataEvento);
       
       // Subject for email
       formDataToSend.append('subject', `Nuova candidatura Call for Speakers: ${formData.sessionTitle}`);
@@ -142,7 +139,6 @@ const CallForSpeakers: NextPage = () => {
           linkedinUrl: '',
           githubUrl: '',
           contatti: '',
-          dataEvento: '',
           privacyAccepted: false
         });
         // Reset file input
@@ -242,20 +238,49 @@ const CallForSpeakers: NextPage = () => {
             </div>
           )}
 
-          {/* Deadline Notice */}
-          <div className="mb-8 p-4 bg-blue-900/30 border border-blue-500/50 rounded-lg">
-            <div className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-blue-300 mb-1">Scadenza Candidature</h3>
-                <p className="text-blue-200 text-sm">
-                  Le candidature saranno accettate fino al <strong>{formatDeadline(DEADLINE)}</strong>
-                </p>
-                {isExpired && (
-                  <p className="text-red-300 text-sm mt-2 font-semibold">
-                    ⚠️ La call for speakers è chiusa
+          {/* Event Info */}
+          <div className="mb-8 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/50 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-blue-400" />
+              Kick Off Meeting - Azure Meetup Puglia
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <Calendar className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-gray-300">Data</p>
+                  <p className="text-white font-medium">Lunedì 20 Ottobre 2025</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock className="w-4 h-4 text-green-400 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-gray-300">Orario</p>
+                  <p className="text-white font-medium">18:00 - 21:00</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 md:col-span-2">
+                <MapPin className="w-4 h-4 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-sm text-gray-300">Località</p>
+                  <p className="text-white font-medium">BIP - Business Integration Partners</p>
+                  <p className="text-gray-300 text-sm">Via Venezia 13, 70122 Bari</p>
+                </div>
+              </div>
+            </div>
+            <div className="border-t border-gray-600 pt-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm text-gray-300 mb-1">
+                    <strong>Scadenza candidature:</strong> {formatDeadline(DEADLINE)}
                   </p>
-                )}
+                  {isExpired && (
+                    <p className="text-red-300 text-sm font-semibold">
+                      ⚠️ La call for speakers è chiusa
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -358,20 +383,6 @@ const CallForSpeakers: NextPage = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="dataEvento" className="block text-sm font-medium text-gray-300 mb-2">
-                    Data Evento Proposta
-                  </label>
-                  <input
-                    type="date"
-                    id="dataEvento"
-                    name="dataEvento"
-                    disabled={isExpired}
-                    value={formData.dataEvento}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </div>
               </div>
 
               {/* Social Links */}

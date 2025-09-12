@@ -29,9 +29,14 @@ jobs:
       - name: Install dependencies with platform-specific binaries
         run: |
           cd amp
-          npm ci --include=optional
-          # Force install platform-specific binaries
-          npm install --force @tailwindcss/node lightningcss
+          # Clean install to avoid conflicts
+          rm -rf node_modules package-lock.json
+          npm install
+          # Install Linux-specific binaries for Tailwind CSS v4
+          npm install @tailwindcss/oxide-linux-x64-gnu --save-optional
+          npm install lightningcss-linux-x64-gnu --save-optional
+          # Rebuild native dependencies
+          npm rebuild
       - name: Build with Next.js
         # Esegui npm run build nella directory amp
         run: |

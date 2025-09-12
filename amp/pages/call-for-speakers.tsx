@@ -68,8 +68,8 @@ const CallForSpeakers: NextPage = () => {
         return;
       }
       
-      if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        setFileError('Il file non può superare i 10MB.');
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit for Web3Forms
+        setFileError('Il file non può superare i 5MB.');
         e.target.value = '';
         return;
       }
@@ -101,24 +101,41 @@ const CallForSpeakers: NextPage = () => {
     try {
       const formDataToSend = new FormData();
       
-      // Web3Forms access key
+      // Web3Forms access key (REQUIRED)
       formDataToSend.append('access_key', 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1');
       
+      // Required honeypot field (for spam protection)
+      formDataToSend.append('botcheck', '');
+      
       // Form fields
-      formDataToSend.append('nome', formData.nome);
-      formDataToSend.append('cognome', formData.cognome);
+      formDataToSend.append('name', `${formData.nome} ${formData.cognome}`);
       formDataToSend.append('email', formData.email);
-      formDataToSend.append('session_title', formData.sessionTitle);
-      formDataToSend.append('session_description', formData.sessionDescription);
-      formDataToSend.append('linkedin_url', formData.linkedinUrl);
-      formDataToSend.append('github_url', formData.githubUrl);
-      formDataToSend.append('contatti', formData.contatti);
+      formDataToSend.append('message', `
+CANDIDATURA CALL FOR SPEAKERS
+==============================
+
+Nome: ${formData.nome}
+Cognome: ${formData.cognome}
+Email: ${formData.email}
+
+SESSIONE:
+Titolo: ${formData.sessionTitle}
+Descrizione: ${formData.sessionDescription}
+
+CONTATTI:
+LinkedIn: ${formData.linkedinUrl || 'Non fornito'}
+GitHub: ${formData.githubUrl || 'Non fornito'}
+Altri contatti: ${formData.contatti || 'Non fornito'}
+`);
       
       // Subject for email
-      formDataToSend.append('subject', `Nuova candidatura Call for Speakers: ${formData.sessionTitle}`);
+      formDataToSend.append('subject', `Call for Speakers: ${formData.sessionTitle}`);
       
-      // File upload
-      if (formData.file) {
+      // Redirect URL (optional)
+      formDataToSend.append('redirect', 'https://azure-meetup-puglia.github.io/call-for-speakers?success=true');
+      
+      // File upload (if present and under size limit)
+      if (formData.file && formData.file.size <= 5 * 1024 * 1024) { // 5MB limit
         formDataToSend.append('attachment', formData.file);
       }
       
@@ -288,6 +305,15 @@ const CallForSpeakers: NextPage = () => {
           {/* Form */}
           <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot field for spam protection - must be hidden */}
+              <input
+                type="text"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                style={{ display: 'none' }}
+                aria-hidden="true"
+              />
               {/* Personal Info */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -448,7 +474,7 @@ const CallForSpeakers: NextPage = () => {
                 
                 <div>
                   <label htmlFor="file" className="block text-sm font-medium text-gray-300 mb-2">
-                    Slide o Materiale (PDF o PowerPoint - max 10MB)
+                    Slide o Materiale (PDF o PowerPoint - max 5MB)
                   </label>
                   <input
                     type="file"

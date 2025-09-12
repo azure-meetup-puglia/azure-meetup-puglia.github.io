@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
-import { ArrowLeft, Users, Calendar, FileText, AlertCircle, CheckCircle, MapPin, Clock, Link as LinkIcon } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, FileText, AlertCircle, CheckCircle, MapPin, Link as LinkIcon } from 'lucide-react';
 
 interface FormData {
   first_name: string;
@@ -12,6 +12,14 @@ interface FormData {
   email: string;
   session_title: string;
   message: string;
+  session_type: string;
+  session_duration: string;
+  availability: string;
+  preferred_city: string;
+  has_venue: string;
+  venue_name?: string;
+  venue_address?: string;
+  venue_contact?: string;
   linkedin: string;
   github: string;
   phone: string;
@@ -21,10 +29,6 @@ interface FormData {
 
 const CallForSpeakers: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
-  
-  // Data di scadenza per la call for speakers
-  const DEADLINE = new Date('2025-10-15T23:59:59');
-  const isExpired = new Date() > DEADLINE;
   
   const [isSuccess, setIsSuccess] = useState(false);
   const [result, setResult] = useState<string>('');
@@ -49,11 +53,11 @@ const CallForSpeakers: NextPage = () => {
     }
   });
   
-  // Watch per conteggio caratteri descrizione
+  // Watch per conteggio caratteri e campo venue
   const messageValue = watch('message', '');
+  const hasVenue = watch('has_venue', '');
   
   const handleFormSubmit = (data: FormData) => {
-    if (isExpired) return;
     if (!data.privacyAccepted) {
       setResult('Devi accettare la privacy policy per procedere.');
       setIsSuccess(false);
@@ -64,35 +68,57 @@ const CallForSpeakers: NextPage = () => {
   };
 
 
-  const formatDeadline = (date: Date) => {
-    return date.toLocaleDateString('it-IT', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
-        <title>Call for Speakers | Azure Meetup Puglia</title>
-        <meta name="description" content="Diventa speaker per Azure Meetup Puglia! Condividi le tue conoscenze su Microsoft Azure con la community pugliese." />
-        <meta name="keywords" content="Call for Speakers, Azure Meetup Puglia, Microsoft Azure, Speaker, Presentazione, Community Tech" />
-        <meta name="robots" content="index, follow" />
+        {/* Meta Tags Essenziali */}
+        <title>Diventa Speaker | Azure Meetup Puglia - Proponi il tuo Talk</title>
+        <meta name="description" content="Proponi il tuo talk su Azure, Cloud, AI o DevOps! Condividi le tue conoscenze con la community tech pugliese. Form sempre aperto per speaker da Bari, Lecce, Brindisi, Foggia e tutta la Puglia." />
+        <meta name="keywords" content="Call for Speakers, Azure Meetup Puglia, Microsoft Azure, Cloud Computing, DevOps, AI, Machine Learning, Speaker, Tech Talk, Bari, Lecce, Brindisi, Foggia, Taranto, Community Tech Puglia" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="author" content="Azure Meetup Puglia" />
+        <meta name="language" content="Italian" />
         
+        {/* Canonical URL */}
         <link rel="canonical" href={`${siteUrl}call-for-speakers`} />
         
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Call for Speakers | Azure Meetup Puglia" />
-        <meta property="og:description" content="Diventa speaker per Azure Meetup Puglia! Condividi le tue conoscenze su Microsoft Azure con la community." />
+        <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
+        <meta property="og:description" content="Hai expertise su Azure, Cloud o AI? Proponi il tuo talk alla community tech più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
+        <meta property="og:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        <meta property="og:image:alt" content="Azure Meetup Puglia - Call for Speakers" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:url" content={`${siteUrl}call-for-speakers`} />
+        <meta property="og:locale" content="it_IT" />
         
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Call for Speakers | Azure Meetup Puglia" />
-        <meta name="twitter:description" content="Diventa speaker per Azure Meetup Puglia! Condividi le tue conoscenze su Microsoft Azure." />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@AzurePuglia" />
+        <meta name="twitter:creator" content="@AzurePuglia" />
+        <meta name="twitter:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
+        <meta name="twitter:description" content="Proponi il tuo talk su Azure, Cloud o AI! Form sempre aperto per speaker da tutta la Puglia 🚀" />
+        <meta name="twitter:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        <meta name="twitter:image:alt" content="Azure Meetup Puglia - Diventa Speaker" />
+        
+        {/* Additional Meta */}
+        <meta name="theme-color" content="#0078D4" />
+        <meta name="msapplication-TileColor" content="#0078D4" />
+        
+        {/* LinkedIn specific */}
+        <meta property="article:author" content="Azure Meetup Puglia" />
+        <meta property="article:published_time" content={new Date().toISOString()} />
+        
+        {/* WhatsApp/Telegram preview */}
+        <meta property="og:image:secure_url" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="p-4 md:p-8">
@@ -119,10 +145,13 @@ const CallForSpeakers: NextPage = () => {
               <Users className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Call for Speakers
+              Diventa Speaker
             </h1>
-            <p className="text-xl text-blue-300 max-w-2xl mx-auto">
-              Condividi la tua esperienza con Microsoft Azure e ispira la community pugliese!
+            <p className="text-xl text-blue-300 max-w-2xl mx-auto mb-3">
+              Condividi la tua expertise su Azure, Cloud, AI o DevOps con la community tech pugliese!
+            </p>
+            <p className="text-sm text-gray-400 max-w-xl mx-auto">
+              Form sempre aperto • Eventi in tutta la Puglia • Supportiamo speaker di ogni livello
             </p>
           </header>
 
@@ -147,50 +176,34 @@ const CallForSpeakers: NextPage = () => {
             </div>
           )}
 
-          {/* Event Info */}
+          {/* Info Box */}
           <div className="mb-8 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-400" />
-              Kick Off Meeting - Azure Meetup Puglia
+              Come Funziona
             </h3>
-            <div className="grid md:grid-cols-2 gap-4 mb-4">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-gray-300">Data</p>
-                  <p className="text-white font-medium">Lunedì 20 Ottobre 2025</p>
-                </div>
+            <div className="space-y-3 text-gray-300">
+              <div className="flex items-start gap-3">
+                <span className="text-blue-400 font-bold">1.</span>
+                <p className="text-sm">Compila il form con la tua proposta di talk o workshop</p>
               </div>
-              <div className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-green-400 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-gray-300">Orario</p>
-                  <p className="text-white font-medium">18:00 - 21:00</p>
-                </div>
+              <div className="flex items-start gap-3">
+                <span className="text-blue-400 font-bold">2.</span>
+                <p className="text-sm">Ti contatteremo per organizzare la sessione più adatta</p>
               </div>
-              <div className="flex items-start gap-3 md:col-span-2">
-                <MapPin className="w-4 h-4 text-red-400 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-sm text-gray-300">Località</p>
-                  <p className="text-white font-medium">BIP - Business Integration Partners</p>
-                  <p className="text-gray-300 text-sm">Via Venezia 13, 70122 Bari</p>
-                </div>
+              <div className="flex items-start gap-3">
+                <span className="text-blue-400 font-bold">3.</span>
+                <p className="text-sm">Pubblicheremo l'evento sui nostri canali e su Meetup</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-blue-400 font-bold">4.</span>
+                <p className="text-sm">Condividi la tua expertise con la community!</p>
               </div>
             </div>
-            <div className="border-t border-gray-600 pt-4">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm text-gray-300 mb-1">
-                    <strong>Scadenza candidature:</strong> {formatDeadline(DEADLINE)}
-                  </p>
-                  {isExpired && (
-                    <p className="text-red-300 text-sm font-semibold">
-                      ⚠️ La call for speakers è chiusa
-                    </p>
-                  )}
-                </div>
-              </div>
+            <div className="mt-4 pt-4 border-t border-gray-600">
+              <p className="text-xs text-gray-400">
+                💡 <strong>Tip:</strong> Accettiamo proposte su tutti i temi legati a cloud, Azure, AI, DevOps, sviluppo software e tecnologie Microsoft.
+              </p>
             </div>
           </div>
 
@@ -206,7 +219,6 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="nome"
-                    disabled={isExpired}
                     {...register('first_name', { required: 'Nome è obbligatorio' })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   />
@@ -221,7 +233,6 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="cognome"
-                    disabled={isExpired}
                     {...register('last_name', { required: 'Cognome è obbligatorio' })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   />
@@ -238,7 +249,6 @@ const CallForSpeakers: NextPage = () => {
                 <input
                   type="email"
                   id="email"
-                  disabled={isExpired}
                   {...register('email', { 
                     required: 'Email è obbligatoria',
                     pattern: {
@@ -246,11 +256,63 @@ const CallForSpeakers: NextPage = () => {
                       message: 'Email non valida'
                     }
                   })}
-                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
                 {errors.email && (
                   <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
                 )}
+              </div>
+
+              {/* Availability Section */}
+              <div className="border-t border-gray-600 pt-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Disponibilità</h3>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="availability" className="block text-sm font-medium text-gray-300 mb-2">
+                      Mi propongo per *
+                    </label>
+                    <select
+                      id="availability"
+                      {...register('availability', { required: 'Seleziona la tua disponibilità' })}
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleziona...</option>
+                      <option value="next_event">Il prossimo evento in programma</option>
+                      <option value="specific_theme">Un evento su tema specifico (Azure AI, DevOps, etc.)</option>
+                      <option value="any_event">Qualsiasi evento quando serve</option>
+                      <option value="workshop">Workshop dedicato</option>
+                      <option value="online">Eventi online</option>
+                    </select>
+                    {errors.availability && (
+                      <p className="text-red-400 text-sm mt-1">{errors.availability.message}</p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="preferred_city" className="block text-sm font-medium text-gray-300 mb-2">
+                      Città preferita *
+                    </label>
+                    <select
+                      id="preferred_city"
+                      {...register('preferred_city', { required: 'Seleziona una città' })}
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleziona...</option>
+                      <option value="bari">Bari</option>
+                      <option value="lecce">Lecce</option>
+                      <option value="brindisi">Brindisi</option>
+                      <option value="foggia">Foggia</option>
+                      <option value="taranto">Taranto</option>
+                      <option value="bat">BAT (Barletta-Andria-Trani)</option>
+                      <option value="any">Qualsiasi città</option>
+                      <option value="online">Solo online</option>
+                    </select>
+                    {errors.preferred_city && (
+                      <p className="text-red-400 text-sm mt-1">{errors.preferred_city.message}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* Session Info */}
@@ -260,6 +322,51 @@ const CallForSpeakers: NextPage = () => {
                   Informazioni sulla Sessione
                 </h3>
                 
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label htmlFor="session_type" className="block text-sm font-medium text-gray-300 mb-2">
+                      Tipo di Sessione *
+                    </label>
+                    <select
+                      id="session_type"
+                      {...register('session_type', { required: 'Seleziona il tipo di sessione' })}
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleziona...</option>
+                      <option value="talk">Talk (Presentazione)</option>
+                      <option value="workshop">Workshop (Hands-on)</option>
+                      <option value="demo">Live Demo</option>
+                      <option value="panel">Panel Discussion</option>
+                      <option value="lightning">Lightning Talk (10-15 min)</option>
+                    </select>
+                    {errors.session_type && (
+                      <p className="text-red-400 text-sm mt-1">{errors.session_type.message}</p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="session_duration" className="block text-sm font-medium text-gray-300 mb-2">
+                      Durata Prevista *
+                    </label>
+                    <select
+                      id="session_duration"
+                      {...register('session_duration', { required: 'Seleziona la durata' })}
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleziona...</option>
+                      <option value="15">15 minuti</option>
+                      <option value="30">30 minuti</option>
+                      <option value="45">45 minuti</option>
+                      <option value="60">60 minuti</option>
+                      <option value="90">90 minuti (workshop)</option>
+                      <option value="120">2 ore (workshop esteso)</option>
+                    </select>
+                    {errors.session_duration && (
+                      <p className="text-red-400 text-sm mt-1">{errors.session_duration.message}</p>
+                    )}
+                  </div>
+                </div>
+                
                 <div>
                   <label htmlFor="sessionTitle" className="block text-sm font-medium text-gray-300 mb-2">
                     Titolo della Sessione *
@@ -267,9 +374,8 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="sessionTitle"
-                    disabled={isExpired}
                     {...register('session_title', { required: 'Titolo sessione è obbligatorio' })}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="es. Implementare CI/CD con Azure DevOps"
                   />
                   {errors.session_title && (
@@ -283,7 +389,6 @@ const CallForSpeakers: NextPage = () => {
                   </label>
                   <textarea
                     id="sessionDescription"
-                    disabled={isExpired}
                     rows={6}
                     {...register('message', { 
                       required: 'Descrizione è obbligatoria',
@@ -317,8 +422,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="linkedinUrl"
-                      disabled={isExpired}
-                      {...register('linkedin')}
+                        {...register('linkedin')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://linkedin.com/in/tuo-profilo"
                     />
@@ -330,8 +434,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="githubUrl"
-                      disabled={isExpired}
-                      {...register('github')}
+                        {...register('github')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://github.com/tuo-username"
                     />
@@ -345,12 +448,76 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="contatti"
-                    disabled={isExpired}
                     {...register('phone')}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Twitter, sito web, altri social..."
                   />
                 </div>
+              </div>
+
+              {/* Venue Section */}
+              <div className="border-t border-gray-600 pt-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5" />
+                  Disponibilità Venue
+                </h3>
+                
+                <div>
+                  <label htmlFor="has_venue" className="block text-sm font-medium text-gray-300 mb-2">
+                    Hai accesso a uno spazio per ospitare eventi?
+                  </label>
+                  <select
+                    id="has_venue"
+                    {...register('has_venue')}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="no">No</option>
+                    <option value="yes">Sì, ho uno spazio disponibile</option>
+                  </select>
+                </div>
+                
+                {hasVenue === 'yes' && (
+                  <div className="mt-4 space-y-4 p-4 bg-gray-700/30 rounded-lg">
+                    <div>
+                      <label htmlFor="venue_name" className="block text-sm font-medium text-gray-300 mb-2">
+                        Nome Società/Spazio
+                      </label>
+                      <input
+                        type="text"
+                        id="venue_name"
+                        {...register('venue_name')}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="es. Innovation Hub Bari"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="venue_address" className="block text-sm font-medium text-gray-300 mb-2">
+                        Indirizzo
+                      </label>
+                      <input
+                        type="text"
+                        id="venue_address"
+                        {...register('venue_address')}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="es. Via Roma 123, 70100 Bari"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="venue_contact" className="block text-sm font-medium text-gray-300 mb-2">
+                        Contatto Referente Venue
+                      </label>
+                      <input
+                        type="text"
+                        id="venue_contact"
+                        {...register('venue_contact')}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="es. Mario Rossi - 320xxxxxxx"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Link to Materials */}
@@ -366,7 +533,6 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="url"
                     id="materialsLink"
-                    disabled={isExpired}
                     {...register('materials_link')}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="https://drive.google.com/..."
@@ -397,7 +563,6 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="checkbox"
                     id="privacyAccepted"
-                    disabled={isExpired}
                     {...register('privacyAccepted', { required: 'Devi accettare la privacy policy' })}
                     className="mt-1 w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
@@ -414,10 +579,9 @@ const CallForSpeakers: NextPage = () => {
               <div className="pt-6">
                 <button
                   type="submit"
-                  disabled={isExpired}
                   className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
-                  {isExpired ? 'Call for Speakers chiusa' : 'Invia Candidatura'}
+                  Invia Proposta
                 </button>
               </div>
             </form>

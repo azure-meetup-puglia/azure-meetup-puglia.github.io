@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
-import { ArrowLeft, Users, Calendar, FileText, Upload, AlertCircle, CheckCircle, MapPin, Clock } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, FileText, AlertCircle, CheckCircle, MapPin, Clock, Link as LinkIcon } from 'lucide-react';
 
 interface FormData {
   first_name: string;
@@ -15,7 +15,7 @@ interface FormData {
   linkedin: string;
   github: string;
   phone: string;
-  attachment?: FileList;
+  materials_link?: string;
   privacyAccepted: boolean;
 }
 
@@ -58,16 +58,6 @@ const CallForSpeakers: NextPage = () => {
       setResult('Devi accettare la privacy policy per procedere.');
       setIsSuccess(false);
       return;
-    }
-    
-    // File size validation
-    if (data.attachment && data.attachment.length > 0) {
-      const file = data.attachment[0];
-      if (file.size > 1024 * 1024) {
-        setResult('Il file deve essere inferiore a 1MB.');
-        setIsSuccess(false);
-        return;
-      }
     }
     
     onSubmit(data);
@@ -363,25 +353,27 @@ const CallForSpeakers: NextPage = () => {
                 </div>
               </div>
 
-              {/* File Upload */}
+              {/* Link to Materials */}
               <div className="border-t border-gray-600 pt-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Upload className="w-5 h-5" />
-                  Materiale Opzionale
+                  <LinkIcon className="w-5 h-5" />
+                  Materiale di Presentazione (Opzionale)
                 </h3>
-                
                 <div>
-                  <label htmlFor="file" className="block text-sm font-medium text-gray-300 mb-2">
-                    Slide o Materiale (PDF o PowerPoint - max 1MB)
+                  <label htmlFor="materialsLink" className="block text-sm font-medium text-gray-300 mb-2">
+                    Link a Slide o Materiale (Google Drive, Dropbox, etc.)
                   </label>
                   <input
-                    type="file"
-                    id="file"
-                    accept=".pdf,.ppt,.pptx"
+                    type="url"
+                    id="materialsLink"
                     disabled={isExpired}
-                    {...register('attachment')}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    {...register('materials_link')}
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    placeholder="https://drive.google.com/..."
                   />
+                  <p className="text-xs text-gray-400 mt-1">
+                    Puoi condividere un link alle tue slide o materiali di presentazione
+                  </p>
                 </div>
               </div>
 

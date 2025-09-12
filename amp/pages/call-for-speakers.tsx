@@ -38,8 +38,8 @@ const CallForSpeakers: NextPage = () => {
   const { submit: onSubmit } = useWeb3Forms({
     access_key: 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1',
     settings: {
-      from_name: 'Azure Meetup Puglia Call for Speakers',
-      subject: 'Nuova candidatura Call for Speakers'
+      from_name: 'Azure Meetup Puglia - Proposta Speaker',
+      subject: 'Nuova proposta speaker ricevuta'
     },
     onSuccess: () => {
       setIsSuccess(true);
@@ -64,7 +64,48 @@ const CallForSpeakers: NextPage = () => {
       return;
     }
     
-    onSubmit(data);
+    // Mapping per valori più leggibili nell'email
+    const availabilityMap: { [key: string]: string } = {
+      'next_event': 'Prossimo evento in programma',
+      'specific_theme': 'Evento su tema specifico',
+      'any_event': 'Qualsiasi evento quando serve',
+      'workshop': 'Workshop dedicato',
+      'online': 'Eventi online'
+    };
+    
+    const cityMap: { [key: string]: string } = {
+      'bari': 'Bari',
+      'lecce': 'Lecce',
+      'brindisi': 'Brindisi',
+      'foggia': 'Foggia',
+      'taranto': 'Taranto',
+      'bat': 'BAT (Barletta-Andria-Trani)',
+      'any': 'Qualsiasi città',
+      'online': 'Solo online'
+    };
+    
+    const sessionTypeMap: { [key: string]: string } = {
+      'talk': 'Talk (Presentazione)',
+      'workshop': 'Workshop (Hands-on)',
+      'demo': 'Live Demo',
+      'panel': 'Panel Discussion',
+      'lightning': 'Lightning Talk (10-15 min)'
+    };
+    
+    // Creiamo un oggetto con dati più leggibili
+    const formattedData = {
+      ...data,
+      // Aggiungiamo campi con nomi più leggibili
+      '_replyto': data.email, // Per rispondere direttamente allo speaker
+      'Nome_Completo': `${data.first_name} ${data.last_name}`,
+      'Disponibilità': availabilityMap[data.availability] || data.availability,
+      'Città_Preferita': cityMap[data.preferred_city] || data.preferred_city,
+      'Tipo_Sessione': sessionTypeMap[data.session_type] || data.session_type,
+      'Durata_Minuti': data.session_duration,
+      'Ha_Venue': data.has_venue === 'yes' ? 'Sì, ha uno spazio disponibile' : 'No'
+    };
+    
+    onSubmit(formattedData);
   };
 
 
@@ -74,8 +115,8 @@ const CallForSpeakers: NextPage = () => {
       <Head>
         {/* Meta Tags Essenziali */}
         <title>Diventa Speaker | Azure Meetup Puglia - Proponi il tuo Talk</title>
-        <meta name="description" content="Proponi il tuo talk su Azure, Cloud, AI o DevOps! Condividi le tue conoscenze con la community tech pugliese. Form sempre aperto per speaker da Bari, Lecce, Brindisi, Foggia e tutta la Puglia." />
-        <meta name="keywords" content="Call for Speakers, Azure Meetup Puglia, Microsoft Azure, Cloud Computing, DevOps, AI, Machine Learning, Speaker, Tech Talk, Bari, Lecce, Brindisi, Foggia, Taranto, Community Tech Puglia" />
+        <meta name="description" content="Proponi il tuo talk su Azure, Cloud, AI, .NET, DevOps o qualsiasi tema tech! Condividi le tue conoscenze con la community pugliese. Form sempre aperto per speaker da Bari, Lecce, Brindisi, Foggia e tutta la Puglia." />
+        <meta name="keywords" content="Call for Speakers, Azure Meetup Puglia, Microsoft Azure, .NET, C#, Blazor, Cloud Computing, DevOps, Docker, Kubernetes, AI, Machine Learning, sviluppo software, Speaker, Tech Talk, Bari, Lecce, Brindisi, Foggia, Taranto, Community Tech Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -89,7 +130,7 @@ const CallForSpeakers: NextPage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
-        <meta property="og:description" content="Hai expertise su Azure, Cloud o AI? Proponi il tuo talk alla community tech più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
+        <meta property="og:description" content="Hai expertise su Azure, .NET, Cloud, AI o qualsiasi tema tech? Proponi il tuo talk alla community più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
         <meta property="og:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
         <meta property="og:image:alt" content="Azure Meetup Puglia - Call for Speakers" />
         <meta property="og:image:width" content="1200" />
@@ -102,7 +143,7 @@ const CallForSpeakers: NextPage = () => {
         <meta name="twitter:site" content="@AzurePuglia" />
         <meta name="twitter:creator" content="@AzurePuglia" />
         <meta name="twitter:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
-        <meta name="twitter:description" content="Proponi il tuo talk su Azure, Cloud o AI! Form sempre aperto per speaker da tutta la Puglia 🚀" />
+        <meta name="twitter:description" content="Proponi il tuo talk su Azure, .NET, Cloud, AI o qualsiasi tema tech! Form sempre aperto per speaker da tutta la Puglia 🚀" />
         <meta name="twitter:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
         <meta name="twitter:image:alt" content="Azure Meetup Puglia - Diventa Speaker" />
         
@@ -148,7 +189,7 @@ const CallForSpeakers: NextPage = () => {
               Diventa Speaker
             </h1>
             <p className="text-xl text-blue-300 max-w-2xl mx-auto mb-3">
-              Condividi la tua expertise su Azure, Cloud, AI o DevOps con la community tech pugliese!
+              Condividi la tua expertise su Azure, Cloud, AI, .NET, DevOps, sviluppo software o qualsiasi tema tech con la community pugliese!
             </p>
             <p className="text-sm text-gray-400 max-w-xl mx-auto">
               Form sempre aperto • Eventi in tutta la Puglia • Supportiamo speaker di ogni livello
@@ -202,7 +243,7 @@ const CallForSpeakers: NextPage = () => {
             </div>
             <div className="mt-4 pt-4 border-t border-gray-600">
               <p className="text-xs text-gray-400">
-                💡 <strong>Tip:</strong> Accettiamo proposte su tutti i temi legati a cloud, Azure, AI, DevOps, sviluppo software e tecnologie Microsoft.
+                💡 <strong>Tip:</strong> Accettiamo proposte su tutti i temi tech: Azure, Cloud, AI/ML, .NET, C#, Blazor, DevOps, Docker, Kubernetes, sviluppo web/mobile, architetture software, best practices e tecnologie Microsoft in generale.
               </p>
             </div>
           </div>

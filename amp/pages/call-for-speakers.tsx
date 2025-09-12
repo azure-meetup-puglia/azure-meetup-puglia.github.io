@@ -1,19 +1,21 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, Users, Calendar, FileText, Upload, AlertCircle, CheckCircle, MapPin, Clock } from 'lucide-react';
 
 interface FormData {
-  nome: string;
-  cognome: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  sessionTitle: string;
-  sessionDescription: string;
-  linkedinUrl: string;
-  githubUrl: string;
-  contatti: string;
-  file?: File;
+  session_title: string;
+  message: string;
+  linkedin: string;
+  github: string;
+  phone: string;
+  attachment?: FileList;
   privacyAccepted: boolean;
 }
 
@@ -24,177 +26,53 @@ const CallForSpeakers: NextPage = () => {
   const DEADLINE = new Date('2025-10-15T23:59:59');
   const isExpired = new Date() > DEADLINE;
   
-  const [formData, setFormData] = useState<FormData>({
-    nome: '',
-    cognome: '',
-    email: '',
-    sessionTitle: '',
-    sessionDescription: '',
-    linkedinUrl: '',
-    githubUrl: '',
-    contatti: '',
-    privacyAccepted: false
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [result, setResult] = useState<string>('');
+  
+  const { register, reset, handleSubmit, formState: { errors }, watch } = useForm<FormData>();
+  
+  const { submit: onSubmit } = useWeb3Forms({
+    access_key: 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1',
+    settings: {
+      from_name: 'Azure Meetup Puglia Call for Speakers',
+      subject: 'Nuova candidatura Call for Speakers'
+    },
+    onSuccess: () => {
+      setIsSuccess(true);
+      setResult('Candidatura inviata con successo! Ti contatteremo presto.');
+      reset();
+    },
+    onError: (msg) => {
+      setIsSuccess(false);
+      setResult('Errore nell\'invio. Riprova più tardi.');
+      console.error('Web3Forms error:', msg);
+    }
   });
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [fileError, setFileError] = useState('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      // Map HTML form field names to state field names
-      let stateFieldName = name;
-      switch (name) {
-        case 'first_name':
-          stateFieldName = 'nome';
-          break;
-        case 'last_name':
-          stateFieldName = 'cognome';
-          break;
-        case 'session_title':
-          stateFieldName = 'sessionTitle';
-          break;
-        case 'message':
-          stateFieldName = 'sessionDescription';
-          break;
-        case 'linkedin':
-          stateFieldName = 'linkedinUrl';
-          break;
-        case 'github':
-          stateFieldName = 'githubUrl';
-          break;
-        case 'phone':
-          stateFieldName = 'contatti';
-          break;
-      }
-      setFormData(prev => ({ ...prev, [stateFieldName]: value }));
+  // Watch per conteggio caratteri descrizione
+  const messageValue = watch('message', '');
+  
+  const handleFormSubmit = (data: FormData) => {
+    if (isExpired) return;
+    if (!data.privacyAccepted) {
+      setResult('Devi accettare la privacy policy per procedere.');
+      setIsSuccess(false);
+      return;
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setFileError('');
     
-    if (file) {
-      const allowedTypes = [
-        'application/pdf',
-        'application/vnd.ms-powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-      ];
-      
-      if (!allowedTypes.includes(file.type)) {
-        setFileError('Solo file PDF e PowerPoint (PPT/PPTX) sono consentiti.');
-        e.target.value = '';
+    // File size validation
+    if (data.attachment && data.attachment.length > 0) {
+      const file = data.attachment[0];
+      if (file.size > 1024 * 1024) {
+        setResult('Il file deve essere inferiore a 1MB.');
+        setIsSuccess(false);
         return;
       }
-      
-      if (file.size > 1024 * 1024) { // 1MB limit as per Web3Forms examples
-        setFileError('Il file non può superare 1MB.');
-        e.target.value = '';
-        return;
-      }
-      
-      setFormData(prev => ({ ...prev, file }));
     }
+    
+    onSubmit(data);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    
-    if (isExpired) {
-      return;
-    }
-    
-    if (!formData.privacyAccepted) {
-      alert('Devi accettare la privacy policy per procedere.');
-      return;
-    }
-    
-    if (formData.sessionDescription.length > 2000) {
-      alert('La descrizione della sessione non può superare i 2000 caratteri.');
-      return;
-    }
-    
-    // File size validation (1MB limit as per Web3Forms examples)
-    if (formData.file && formData.file.size > 1024 * 1024) {
-      alert('Il file deve essere inferiore a 1MB');
-      return;
-    }
-    
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-    
-    try {
-      const form = e.target as HTMLFormElement;
-      const formDataToSend = new FormData(form);
-      
-      // Debug: Log all form data
-      console.log('=== FORM DATA DEBUG ===');
-      for (const [key, value] of formDataToSend.entries()) {
-        if (value instanceof File) {
-          console.log(`${key}:`, `File - ${value.name} (${value.size} bytes)`);
-          // If file is too large, remove it for testing
-          if (value.size > 1024 * 1024) {
-            console.log('Removing large file for testing...');
-            formDataToSend.delete(key);
-          }
-        } else {
-          console.log(`${key}:`, value);
-        }
-      }
-      
-      // Web3Forms access key (append to existing FormData)
-      formDataToSend.append('access_key', 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1');
-      formDataToSend.append('subject', `Call for Speakers: ${formData.sessionTitle}`);
-      
-      console.log('=== FINAL FORM DATA ===');
-      for (const [key, value] of formDataToSend.entries()) {
-        if (value instanceof File) {
-          console.log(`${key}:`, `File - ${value.name} (${value.size} bytes)`);
-        } else {
-          console.log(`${key}:`, value);
-        }
-      }
-      
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formDataToSend
-      });
-      
-      const result = await response.json();
-      console.log('Web3Forms response:', result);
-      
-      if (response.status === 200 && result.success) {
-        setSubmitStatus('success');
-        // Reset form
-        form.reset();
-        setFormData({
-          nome: '',
-          cognome: '',
-          email: '',
-          sessionTitle: '',
-          sessionDescription: '',
-          linkedinUrl: '',
-          githubUrl: '',
-          contatti: '',
-          privacyAccepted: false
-        });
-      } else {
-        console.log('Error response:', result);
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Errore nell\'invio del form:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const formatDeadline = (date: Date) => {
     return date.toLocaleDateString('it-IT', {
@@ -259,22 +137,22 @@ const CallForSpeakers: NextPage = () => {
           </header>
 
           {/* Status Messages */}
-          {submitStatus === 'success' && (
+          {result && isSuccess && (
             <div className="mb-8 p-4 bg-green-900/50 border border-green-500 rounded-lg flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-green-300">Candidatura inviata con successo!</h3>
-                <p className="text-green-200 text-sm">Grazie per il tuo interesse. Ti contatteremo presto.</p>
+                <p className="text-green-200 text-sm">{result}</p>
               </div>
             </div>
           )}
 
-          {submitStatus === 'error' && (
+          {result && !isSuccess && (
             <div className="mb-8 p-4 bg-red-900/50 border border-red-500 rounded-lg flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-red-300">Errore nell'invio</h3>
-                <p className="text-red-200 text-sm">Si è verificato un errore. Riprova più tardi.</p>
+                <p className="text-red-200 text-sm">{result}</p>
               </div>
             </div>
           )}
@@ -328,16 +206,7 @@ const CallForSpeakers: NextPage = () => {
 
           {/* Form */}
           <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Honeypot field for spam protection - must be hidden */}
-              <input
-                type="text"
-                name="botcheck"
-                tabIndex={-1}
-                autoComplete="off"
-                style={{ display: 'none' }}
-                aria-hidden="true"
-              />
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
               {/* Personal Info */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -347,13 +216,13 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="nome"
-                    name="first_name"
-                    required
                     disabled={isExpired}
-                    value={formData.nome}
-                    onChange={handleInputChange}
+                    {...register('first_name', { required: 'Nome è obbligatorio' })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   />
+                  {errors.first_name && (
+                    <p className="text-red-400 text-sm mt-1">{errors.first_name.message}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="cognome" className="block text-sm font-medium text-gray-300 mb-2">
@@ -362,13 +231,13 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="cognome"
-                    name="last_name"
-                    required
                     disabled={isExpired}
-                    value={formData.cognome}
-                    onChange={handleInputChange}
+                    {...register('last_name', { required: 'Cognome è obbligatorio' })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   />
+                  {errors.last_name && (
+                    <p className="text-red-400 text-sm mt-1">{errors.last_name.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -379,13 +248,19 @@ const CallForSpeakers: NextPage = () => {
                 <input
                   type="email"
                   id="email"
-                  name="email"
-                  required
                   disabled={isExpired}
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  {...register('email', { 
+                    required: 'Email è obbligatoria',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Email non valida'
+                    }
+                  })}
                   className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                 />
+                {errors.email && (
+                  <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                )}
               </div>
 
               {/* Session Info */}
@@ -402,14 +277,14 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="sessionTitle"
-                    name="session_title"
-                    required
                     disabled={isExpired}
-                    value={formData.sessionTitle}
-                    onChange={handleInputChange}
+                    {...register('session_title', { required: 'Titolo sessione è obbligatorio' })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="es. Implementare CI/CD con Azure DevOps"
                   />
+                  {errors.session_title && (
+                    <p className="text-red-400 text-sm mt-1">{errors.session_title.message}</p>
+                  )}
                 </div>
 
                 <div className="mt-4">
@@ -418,19 +293,24 @@ const CallForSpeakers: NextPage = () => {
                   </label>
                   <textarea
                     id="sessionDescription"
-                    name="message"
-                    required
                     disabled={isExpired}
                     rows={6}
-                    maxLength={2000}
-                    value={formData.sessionDescription}
-                    onChange={handleInputChange}
+                    {...register('message', { 
+                      required: 'Descrizione è obbligatoria',
+                      maxLength: {
+                        value: 2000,
+                        message: 'Massimo 2000 caratteri'
+                      }
+                    })}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Descrive di cosa parlerai, gli obiettivi della sessione e cosa impareranno i partecipanti..."
                   />
                   <div className="text-right text-sm text-gray-400 mt-1">
-                    {formData.sessionDescription.length}/2000 caratteri
+                    {messageValue?.length || 0}/2000 caratteri
                   </div>
+                  {errors.message && (
+                    <p className="text-red-400 text-sm mt-1">{errors.message.message}</p>
+                  )}
                 </div>
 
               </div>
@@ -447,10 +327,8 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="linkedinUrl"
-                      name="linkedin"
                       disabled={isExpired}
-                      value={formData.linkedinUrl}
-                      onChange={handleInputChange}
+                      {...register('linkedin')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://linkedin.com/in/tuo-profilo"
                     />
@@ -462,10 +340,8 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="githubUrl"
-                      name="github"
                       disabled={isExpired}
-                      value={formData.githubUrl}
-                      onChange={handleInputChange}
+                      {...register('github')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://github.com/tuo-username"
                     />
@@ -479,10 +355,8 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="contatti"
-                    name="phone"
                     disabled={isExpired}
-                    value={formData.contatti}
-                    onChange={handleInputChange}
+                    {...register('phone')}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Twitter, sito web, altri social..."
                   />
@@ -503,15 +377,11 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="file"
                     id="file"
-                    name="attachment"
                     accept=".pdf,.ppt,.pptx"
                     disabled={isExpired}
-                    onChange={handleFileChange}
+                    {...register('attachment')}
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
-                  {fileError && (
-                    <p className="text-red-400 text-sm mt-2">{fileError}</p>
-                  )}
                 </div>
               </div>
 
@@ -535,13 +405,13 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="checkbox"
                     id="privacyAccepted"
-                    name="privacyAccepted"
-                    required
                     disabled={isExpired}
-                    checked={formData.privacyAccepted}
-                    onChange={handleInputChange}
+                    {...register('privacyAccepted', { required: 'Devi accettare la privacy policy' })}
                     className="mt-1 w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
+                  {errors.privacyAccepted && (
+                    <p className="text-red-400 text-sm mt-2">{errors.privacyAccepted.message}</p>
+                  )}
                   <label htmlFor="privacyAccepted" className="text-sm text-gray-300">
                     Accetto la privacy policy e autorizzo il trattamento dei miei dati personali per le finalità indicate *
                   </label>
@@ -552,10 +422,10 @@ const CallForSpeakers: NextPage = () => {
               <div className="pt-6">
                 <button
                   type="submit"
-                  disabled={isSubmitting || isExpired || !formData.privacyAccepted}
+                  disabled={isExpired}
                   className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
-                  {isSubmitting ? 'Invio in corso...' : isExpired ? 'Call for Speakers chiusa' : 'Invia Candidatura'}
+                  {isExpired ? 'Call for Speakers chiusa' : 'Invia Candidatura'}
                 </button>
               </div>
             </form>

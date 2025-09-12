@@ -95,6 +95,13 @@ const CallForSpeakers: NextPage = () => {
       return;
     }
     
+    // Check honeypot field (should be empty)
+    const honeypot = (e.target as HTMLFormElement).botcheck?.value;
+    if (honeypot && honeypot.length > 0) {
+      console.log('Spam detected');
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
@@ -110,41 +117,28 @@ const CallForSpeakers: NextPage = () => {
       // Form fields
       formDataToSend.append('name', `${formData.nome} ${formData.cognome}`);
       formDataToSend.append('email', formData.email);
-      formDataToSend.append('message', `
-CANDIDATURA CALL FOR SPEAKERS
-==============================
-
-Nome: ${formData.nome}
-Cognome: ${formData.cognome}
-Email: ${formData.email}
-
-SESSIONE:
-Titolo: ${formData.sessionTitle}
-Descrizione: ${formData.sessionDescription}
-
-CONTATTI:
-LinkedIn: ${formData.linkedinUrl || 'Non fornito'}
-GitHub: ${formData.githubUrl || 'Non fornito'}
-Altri contatti: ${formData.contatti || 'Non fornito'}
-`);
+      formDataToSend.append('message', `Candidatura Call for Speakers da ${formData.nome} ${formData.cognome}. Sessione: ${formData.sessionTitle}. Descrizione: ${formData.sessionDescription}. LinkedIn: ${formData.linkedinUrl}. GitHub: ${formData.githubUrl}. Altri contatti: ${formData.contatti}`);
       
       // Subject for email
       formDataToSend.append('subject', `Call for Speakers: ${formData.sessionTitle}`);
       
-      // Redirect URL (optional)
-      formDataToSend.append('redirect', 'https://azure-meetup-puglia.github.io/call-for-speakers?success=true');
+      // Redirect URL (temporarily disabled for debugging)
+      // formDataToSend.append('redirect', 'https://azure-meetup-puglia.github.io/call-for-speakers?success=true');
       
-      // File upload (if present and under size limit)
-      if (formData.file && formData.file.size <= 5 * 1024 * 1024) { // 5MB limit
-        formDataToSend.append('attachment', formData.file);
-      }
+      // File upload (temporarily disabled for debugging)
+      // if (formData.file && formData.file.size <= 5 * 1024 * 1024) { // 5MB limit
+      //   formDataToSend.append('attachment', formData.file);
+      // }
       
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formDataToSend
       });
       
-      if (response.ok) {
+      const result = await response.json();
+      console.log('Web3Forms response:', result);
+      
+      if (response.ok && result.success) {
         setSubmitStatus('success');
         // Reset form
         setFormData({

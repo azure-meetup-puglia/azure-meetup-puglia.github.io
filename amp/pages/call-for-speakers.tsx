@@ -47,7 +47,32 @@ const CallForSpeakers: NextPage = () => {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData(prev => ({ ...prev, [name]: checked }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      // Map HTML form field names to state field names
+      let stateFieldName = name;
+      switch (name) {
+        case 'first_name':
+          stateFieldName = 'nome';
+          break;
+        case 'last_name':
+          stateFieldName = 'cognome';
+          break;
+        case 'session_title':
+          stateFieldName = 'sessionTitle';
+          break;
+        case 'message':
+          stateFieldName = 'sessionDescription';
+          break;
+        case 'linkedin':
+          stateFieldName = 'linkedinUrl';
+          break;
+        case 'github':
+          stateFieldName = 'githubUrl';
+          break;
+        case 'phone':
+          stateFieldName = 'contatti';
+          break;
+      }
+      setFormData(prev => ({ ...prev, [stateFieldName]: value }));
     }
   };
 
@@ -68,8 +93,8 @@ const CallForSpeakers: NextPage = () => {
         return;
       }
       
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit for Web3Forms
-        setFileError('Il file non può superare i 5MB.');
+      if (file.size > 1024 * 1024) { // 1MB limit as per Web3Forms examples
+        setFileError('Il file non può superare 1MB.');
         e.target.value = '';
         return;
       }
@@ -95,10 +120,9 @@ const CallForSpeakers: NextPage = () => {
       return;
     }
     
-    // Check honeypot field (should be empty)
-    const honeypot = (e.target as HTMLFormElement).botcheck?.value;
-    if (honeypot && honeypot.length > 0) {
-      console.log('Spam detected');
+    // File size validation (1MB limit as per Web3Forms examples)
+    if (formData.file && formData.file.size > 1024 * 1024) {
+      alert('Il file deve essere inferiore a 1MB');
       return;
     }
     
@@ -106,29 +130,12 @@ const CallForSpeakers: NextPage = () => {
     setSubmitStatus('idle');
     
     try {
-      const formDataToSend = new FormData();
+      const form = e.target as HTMLFormElement;
+      const formDataToSend = new FormData(form);
       
-      // Web3Forms access key (REQUIRED)
+      // Web3Forms access key (append to existing FormData)
       formDataToSend.append('access_key', 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1');
-      
-      // Required honeypot field (for spam protection)
-      formDataToSend.append('botcheck', '');
-      
-      // Form fields
-      formDataToSend.append('name', `${formData.nome} ${formData.cognome}`);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('message', `Candidatura Call for Speakers da ${formData.nome} ${formData.cognome}. Sessione: ${formData.sessionTitle}. Descrizione: ${formData.sessionDescription}. LinkedIn: ${formData.linkedinUrl}. GitHub: ${formData.githubUrl}. Altri contatti: ${formData.contatti}`);
-      
-      // Subject for email
       formDataToSend.append('subject', `Call for Speakers: ${formData.sessionTitle}`);
-      
-      // Redirect URL (temporarily disabled for debugging)
-      // formDataToSend.append('redirect', 'https://azure-meetup-puglia.github.io/call-for-speakers?success=true');
-      
-      // File upload (temporarily disabled for debugging)
-      // if (formData.file && formData.file.size <= 5 * 1024 * 1024) { // 5MB limit
-      //   formDataToSend.append('attachment', formData.file);
-      // }
       
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -138,9 +145,10 @@ const CallForSpeakers: NextPage = () => {
       const result = await response.json();
       console.log('Web3Forms response:', result);
       
-      if (response.ok && result.success) {
+      if (response.status === 200 && result.success) {
         setSubmitStatus('success');
         // Reset form
+        form.reset();
         setFormData({
           nome: '',
           cognome: '',
@@ -152,10 +160,8 @@ const CallForSpeakers: NextPage = () => {
           contatti: '',
           privacyAccepted: false
         });
-        // Reset file input
-        const fileInput = document.getElementById('file') as HTMLInputElement;
-        if (fileInput) fileInput.value = '';
       } else {
+        console.log('Error response:', result);
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -317,7 +323,7 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="nome"
-                    name="nome"
+                    name="first_name"
                     required
                     disabled={isExpired}
                     value={formData.nome}
@@ -332,7 +338,7 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="cognome"
-                    name="cognome"
+                    name="last_name"
                     required
                     disabled={isExpired}
                     value={formData.cognome}
@@ -372,7 +378,7 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="sessionTitle"
-                    name="sessionTitle"
+                    name="session_title"
                     required
                     disabled={isExpired}
                     value={formData.sessionTitle}
@@ -388,7 +394,7 @@ const CallForSpeakers: NextPage = () => {
                   </label>
                   <textarea
                     id="sessionDescription"
-                    name="sessionDescription"
+                    name="message"
                     required
                     disabled={isExpired}
                     rows={6}
@@ -417,7 +423,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="linkedinUrl"
-                      name="linkedinUrl"
+                      name="linkedin"
                       disabled={isExpired}
                       value={formData.linkedinUrl}
                       onChange={handleInputChange}
@@ -432,7 +438,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="githubUrl"
-                      name="githubUrl"
+                      name="github"
                       disabled={isExpired}
                       value={formData.githubUrl}
                       onChange={handleInputChange}
@@ -449,7 +455,7 @@ const CallForSpeakers: NextPage = () => {
                   <input
                     type="text"
                     id="contatti"
-                    name="contatti"
+                    name="phone"
                     disabled={isExpired}
                     value={formData.contatti}
                     onChange={handleInputChange}
@@ -468,12 +474,12 @@ const CallForSpeakers: NextPage = () => {
                 
                 <div>
                   <label htmlFor="file" className="block text-sm font-medium text-gray-300 mb-2">
-                    Slide o Materiale (PDF o PowerPoint - max 5MB)
+                    Slide o Materiale (PDF o PowerPoint - max 1MB)
                   </label>
                   <input
                     type="file"
                     id="file"
-                    name="file"
+                    name="attachment"
                     accept=".pdf,.ppt,.pptx"
                     disabled={isExpired}
                     onChange={handleFileChange}

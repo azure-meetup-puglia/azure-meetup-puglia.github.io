@@ -84,7 +84,7 @@ const MediaKit: NextPage = () => {
               <ul className="space-y-3">
                 <li>La regione è al centro di investimenti tech con progetti come la <strong className="text-white">Puglia Data Center Valley</strong>.</li>
                 <li>Le università di Bari, Lecce e il Politecnico offrono nuovi talenti IT ogni anno.</li>
-                <li>Le PMI locali si stanno digitalizzando rapidamente, ma manca ancora un ecosistema cloud tecnico forte e continuo.</li>
+                <li>La Puglia è un territorio in enorme crescita con molte possibilità dove molte aziende e società di consulenza stanno trasferendo o aprendo uffici e sedi sul territorio.</li>
               </ul>
             </div>
           </section>
@@ -98,7 +98,8 @@ const MediaKit: NextPage = () => {
               <div>
                 <h3 className="text-lg font-semibold text-white mb-3">Profilo demografico</h3>
                 <ul className="space-y-2 text-gray-300">
-                  <li><strong>Età:</strong> 20+ anni</li>
+                  <li><strong>Età:</strong> 20+ anni, tutti i generi</li>
+                  <li><strong>Inclusività:</strong> Cerchiamo soluzioni e spazi accessibili a tutti, incluse persone con disabilità</li>
                   <li><strong>Professionisti IT:</strong> DevOps, sviluppatori, architetti cloud, consulenti, CTO, CIO</li>
                   <li><strong>Figure dirigenziali:</strong> Tech Lead, Engineering Manager, IT Director</li>
                   <li><strong>Settori:</strong> Startup, PMI, system integrator, grandi aziende</li>
@@ -128,7 +129,7 @@ const MediaKit: NextPage = () => {
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
               <Calendar className="w-6 h-6" />
-              Eventi 2025
+              Eventi {new Date().getFullYear()}
             </h2>
             <div className="text-gray-300 space-y-4">
               <p className="text-lg">
@@ -192,6 +193,22 @@ const MediaKit: NextPage = () => {
             </div>
 
             <div className="space-y-6">
+              {/* Sponsorizzazione Tecnica Improove */}
+              <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 border border-purple-600/50 p-6 rounded-lg mb-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  🚀 Partnership Tecnica con Improove
+                </h3>
+                <p className="text-gray-300 mb-3">
+                  Siamo orgogliosi di collaborare con <strong className="text-purple-300">Improove</strong> (<a href="https://improove.tech" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 underline">improove.tech</a>), piattaforma leader per la formazione aziendale continua.
+                </p>
+                <div className="bg-purple-900/10 border border-purple-700/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-white mb-2">Vantaggi esclusivi per le aziende host:</h4>
+                  <p className="text-gray-300">
+                    Le aziende che ospiteranno i nostri eventi riceveranno <strong className="text-purple-300">pacchetti gratuiti speciali</strong> sulla piattaforma Improove, da utilizzare come strumento di formazione aziendale interna per i propri dipendenti. Un'opportunità unica per investire nella crescita continua del proprio team tech.
+                  </p>
+                </div>
+              </div>
+
               {/* Host Partner */}
               <div className="bg-gray-700 p-6 rounded-lg">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">

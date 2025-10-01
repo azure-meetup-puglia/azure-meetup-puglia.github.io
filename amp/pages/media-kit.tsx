@@ -182,7 +182,7 @@ const MediaKit: NextPage = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-gray-700/50 p-4 rounded-lg">
                     <p className="text-white font-semibold mb-2">💼 Employer branding & recruiting</p>
-                    <p className="text-gray-300 text-sm">Mostra team e progetti; incontri profili tecnici qualificati.</p>
+                    <p className="text-gray-300 text-sm">Fai vedere al settore che tipo di azienda sei: mostra team, progetti e cultura aziendale. Attrai nuovi talenti e crea opportunità lavorative incontrando profili tecnici qualificati in un contesto autentico.</p>
                   </div>
 
                   <div className="bg-gray-700/50 p-4 rounded-lg">

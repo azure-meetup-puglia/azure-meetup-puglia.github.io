@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, Target, CheckCircle, ClipboardList, Shield, HelpCircle, Zap } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, CheckCircle, ClipboardList, Shield, HelpCircle, Zap } from 'lucide-react';
 
 const MediaKit: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
@@ -67,19 +67,10 @@ const MediaKit: NextPage = () => {
               <Users className="w-6 h-6" />
               Chi siamo
             </h2>
-            <div className="space-y-4 text-gray-300">
+            <div className="text-gray-300">
               <p>
-                <strong className="text-white">Azure Meetup Puglia</strong> nasce per riunire professionisti e appassionati del cloud in eventi <strong className="text-white">concreti, accessibili e utili</strong>. 
-                Favoriamo lo scambio tra chi progetta, implementa e governa soluzioni su Azure ogni giorno.
+                <strong className="text-white">Azure Meetup Puglia</strong> riunisce professionisti del cloud in eventi concreti, accessibili e utili. Iniziativa 100% volontaria, autofinanziata, orientata allo scambio tra chi progetta e implementa soluzioni Azure. Non puntiamo all'effetto wow, ma al valore reale: talk tecnici, demo, casi d'uso, networking.
               </p>
-              <p>
-                L'iniziativa è completamente volontaria e autofinanziata. Il nostro obiettivo è semplice: costruire una community reale, accessibile, formativa e orientata allo scambio concreto tra persone.
-              </p>
-              <div className="bg-blue-900/20 border border-blue-600 rounded-lg p-4 mt-4">
-                <p className="text-blue-200 font-medium">
-                  Non puntiamo all'effetto wow, ma al valore reale: talk tecnici, demo, casi d'uso, networking.
-                </p>
-              </div>
             </div>
           </section>
 
@@ -108,12 +99,11 @@ const MediaKit: NextPage = () => {
               <MapPin className="w-6 h-6" />
               Perché la Puglia
             </h2>
-            <div className="space-y-4 text-gray-300">
+            <div className="text-gray-300">
               <ul className="space-y-3">
-                <li>• Ecosistema in crescita (es. iniziative come <strong className="text-white">Puglia Data Center Valley</strong>)</li>
-                <li>• Atenei (Univ. Bari, Univ. Salento, Politecnico di Bari) → <strong className="text-white">talenti</strong> e collaborazione con i dipartimenti</li>
-                <li>• Territorio attrattivo per <strong className="text-white">nuove sedi</strong> e hub IT</li>
-                <li>• La Puglia è un territorio in enorme crescita con molte possibilità dove molte aziende e società di consulenza stanno trasferendo o aprendo uffici e sedi sul territorio</li>
+                <li>• <strong className="text-white">Ecosistema tech in crescita</strong>: Puglia Data Center Valley, nuove sedi IT, società di consulenza</li>
+                <li>• <strong className="text-white">Talenti</strong>: atenei (Univ. Bari, Salento, Politecnico) e collaborazioni con i dipartimenti</li>
+                <li>• <strong className="text-white">Territorio attrattivo</strong> per nuovi hub IT e aziende che aprono o trasferiscono uffici</li>
               </ul>
             </div>
           </section>
@@ -196,8 +186,8 @@ const MediaKit: NextPage = () => {
                   </div>
 
                   <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">🔄 Visibilità che si moltiplica</p>
-                    <p className="text-gray-300 text-sm">Grazie alle partnership (es. Global AI), la promozione si propaga a cascata su reti e canali aggiuntivi senza effort extra, ampliando pubblico e territori.</p>
+                    <p className="text-white font-semibold mb-2">🔄 Visibilità qualificata</p>
+                    <p className="text-gray-300 text-sm">Visibilità qualificata su audience tecnica locale; recap con metriche (iscritti, presenti, reach). Grazie alle partnership (es. Global AI), promozione a cascata su reti multiple senza effort extra.</p>
                   </div>
 
                   <div className="bg-gray-700/50 p-4 rounded-lg">
@@ -248,12 +238,6 @@ const MediaKit: NextPage = () => {
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-600 rounded-lg p-6 text-center">
-                <h3 className="text-xl font-semibold text-white mb-3">📞 Vuoi ospitarci?</h3>
-                <p className="text-gray-200">
-                  Vuoi portare la community in sede? <strong className="text-green-300">Candidati come Host Partner</strong> e definiamo insieme data, format e logistica.
-                </p>
-              </div>
             </div>
           </section>
 
@@ -263,63 +247,54 @@ const MediaKit: NextPage = () => {
               <Calendar className="w-6 h-6" />
               Formati evento
             </h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-gray-700 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white mb-4">In presenza (90-120')</h3>
-                <p className="text-sm text-gray-400 mb-3">Esempio agenda</p>
-                <ol className="space-y-2 text-gray-300 text-sm">
-                  <li><strong>1.</strong> Welcome & apertura – 10'</li>
-                  <li><strong>2.</strong> Talk tecnico #1 – 30'</li>
-                  <li><strong>3.</strong> Break / coffee – 15'</li>
-                  <li><strong>4.</strong> Talk tecnico #2 – 30'</li>
-                  <li><strong>5.</strong> Q&A + networking – 30'</li>
-                </ol>
+                <h3 className="text-lg font-semibold text-white mb-3">🏢 In presenza</h3>
+                <p className="text-gray-300 text-sm mb-2"><strong className="text-white">Durata:</strong> 90-120 minuti</p>
+                <p className="text-gray-300 text-sm">Welcome (10') → Talk #1 (30') → Coffee break (15') → Talk #2 (30') → Q&A e networking strutturato (30')</p>
               </div>
-              
+
               <div className="bg-gray-700 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold text-white mb-4">Online (60-75')</h3>
-                <p className="text-sm text-gray-400 mb-3">Piattaforme: Teams/Zoom</p>
-                <div className="text-gray-300 text-sm space-y-2">
-                  <p>• Sessioni virtuali per raggiungere un pubblico più ampio</p>
-                  <p>• Focus su tematiche specifiche e approfondimenti</p>
-                  <p>• <strong className="text-green-200">Registrazione:</strong> disponibile per gli eventi online</p>
-                </div>
+                <h3 className="text-lg font-semibold text-white mb-3">💻 Online</h3>
+                <p className="text-gray-300 text-sm mb-2"><strong className="text-white">Durata:</strong> 60-75 minuti</p>
+                <p className="text-gray-300 text-sm">Teams/Zoom • Tematiche specifiche e approfondimenti • Registrazione disponibile</p>
               </div>
             </div>
           </section>
 
-          {/* Cosa portiamo noi */}
-          <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
+          {/* Cosa portiamo noi / Cosa chiediamo a te */}
+          <section className="bg-gradient-to-r from-blue-900/20 to-green-900/20 p-8 rounded-xl border border-blue-700/50">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
-              <Target className="w-6 h-6" />
-              Cosa portiamo noi (organizzatori)
+              <Handshake className="w-6 h-6" />
+              Cosa portiamo noi / Cosa chiediamo a te
             </h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <ul className="space-y-2 text-gray-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                  <span><strong className="text-white">Curatela contenuti:</strong> selezione talk, coaching speaker, agenda</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                  <span><strong className="text-white">Onboarding speaker:</strong> abstract review, dry-run, checklist</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                  <span><strong className="text-white">Promozione:</strong> pagina Meetup, post social, reminder</span>
-                </li>
-              </ul>
-              <ul className="space-y-2 text-gray-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                  <span><strong className="text-white">Gestione evento:</strong> MC/moderazione, tempi, Q&A, foto</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                  <span><strong className="text-white">Trasparenza:</strong> post-evento con ringraziamenti, foto e form feedback</span>
-                </li>
-              </ul>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-800/50 p-6 rounded-lg border border-green-600/30">
+                <h3 className="text-lg font-semibold text-green-400 mb-4">✓ Cosa portiamo noi</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>✓ Curatela contenuti e selezione speaker</li>
+                  <li>✓ Onboarding speaker (abstract review, dry-run)</li>
+                  <li>✓ Promozione completa (Meetup, social, reminder)</li>
+                  <li>✓ Kit materiali per intranet/newsletter</li>
+                  <li>✓ MC/moderazione e gestione evento</li>
+                  <li>✓ Q&A e networking strutturato (30' finali)</li>
+                  <li>✓ Recap con metriche e foto</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 p-6 rounded-lg border border-blue-600/30">
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">— Cosa chiediamo a te</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>— Location (sala, sedie, Wi-Fi stabile ≥50/10 Mbps)</li>
+                  <li>— Setup AV (proiettore/TV, HDMI/USB-C, audio)</li>
+                  <li>— Catering base (acqua + coffee break/aperitivo)</li>
+                  <li>— Supporto logistico (accessi, badge)</li>
+                  <li>— Accesso disabili e prese elettriche</li>
+                  <li>— Assistenza IT di sala</li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -347,6 +322,49 @@ const MediaKit: NextPage = () => {
                 <li>• Foto selezionate (con consenso) e <strong className="text-white">menzione partner</strong></li>
                 <li>• Report dettagliato per sponsor premium</li>
               </ul>
+            </div>
+          </section>
+
+          {/* KPI Standard */}
+          <section className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 p-8 rounded-xl border border-purple-700/50">
+            <h2 className="text-2xl font-semibold text-purple-400 mb-6 flex items-center gap-3">
+              <TrendingUp className="w-6 h-6" />
+              KPI Standard (range realistici)
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-gray-800/50 p-4 rounded-lg border border-purple-600/30">
+                <h3 className="text-lg font-semibold text-white mb-2">📊 Partecipazione</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• <strong>Iscritti:</strong> 40-80</li>
+                  <li>• <strong>Presenti:</strong> 25-50</li>
+                  <li>• <strong>Show-up rate:</strong> 50-70%</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 p-4 rounded-lg border border-purple-600/30">
+                <h3 className="text-lg font-semibold text-white mb-2">📱 Reach Social</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• <strong>Impression:</strong> 2k-5k</li>
+                  <li>• <strong>Engagement:</strong> 150-400</li>
+                  <li>• <strong>Cross-posting:</strong> +30-50% via partner</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 p-4 rounded-lg border border-purple-600/30">
+                <h3 className="text-lg font-semibold text-white mb-2">⭐ Feedback</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• <strong>Response rate:</strong> 30-50%</li>
+                  <li>• <strong>Rating medio:</strong> 4.2-4.7/5</li>
+                  <li>• <strong>NPS:</strong> 40-60</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-6 bg-purple-900/20 border border-purple-600 rounded-lg p-4">
+              <p className="text-purple-200 text-sm">
+                <strong>Nota:</strong> I valori variano in base a location, topic e periodo dell'anno. Eventi co-brandati con Global AI o altre community possono superare questi range.
+              </p>
             </div>
           </section>
 
@@ -493,6 +511,43 @@ const MediaKit: NextPage = () => {
             </div>
           </section>
 
+          {/* Policy operative */}
+          <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
+            <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
+              <Shield className="w-6 h-6" />
+              Policy operative
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-gray-700/50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">🔒 Privacy & dati</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• Lista partecipanti: gestita da organizzatori</li>
+                  <li>• No condivisione dati personali senza consenso</li>
+                  <li>• Form feedback anonimi</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-700/50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">🚪 Accessi</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• Registrazione via Meetup.com</li>
+                  <li>• Check-in in loco (badge opzionali)</li>
+                  <li>• Accesso disabili obbligatorio</li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-700/50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">📸 Foto & Video</h3>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• Solo platea/ambienti generali</li>
+                  <li>• No aree sensibili (schermi con dati, sale riservate)</li>
+                  <li>• Nessuna registrazione salvo accordi espliciti</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
           {/* Codice di condotta */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
@@ -527,7 +582,7 @@ const MediaKit: NextPage = () => {
               
               <div>
                 <p className="font-semibold text-white mb-1">Registrate gli eventi?</p>
-                <p className="text-gray-300">In presenza no; online sì, le registrazioni sono disponibili.</p>
+                <p className="text-gray-300">In presenza no; online sì. Foto: solo platea/ambienti, no aree sensibili. Nessuna registrazione salvo accordi.</p>
               </div>
               
               <div>
@@ -548,28 +603,37 @@ const MediaKit: NextPage = () => {
           </section>
 
           {/* Call to Action */}
-          <section className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-600 rounded-xl p-8">
-            <h2 className="text-2xl font-semibold text-blue-400 mb-6 text-center">
-              Call to Action
+          <section className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-2 border-blue-500 rounded-xl p-12 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              🚀 Porta la community in sede
             </h2>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div className="bg-gray-800/50 p-4 rounded-lg">
-                <h3 className="font-semibold text-white mb-2">🏢 Ospita un meetup</h3>
-                <p className="text-gray-300 text-sm">Proponi una data e capienza</p>
+            <p className="text-xl text-blue-200 mb-6 max-w-2xl mx-auto">
+              Vuoi ospitare Azure Meetup Puglia? Candidati come <strong className="text-white">Host Partner</strong> o <strong className="text-white">Sponsor Partner</strong> e definiamo insieme data, format e logistica.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <div className="bg-blue-800/50 p-4 rounded-lg border border-blue-600 flex-1 max-w-xs">
+                <p className="text-white font-semibold mb-1">🏢 Ospita un meetup</p>
+                <p className="text-gray-300 text-sm">Location + catering base</p>
               </div>
-              <div className="bg-gray-800/50 p-4 rounded-lg">
-                <h3 className="font-semibold text-white mb-2">💎 Diventa sponsor</h3>
-                <p className="text-gray-300 text-sm">Scegli tra Host o Sponsor Partner</p>
+              <div className="bg-purple-800/50 p-4 rounded-lg border border-purple-600 flex-1 max-w-xs">
+                <p className="text-white font-semibold mb-1">💎 Diventa sponsor</p>
+                <p className="text-gray-300 text-sm">Visibilità ampliata + benefit extra</p>
               </div>
-              <div className="bg-gray-800/50 p-4 rounded-lg">
-                <h3 className="font-semibold text-white mb-2">🎤 Proponi un talk</h3>
-                <p className="text-gray-300 text-sm">Abstract, titolo, livello e demo</p>
+              <div className="bg-green-800/50 p-4 rounded-lg border border-green-600 flex-1 max-w-xs">
+                <p className="text-white font-semibold mb-1">🎤 Proponi un talk</p>
+                <p className="text-gray-300 text-sm">Call for Speakers sempre aperta</p>
               </div>
             </div>
-            
-            <p className="text-center mt-6 text-gray-300">
-              Ti va di collaborare? Scrivici su LinkedIn o tramite la pagina del prossimo evento su <strong className="text-white">Meetup.com</strong>.
-            </p>
+
+            <div className="bg-white/10 backdrop-blur rounded-lg p-6 max-w-2xl mx-auto">
+              <p className="text-white text-lg mb-2">
+                <strong>Contatti</strong>
+              </p>
+              <p className="text-gray-200">
+                Scrivici su <strong className="text-blue-300">LinkedIn</strong> (Azure Meetup Puglia) o tramite la pagina del prossimo evento su <strong className="text-blue-300">Meetup.com</strong>
+              </p>
+            </div>
           </section>
 
           {/* Nota finale */}

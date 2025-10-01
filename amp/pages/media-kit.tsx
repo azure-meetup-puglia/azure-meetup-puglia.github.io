@@ -160,6 +160,103 @@ const MediaKit: NextPage = () => {
             </div>
           </section>
 
+          {/* Perché ospitarci */}
+          <section className="bg-gradient-to-r from-green-900/20 to-blue-900/20 p-8 rounded-xl border border-green-700/50">
+            <h2 className="text-2xl font-semibold text-green-400 mb-6 flex items-center gap-3">
+              <Building2 className="w-6 h-6" />
+              Perché ospitarci
+            </h2>
+
+            <div className="bg-green-900/30 border border-green-600 rounded-lg p-4 mb-6">
+              <p className="text-green-100 font-semibold text-lg">
+                In una riga
+              </p>
+              <p className="text-gray-200 mt-2">
+                Porti in sede talento, idee e opportunità, con investimento minimo e impatto immediato su brand, recruiting e innovazione.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-4">I motivi principali</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">💼 Employer branding & recruiting</p>
+                    <p className="text-gray-300 text-sm">Mostra team e progetti; incontri profili tecnici qualificati.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">💡 Innovazione pratica</p>
+                    <p className="text-gray-300 text-sm">Trend Azure/Cloud, casi reali e lesson learned riusabili.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">📢 Marketing credibile</p>
+                    <p className="text-gray-300 text-sm">Contenuti autentici (no marchette), visibilità locale.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🔄 Visibilità che si moltiplica</p>
+                    <p className="text-gray-300 text-sm">Grazie alle partnership (es. Global AI), la promozione si propaga a cascata su reti e canali aggiuntivi senza effort extra, ampliando pubblico e territori.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">📚 Formazione continua</p>
+                    <p className="text-gray-300 text-sm">Aggiornamento gratuito per i tuoi tecnici, in sede.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🤝 Business & partnership</p>
+                    <p className="text-gray-300 text-sm">Conversazioni ad alto valore con aziende e professionisti.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🌍 Impatto sul territorio</p>
+                    <p className="text-gray-300 text-sm">Sostieni l'ecosistema locale e l'inclusione.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">💰 Costo/beneficio eccellente</p>
+                    <p className="text-gray-300 text-sm">Tu metti lo spazio; agenda, speaker e comunicazione li curiamo noi.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-900/20 border border-blue-600 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-4">Cosa ottieni concretamente</h3>
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Logo su pagina evento/slide, ringraziamento live, welcome 3–5'</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Cross-posting multi-community e co-branding nei materiali: reach e autorevolezza aumentano automaticamente</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Recruiting corner opzionale e recap con metriche (iscritti/presenti, reach, feedback)</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-900/20 border border-purple-600 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-4">Garanzie editoriali</h3>
+                <ul className="space-y-2 text-gray-300">
+                  <li>• Eventi vendor-neutral e curati; niente pitch commerciali</li>
+                  <li>• Gestione accessi e privacy; niente registrazioni salvo accordi</li>
+                </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-600 rounded-lg p-6 text-center">
+                <h3 className="text-xl font-semibold text-white mb-3">📞 Vuoi ospitarci?</h3>
+                <p className="text-gray-200">
+                  Vuoi portare la community in sede? <strong className="text-green-300">Candidati come Host Partner</strong> e definiamo insieme data, format e logistica.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Formati evento */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
             <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">

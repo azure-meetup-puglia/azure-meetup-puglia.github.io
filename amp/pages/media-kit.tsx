@@ -67,10 +67,22 @@ const MediaKit: NextPage = () => {
               <Users className="w-6 h-6" />
               Chi siamo
             </h2>
-            <div className="text-gray-300">
+            <div className="text-gray-300 space-y-4">
               <p>
                 <strong className="text-white">Azure Meetup Puglia</strong> riunisce professionisti del cloud in eventi concreti, accessibili e utili. Iniziativa 100% volontaria, autofinanziata, orientata allo scambio tra chi progetta e implementa soluzioni Azure. Non puntiamo all'effetto wow, ma al valore reale: talk tecnici, demo, casi d'uso, networking.
               </p>
+
+              <div className="pt-4 border-t border-gray-700">
+                <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-blue-400" />
+                  Perché la Puglia
+                </h3>
+                <ul className="space-y-2 ml-6">
+                  <li>• <strong className="text-white">Ecosistema tech in crescita</strong>: Puglia Data Center Valley, nuove sedi IT, società di consulenza</li>
+                  <li>• <strong className="text-white">Talenti</strong>: atenei (Univ. Bari, Salento, Politecnico) e collaborazioni con i dipartimenti</li>
+                  <li>• <strong className="text-white">Territorio attrattivo</strong> per nuovi hub IT e aziende che aprono o trasferiscono uffici</li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -93,18 +105,92 @@ const MediaKit: NextPage = () => {
             </div>
           </section>
 
-          {/* Perché la Puglia */}
-          <section className="bg-gray-800 p-8 rounded-xl border border-gray-700">
-            <h2 className="text-2xl font-semibold text-blue-400 mb-6 flex items-center gap-3">
-              <MapPin className="w-6 h-6" />
-              Perché la Puglia
+          {/* Perché ospitarci */}
+          <section className="bg-gradient-to-r from-green-900/20 to-blue-900/20 p-8 rounded-xl border border-green-700/50">
+            <h2 className="text-2xl font-semibold text-green-400 mb-6 flex items-center gap-3">
+              <Building2 className="w-6 h-6" />
+              Perché ospitarci
             </h2>
-            <div className="text-gray-300">
-              <ul className="space-y-3">
-                <li>• <strong className="text-white">Ecosistema tech in crescita</strong>: Puglia Data Center Valley, nuove sedi IT, società di consulenza</li>
-                <li>• <strong className="text-white">Talenti</strong>: atenei (Univ. Bari, Salento, Politecnico) e collaborazioni con i dipartimenti</li>
-                <li>• <strong className="text-white">Territorio attrattivo</strong> per nuovi hub IT e aziende che aprono o trasferiscono uffici</li>
-              </ul>
+
+            <div className="bg-green-900/30 border border-green-600 rounded-lg p-4 mb-6">
+              <p className="text-green-100 font-semibold text-lg">
+                In una riga
+              </p>
+              <p className="text-gray-200 mt-2">
+                Porti in sede talento, idee e opportunità, con investimento minimo e impatto immediato su brand, recruiting e innovazione.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-4">I 3 benefici principali</h3>
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
+                  <div className="bg-gradient-to-br from-blue-600/30 to-blue-800/30 p-6 rounded-lg border-2 border-blue-500 shadow-lg">
+                    <p className="text-white font-bold text-lg mb-3">💼 Employer Branding & Recruiting</p>
+                    <p className="text-gray-200 text-sm">Fai vedere al settore che tipo di azienda sei: mostra team, progetti e cultura aziendale. Attrai nuovi talenti e crea opportunità lavorative incontrando profili tecnici qualificati in un contesto autentico.</p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-purple-600/30 to-purple-800/30 p-6 rounded-lg border-2 border-purple-500 shadow-lg">
+                    <p className="text-white font-bold text-lg mb-3">💡 Innovazione Pratica</p>
+                    <p className="text-gray-200 text-sm">Trend Azure/Cloud, casi reali e lesson learned riusabili. Aggiornamento gratuito per i tuoi tecnici, in sede.</p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-green-600/30 to-green-800/30 p-6 rounded-lg border-2 border-green-500 shadow-lg">
+                    <p className="text-white font-bold text-lg mb-3">💰 ROI Eccellente</p>
+                    <p className="text-gray-200 text-sm">Tu metti lo spazio; agenda, speaker e comunicazione li curiamo noi. Investimento minimo, impatto massimo.</p>
+                  </div>
+                </div>
+
+                <h4 className="text-lg font-semibold text-white mb-3 mt-8">Altri benefici importanti</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">📢 Marketing credibile</p>
+                    <p className="text-gray-300 text-sm">Contenuti autentici (no marchette), visibilità locale.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🔄 Visibilità qualificata</p>
+                    <p className="text-gray-300 text-sm">Visibilità qualificata su audience tecnica locale; recap con metriche (iscritti, presenti, reach). Grazie alle partnership (es. Global AI), promozione a cascata su reti multiple senza effort extra.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🤝 Business & partnership</p>
+                    <p className="text-gray-300 text-sm">Conversazioni ad alto valore con aziende e professionisti.</p>
+                  </div>
+
+                  <div className="bg-gray-700/50 p-4 rounded-lg">
+                    <p className="text-white font-semibold mb-2">🌍 Impatto sul territorio</p>
+                    <p className="text-gray-300 text-sm">Sostieni l'ecosistema locale e l'inclusione.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-900/20 border border-blue-600 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-4">Cosa ottieni concretamente</h3>
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Logo su pagina evento/slide, ringraziamento live, welcome 3–5'</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Cross-posting multi-community e co-branding nei materiali: reach e autorevolezza aumentano automaticamente</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
+                    <span>Recruiting corner opzionale e recap con metriche (iscritti/presenti, reach, feedback)</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-900/20 border border-purple-600 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-4">Garanzie editoriali</h3>
+                <ul className="space-y-2 text-gray-300">
+                  <li>• Eventi vendor-neutral e curati; niente pitch commerciali</li>
+                  <li>• Gestione accessi e privacy; niente registrazioni salvo accordi</li>
+                </ul>
+              </div>
+
             </div>
           </section>
 
@@ -147,97 +233,6 @@ const MediaKit: NextPage = () => {
                 Collaboriamo attivamente con <strong className="text-blue-300">Global AI Community</strong> (<a href="https://globalai.community/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">globalai.community</a>) per i capitoli di Bari e Lecce. 
                 <span className="text-yellow-200"> A breve aggiungeremo altre community tech sul territorio</span> per ampliare l'offerta formativa.
               </p>
-            </div>
-          </section>
-
-          {/* Perché ospitarci */}
-          <section className="bg-gradient-to-r from-green-900/20 to-blue-900/20 p-8 rounded-xl border border-green-700/50">
-            <h2 className="text-2xl font-semibold text-green-400 mb-6 flex items-center gap-3">
-              <Building2 className="w-6 h-6" />
-              Perché ospitarci
-            </h2>
-
-            <div className="bg-green-900/30 border border-green-600 rounded-lg p-4 mb-6">
-              <p className="text-green-100 font-semibold text-lg">
-                In una riga
-              </p>
-              <p className="text-gray-200 mt-2">
-                Porti in sede talento, idee e opportunità, con investimento minimo e impatto immediato su brand, recruiting e innovazione.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">I motivi principali</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">💼 Employer branding & recruiting</p>
-                    <p className="text-gray-300 text-sm">Fai vedere al settore che tipo di azienda sei: mostra team, progetti e cultura aziendale. Attrai nuovi talenti e crea opportunità lavorative incontrando profili tecnici qualificati in un contesto autentico.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">💡 Innovazione pratica</p>
-                    <p className="text-gray-300 text-sm">Trend Azure/Cloud, casi reali e lesson learned riusabili.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">📢 Marketing credibile</p>
-                    <p className="text-gray-300 text-sm">Contenuti autentici (no marchette), visibilità locale.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">🔄 Visibilità qualificata</p>
-                    <p className="text-gray-300 text-sm">Visibilità qualificata su audience tecnica locale; recap con metriche (iscritti, presenti, reach). Grazie alle partnership (es. Global AI), promozione a cascata su reti multiple senza effort extra.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">📚 Formazione continua</p>
-                    <p className="text-gray-300 text-sm">Aggiornamento gratuito per i tuoi tecnici, in sede.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">🤝 Business & partnership</p>
-                    <p className="text-gray-300 text-sm">Conversazioni ad alto valore con aziende e professionisti.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">🌍 Impatto sul territorio</p>
-                    <p className="text-gray-300 text-sm">Sostieni l'ecosistema locale e l'inclusione.</p>
-                  </div>
-
-                  <div className="bg-gray-700/50 p-4 rounded-lg">
-                    <p className="text-white font-semibold mb-2">💰 Costo/beneficio eccellente</p>
-                    <p className="text-gray-300 text-sm">Tu metti lo spazio; agenda, speaker e comunicazione li curiamo noi.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-900/20 border border-blue-600 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Cosa ottieni concretamente</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
-                    <span>Logo su pagina evento/slide, ringraziamento live, welcome 3–5'</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
-                    <span>Cross-posting multi-community e co-branding nei materiali: reach e autorevolezza aumentano automaticamente</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-blue-400 mt-1 flex-shrink-0" />
-                    <span>Recruiting corner opzionale e recap con metriche (iscritti/presenti, reach, feedback)</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-purple-900/20 border border-purple-600 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Garanzie editoriali</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Eventi vendor-neutral e curati; niente pitch commerciali</li>
-                  <li>• Gestione accessi e privacy; niente registrazioni salvo accordi</li>
-                </ul>
-              </div>
-
             </div>
           </section>
 

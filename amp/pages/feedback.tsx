@@ -387,7 +387,7 @@ const Feedback: NextPage = () => {
                             <input
                               type="radio"
                               value={option.value}
-                              {...register(item.name as any, { required: 'Valuta questo aspetto' })}
+                              {...register(item.name as keyof FeedbackFormData, { required: 'Valuta questo aspetto' })}
                               className="w-5 h-5 text-blue-600 bg-gray-700 border-gray-600"
                             />
                             <span className="text-xs text-gray-400">{option.label}</span>

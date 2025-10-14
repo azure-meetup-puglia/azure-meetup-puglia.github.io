@@ -45,11 +45,15 @@ const CallForSpeakers: NextPage = () => {
       setIsSuccess(true);
       setResult('Candidatura inviata con successo! Ti contatteremo presto.');
       reset();
+      // Scroll to top per mostrare il messaggio di successo
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     onError: (msg) => {
       setIsSuccess(false);
       setResult('Errore nell\'invio. Riprova più tardi.');
       console.error('Web3Forms error:', msg);
+      // Scroll to top per mostrare il messaggio di errore
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
   
@@ -198,11 +202,16 @@ const CallForSpeakers: NextPage = () => {
 
           {/* Status Messages */}
           {result && isSuccess && (
-            <div className="mb-8 p-4 bg-green-900/50 border border-green-500 rounded-lg flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-green-300">Candidatura inviata con successo!</h3>
-                <p className="text-green-200 text-sm">{result}</p>
+            <div className="mb-8 p-6 bg-gradient-to-r from-green-900/70 to-green-800/70 border-2 border-green-400 rounded-xl shadow-lg animate-in fade-in duration-500">
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-green-500 rounded-full p-4">
+                  <CheckCircle className="w-12 h-12 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-green-100 mb-2">Grazie!</h3>
+                  <p className="text-green-200 text-lg">{result}</p>
+                  <p className="text-green-300 text-sm mt-3">Riceverai una risposta entro 2 settimane.</p>
+                </div>
               </div>
             </div>
           )}

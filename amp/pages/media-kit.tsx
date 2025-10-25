@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, CheckCircle, ClipboardList, Shield, HelpCircle, Zap } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, CheckCircle, ClipboardList, Shield, HelpCircle, Zap, Download, FileText, Image as ImageIcon } from 'lucide-react';
 
 const MediaKit: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
@@ -58,6 +58,64 @@ const MediaKit: NextPage = () => {
                 <p><strong className="text-white">Collaborazioni:</strong> Global AI Community (Bari e Lecce), a breve altre community tech sul territorio</p>
                 <p><strong className="text-white">Canali:</strong> Meetup.com • LinkedIn • Instagram</p>
               </div>
+            </div>
+          </section>
+
+          {/* Materiali di riferimento */}
+          <section className="bg-gradient-to-r from-green-900/20 to-teal-900/20 p-8 rounded-xl border border-green-700/50">
+            <h2 className="text-2xl font-semibold text-green-400 mb-6 flex items-center gap-3">
+              <Download className="w-6 h-6" />
+              Materiali di riferimento
+            </h2>
+            <p className="text-gray-300 mb-6">
+              Scarica i materiali ufficiali per conoscere meglio Azure Meetup Puglia e utilizzare il nostro logo nelle tue comunicazioni.
+            </p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <a
+                href="/docs/Azure_Meetup_Puglia_org_and_checklist.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-gray-800/50 p-6 rounded-lg border border-green-600/30 hover:border-green-500 transition-all hover:shadow-lg hover:shadow-green-900/50"
+              >
+                <div className="flex items-start gap-4">
+                  <FileText className="w-10 h-10 text-green-400 flex-shrink-0 group-hover:text-green-300 transition-colors" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-green-100">
+                      Media Kit PDF
+                    </h3>
+                    <p className="text-gray-300 text-sm mb-3">
+                      Documento completo con informazioni organizzative e checklist per partner
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-green-400 text-sm font-medium group-hover:text-green-300">
+                      <Download className="w-4 h-4" />
+                      Scarica PDF
+                    </span>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="/img/azure-meetup-puglia-logo_hq.png"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-gray-800/50 p-6 rounded-lg border border-green-600/30 hover:border-green-500 transition-all hover:shadow-lg hover:shadow-green-900/50"
+              >
+                <div className="flex items-start gap-4">
+                  <ImageIcon className="w-10 h-10 text-green-400 flex-shrink-0 group-hover:text-green-300 transition-colors" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-green-100">
+                      Logo Alta Qualità
+                    </h3>
+                    <p className="text-gray-300 text-sm mb-3">
+                      Logo ufficiale di Azure Meetup Puglia in alta risoluzione (PNG)
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-green-400 text-sm font-medium group-hover:text-green-300">
+                      <Download className="w-4 h-4" />
+                      Scarica Logo
+                    </span>
+                  </div>
+                </div>
+              </a>
             </div>
           </section>
 

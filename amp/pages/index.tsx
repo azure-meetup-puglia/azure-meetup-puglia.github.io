@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Linkedin, Send, Users, Info, Code, UsersRound, Calendar, Lightbulb, Handshake, FileText, Mic } from 'lucide-react';
+import { Linkedin, Send, Users, Info, Code, UsersRound, Calendar, Lightbulb, Handshake, FileText, Mic, Shield } from 'lucide-react';
 
 interface LinkCardProps {
   href: string;
@@ -326,15 +326,14 @@ const AzureMeetupPuglia: NextPage = () => {
                 <Mic className="w-4 h-4" aria-hidden="true" />
                 Call for Speakers
               </Link>
-              {/*
-                <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
-                <Link
+              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
+              <Link
                 href="/privacy"
                 className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
-                >
-                Privacy Policy
-                </Link>
-                */}
+              >
+                <Shield className="w-4 h-4" aria-hidden="true" />
+                Privacy
+              </Link>
             </nav>
             <div className="text-center">
               <p className="text-xs text-gray-500">

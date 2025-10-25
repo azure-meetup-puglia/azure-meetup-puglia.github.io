@@ -70,7 +70,7 @@ export default function Privacy() {
                         <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
                             <h3 className="text-lg font-semibold text-blue-300 mb-2">1. Gestione iscrizione e comunicazioni operative</h3>
                             <p className="mb-2">
-                                Accesso in sede, reminder, variazioni dell'evento.
+                                Accesso in sede, registrazione partecipanti, reminder, variazioni dell'evento. Include condivisione con venue host/partner per motivi di sicurezza e gestione accessi in loco.
                             </p>
                             <p className="text-sm text-gray-400">
                                 <strong>Base giuridica:</strong> Esecuzione di misure precontrattuali/contratto (art. 6.1.b GDPR)
@@ -113,9 +113,26 @@ export default function Privacy() {
                     <h2 className="text-2xl font-semibold text-white mb-4">Destinatari</h2>
                     <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4">
                         <div>
-                            <h3 className="text-lg font-semibold text-blue-300 mb-2">Partner e Sponsor</h3>
+                            <h3 className="text-lg font-semibold text-blue-300 mb-2">Venue Host e Partner per gestione evento</h3>
+                            <p className="mb-2">
+                                Venue host e partner organizzativi ricevono i dati necessari per:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 text-gray-300 ml-4">
+                                <li>Registrazione e controllo accessi in loco (sicurezza, badge)</li>
+                                <li>Gestione logistica dell'evento (catering, emergenze)</li>
+                                <li>Adempimenti normativi (es. GDPR, sicurezza sul lavoro)</li>
+                            </ul>
+                            <p className="text-sm text-gray-400 mt-2">
+                                <strong>Base giuridica:</strong> Esecuzione del contratto (necessario per la partecipazione all'evento)
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold text-blue-300 mb-2">Sponsor per attività promozionali</h3>
                             <p>
-                                Partner/sponsor dell'evento (es. Improove, Global AI Community, venue host) <strong>solo se hai dato consenso</strong>.
+                                Sponsor dell'evento (es. Improove, Global AI Community) per attivazione di omaggi, promozioni e comunicazioni commerciali <strong>solo se hai dato consenso specifico</strong>.
+                            </p>
+                            <p className="text-sm text-gray-400 mt-2">
+                                <strong>Base giuridica:</strong> Consenso (art. 6.1.a GDPR) - <span className="text-yellow-400">facoltativo</span>
                             </p>
                         </div>
                         <div>
@@ -206,10 +223,15 @@ export default function Privacy() {
 
                 <section>
                     <h2 className="text-2xl font-semibold text-white mb-4">Obbligatorietà</h2>
-                    <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                    <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-3">
                         <p>
-                            Il conferimento dei dati per la gestione dell'evento è <strong className="text-blue-300">necessario per partecipare</strong>.
-                            I consensi facoltativi (condivisione con partner/sponsor e comunicazioni future) non incidono sulla partecipazione.
+                            Il conferimento dei dati per la <strong className="text-blue-300">gestione dell'evento</strong> (iscrizione, accesso in sede, registrazione partecipanti, comunicazioni operative) è <strong className="text-blue-300">necessario per partecipare</strong>.
+                        </p>
+                        <p>
+                            Questo include la condivisione dei dati con il venue host/partner per motivi di sicurezza e gestione accessi in loco.
+                        </p>
+                        <p className="pt-2 border-t border-gray-700">
+                            I consensi <strong className="text-yellow-300">facoltativi</strong> (condivisione con sponsor per attività promozionali e comunicazioni future) non incidono sulla partecipazione all'evento.
                         </p>
                     </div>
                 </section>

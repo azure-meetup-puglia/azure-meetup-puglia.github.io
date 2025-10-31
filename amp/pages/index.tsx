@@ -296,6 +296,14 @@ const AzureMeetupPuglia: NextPage = () => {
           <div className="max-w-6xl mx-auto px-4">
             <nav className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-6" aria-label="Footer navigation">
               <Link
+                href="/events"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+              >
+                <Calendar className="w-4 h-4" aria-hidden="true" />
+                Eventi
+              </Link>
+              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
+              <Link
                 href="/code-of-conduct"
                 className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
               >

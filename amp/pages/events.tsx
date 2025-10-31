@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, Users, ExternalLink, Globe, Video, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft } from 'lucide-react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
 
 interface EventCardProps {
@@ -37,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       case 'OfflineEventAttendanceMode':
         return <MapPin className="w-5 h-5 text-green-400" aria-hidden="true" />;
       case 'MixedEventAttendanceMode':
-        return <Globe className="w-5 h-5 text-purple-400" aria-hidden="true" />;
+        return <MapPin className="w-5 h-5 text-purple-400" aria-hidden="true" />;
     }
   };
 
@@ -107,6 +107,9 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
             {getAttendanceModeIcon()}
             <span className="text-sm">{getAttendanceModeLabel()}</span>
             {event.location.name && <span className="text-sm">• {event.location.name}</span>}
+            {event.location.address?.addressLocality && (
+              <span className="text-sm">• {event.location.address.addressLocality}</span>
+            )}
           </div>
         </div>
 
@@ -237,28 +240,6 @@ const EventsPage: NextPage = () => {
               <li aria-current="page" className="text-blue-300">Eventi</li>
             </ol>
           </nav>
-
-          {/* Info Box about dev.events integration */}
-          <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-6">
-            <div className="flex items-start gap-3">
-              <Globe className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <h2 className="text-lg font-semibold text-blue-300 mb-2">Integrazione automatica con dev.events</h2>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Questa pagina utilizza il markup JSON-LD Schema.org per gli eventi. Una volta che il tuo primo evento viene approvato su{' '}
-                  <a
-                    href="https://dev.events"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 underline"
-                  >
-                    dev.events
-                  </a>
-                  , i futuri eventi aggiunti qui verranno automaticamente rilevati e proposti per la pubblicazione sulla piattaforma.
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Upcoming Events */}
           {upcomingEvents.length > 0 ? (

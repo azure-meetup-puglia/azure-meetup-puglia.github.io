@@ -1,0 +1,61 @@
+name: Sync Meetup Events
+
+on:
+  # Run daily at 6 AM UTC (7 AM CET / 8 AM CEST)
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+  # Run on push to main if the sync script changes
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/sync-meetup-events.js'
+
+jobs:
+  sync-events:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync events from Meetup.com
+        run: |
+          echo "🔄 Starting Meetup.com event sync..."
+          node scripts/sync-meetup-events.js
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code amp/data/events.ts || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changes
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add amp/data/events.ts
+          git commit -m "chore: sync events from Meetup.com
+
+          - Auto-synced by GitHub Actions
+          - Updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git push
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.git-check.outputs.changed }}" == "true" ]; then
+            echo "✅ Events synced and committed"
+          else
+            echo "ℹ️  No changes detected, events are up to date"
+          fi

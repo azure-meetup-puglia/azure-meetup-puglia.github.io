@@ -125,7 +125,6 @@ coverage/
 *.pg_dump
 
 # CI/CD
-/.github/workflows/*
 /.circleci/*
 /.travis.yml
 /.gitlab-ci.yml

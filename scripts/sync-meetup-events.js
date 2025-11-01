@@ -323,19 +323,19 @@ async function syncEvents() {
     }
 
     if (meetupEvents.length === 0) {
-      console.log('ℹ️  No new events from Meetup, keeping existing events');
+      console.log('ℹ️  No new events from Meetup, keeping all existing events (including past events)');
 
-      // Remove past events but keep upcoming ones
+      // Keep ALL events (both upcoming and past) to show event history
       const now = new Date();
-      const stillRelevant = currentEvents.filter(event => new Date(event.endDate) >= now);
+      const upcomingCount = currentEvents.filter(event => new Date(event.endDate) >= now).length;
+      const pastCount = currentEvents.filter(event => new Date(event.endDate) < now).length;
 
-      if (stillRelevant.length !== currentEvents.length) {
-        const fileContent = generateEventsFileContent(stillRelevant);
-        fs.writeFileSync(EVENTS_FILE_PATH, fileContent, 'utf8');
-        console.log(`✅ Cleaned up past events. Kept ${stillRelevant.length} upcoming events`);
-      } else {
-        console.log(`ℹ️  No changes needed`);
-      }
+      console.log(`📊 Current status:`);
+      console.log(`   - Upcoming events: ${upcomingCount}`);
+      console.log(`   - Past events: ${pastCount}`);
+      console.log(`   - Total events: ${currentEvents.length}`);
+      console.log(`ℹ️  No changes needed - all events maintained for history`);
+
       return;
     }
 

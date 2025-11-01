@@ -48,6 +48,9 @@ export interface EventData {
  * Upcoming and past events
  * Add new events here and they will automatically appear on the events page
  * with proper JSON-LD markup for dev.events automatic detection
+ *
+ * NOTE: Past events are kept to show the community's event history
+ * The page automatically separates upcoming and past events
  */
 export const events: EventData[] = [
   {
@@ -84,6 +87,49 @@ export const events: EventData[] = [
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
       validFrom: "2025-10-31T00:00:00+01:00"
+    },
+    performer: [
+      {
+        "@type": "Person",
+        name: "Carlo Sacchi",
+        description: "Organizer, Azure Meetup Puglia"
+      }
+    ]
+  },
+  {
+    name: "Nasce Azure Meetup Puglia - Kick Off meeting @ BIP Bari - 20 Ottobre",
+    description: "Primo incontro inaugurale di Azure Meetup Puglia presso BIP a Bari. Due sessioni tecniche: deployment di applicazioni PHP su Azure App Service con GitHub Actions, e fondamenti di LLMs e Copilot in Microsoft 365. Evento in presenza con networking, gadget omaggio grazie alla partnership con Improove, e refreshments.",
+    startDate: "2025-10-20T18:30:00+02:00",
+    endDate: "2025-10-20T21:30:00+02:00",
+    eventStatus: "EventScheduled",
+    eventAttendanceMode: "OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: "BIP",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Via Venezia 13",
+        addressLocality: "Bari",
+        addressRegion: "Puglia",
+        postalCode: "70100",
+        addressCountry: "IT"
+      }
+    },
+    image: [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    organizer: {
+      "@type": "Organization",
+      name: "Azure Meetup Puglia",
+      url: "https://azure-meetup-puglia.github.io/"
+    },
+    offers: {
+      "@type": "Offer",
+      url: "https://www.meetup.com/azure-meetup-puglia/events/310886158/",
+      price: "0",
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      validFrom: "2025-09-20T00:00:00+02:00"
     },
     performer: [
       {

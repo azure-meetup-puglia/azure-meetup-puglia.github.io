@@ -2,7 +2,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
 
 interface EventCardProps {
@@ -155,6 +156,9 @@ const EventsPage: NextPage = () => {
   const upcomingEvents = getUpcomingEvents(events);
   const pastEvents = getPastEvents(events);
 
+  // State for collapsible past events section
+  const [isPastEventsOpen, setIsPastEventsOpen] = useState(false);
+
   // Generate JSON-LD schema for all events
   const eventsSchema = generateEventsListSchema(events);
 
@@ -270,17 +274,46 @@ const EventsPage: NextPage = () => {
             </section>
           )}
 
-          {/* Past Events */}
+          {/* Past Events - Collapsible Section */}
           {pastEvents.length > 0 && (
-            <section id="past-events" aria-labelledby="past-events-title">
-              <h2 id="past-events-title" className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-                <Calendar className="w-8 h-8 text-gray-500" aria-hidden="true" />
-                Eventi Passati
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {pastEvents.map((event, index) => (
-                  <EventCard key={index} event={event} />
-                ))}
+            <section id="past-events" aria-labelledby="past-events-title" className="border border-gray-700 rounded-xl overflow-hidden bg-gray-800/50">
+              <button
+                onClick={() => setIsPastEventsOpen(!isPastEventsOpen)}
+                className="w-full p-6 flex items-center justify-between hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-inset"
+                aria-expanded={isPastEventsOpen}
+                aria-controls="past-events-content"
+              >
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-8 h-8 text-gray-400" aria-hidden="true" />
+                  <h2 id="past-events-title" className="text-2xl font-bold text-white">
+                    Eventi Passati
+                  </h2>
+                  <span className="ml-2 px-3 py-1 text-sm font-semibold rounded-full bg-gray-700 text-gray-300">
+                    {pastEvents.length}
+                  </span>
+                </div>
+                <ChevronDown
+                  className={`w-6 h-6 text-gray-400 transition-transform duration-300 ${isPastEventsOpen ? 'rotate-180' : ''}`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              <div
+                id="past-events-content"
+                className={`transition-all duration-300 ease-in-out ${
+                  isPastEventsOpen ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                }`}
+              >
+                <div className="p-6 pt-0">
+                  <p className="text-gray-400 text-sm mb-6 italic">
+                    Scopri gli eventi passati della nostra community
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {pastEvents.map((event, index) => (
+                      <EventCard key={index} event={event} />
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           )}

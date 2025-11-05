@@ -29,12 +29,12 @@ interface FormData {
 
 const CallForSpeakers: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
-  
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [result, setResult] = useState<string>('');
-  
+
   const { register, reset, handleSubmit, formState: { errors }, watch } = useForm<FormData>();
-  
+
   const { submit: onSubmit } = useWeb3Forms({
     access_key: 'b6b08bc9-f2a1-4795-b970-b0b392f1a9c1',
     settings: {
@@ -56,18 +56,18 @@ const CallForSpeakers: NextPage = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
-  
+
   // Watch per conteggio caratteri e campo venue
   const messageValue = watch('message', '');
   const hasVenue = watch('has_venue', '');
-  
+
   const handleFormSubmit = (data: FormData) => {
     if (!data.privacyAccepted) {
       setResult('Devi accettare la privacy policy per procedere.');
       setIsSuccess(false);
       return;
     }
-    
+
     // Mapping per valori più leggibili nell'email
     const availabilityMap: { [key: string]: string } = {
       'next_event': 'Prossimo evento in programma',
@@ -76,7 +76,7 @@ const CallForSpeakers: NextPage = () => {
       'workshop': 'Workshop dedicato',
       'online': 'Eventi online'
     };
-    
+
     const cityMap: { [key: string]: string } = {
       'bari': 'Bari',
       'lecce': 'Lecce',
@@ -87,7 +87,7 @@ const CallForSpeakers: NextPage = () => {
       'any': 'Qualsiasi città',
       'online': 'Solo online'
     };
-    
+
     const sessionTypeMap: { [key: string]: string } = {
       'talk': 'Talk (Presentazione)',
       'workshop': 'Workshop (Hands-on)',
@@ -95,7 +95,7 @@ const CallForSpeakers: NextPage = () => {
       'panel': 'Panel Discussion',
       'lightning': 'Lightning Talk (10-15 min)'
     };
-    
+
     // Creiamo un oggetto con dati più leggibili
     const formattedData = {
       ...data,
@@ -108,7 +108,7 @@ const CallForSpeakers: NextPage = () => {
       'Durata_Minuti': data.session_duration,
       'Ha_Venue': data.has_venue === 'yes' ? 'Sì, ha uno spazio disponibile' : 'No'
     };
-    
+
     onSubmit(formattedData);
   };
 
@@ -126,10 +126,10 @@ const CallForSpeakers: NextPage = () => {
         <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="author" content="Azure Meetup Puglia" />
         <meta name="language" content="Italian" />
-        
+
         {/* Canonical URL */}
         <link rel="canonical" href={`${siteUrl}call-for-speakers`} />
-        
+
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
@@ -141,7 +141,7 @@ const CallForSpeakers: NextPage = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:url" content={`${siteUrl}call-for-speakers`} />
         <meta property="og:locale" content="it_IT" />
-        
+
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@AzurePuglia" />
@@ -150,18 +150,18 @@ const CallForSpeakers: NextPage = () => {
         <meta name="twitter:description" content="Proponi il tuo talk su Azure, .NET, Cloud, AI o qualsiasi tema tech! Form sempre aperto per speaker da tutta la Puglia 🚀" />
         <meta name="twitter:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
         <meta name="twitter:image:alt" content="Azure Meetup Puglia - Diventa Speaker" />
-        
+
         {/* Additional Meta */}
         <meta name="theme-color" content="#0078D4" />
         <meta name="msapplication-TileColor" content="#0078D4" />
-        
+
         {/* LinkedIn specific */}
         <meta property="article:author" content="Azure Meetup Puglia" />
         <meta property="article:published_time" content={new Date().toISOString()} />
-        
+
         {/* WhatsApp/Telegram preview */}
         <meta property="og:image:secure_url" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
-        
+
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -299,7 +299,7 @@ const CallForSpeakers: NextPage = () => {
                 <input
                   type="email"
                   id="email"
-                  {...register('email', { 
+                  {...register('email', {
                     required: 'Email è obbligatoria',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -316,7 +316,7 @@ const CallForSpeakers: NextPage = () => {
               {/* Availability Section */}
               <div className="border-t border-gray-600 pt-6">
                 <h3 className="text-lg font-semibold text-white mb-4">Disponibilità</h3>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="availability" className="block text-sm font-medium text-gray-300 mb-2">
@@ -329,6 +329,7 @@ const CallForSpeakers: NextPage = () => {
                     >
                       <option value="">Seleziona...</option>
                       <option value="next_event">Il prossimo evento in programma</option>
+                      <option value="global_azure_2026">Global Azure 2026 Venerdì 17</option>
                       <option value="specific_theme">Un evento su tema specifico (Azure AI, DevOps, etc.)</option>
                       <option value="any_event">Qualsiasi evento quando serve</option>
                       <option value="workshop">Workshop dedicato</option>
@@ -338,7 +339,7 @@ const CallForSpeakers: NextPage = () => {
                       <p className="text-red-400 text-sm mt-1">{errors.availability.message}</p>
                     )}
                   </div>
-                  
+
                   <div>
                     <label htmlFor="preferred_city" className="block text-sm font-medium text-gray-300 mb-2">
                       Città preferita *
@@ -371,7 +372,7 @@ const CallForSpeakers: NextPage = () => {
                   <FileText className="w-5 h-5" />
                   Informazioni sulla Sessione
                 </h3>
-                
+
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label htmlFor="session_type" className="block text-sm font-medium text-gray-300 mb-2">
@@ -393,7 +394,7 @@ const CallForSpeakers: NextPage = () => {
                       <p className="text-red-400 text-sm mt-1">{errors.session_type.message}</p>
                     )}
                   </div>
-                  
+
                   <div>
                     <label htmlFor="session_duration" className="block text-sm font-medium text-gray-300 mb-2">
                       Durata Prevista *
@@ -416,7 +417,7 @@ const CallForSpeakers: NextPage = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div>
                   <label htmlFor="sessionTitle" className="block text-sm font-medium text-gray-300 mb-2">
                     Titolo della Sessione *
@@ -440,7 +441,7 @@ const CallForSpeakers: NextPage = () => {
                   <textarea
                     id="sessionDescription"
                     rows={6}
-                    {...register('message', { 
+                    {...register('message', {
                       required: 'Descrizione è obbligatoria',
                       maxLength: {
                         value: 2000,
@@ -463,7 +464,7 @@ const CallForSpeakers: NextPage = () => {
               {/* Social Links */}
               <div className="border-t border-gray-600 pt-6">
                 <h3 className="text-lg font-semibold text-white mb-4">Contatti e Social</h3>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="linkedinUrl" className="block text-sm font-medium text-gray-300 mb-2">
@@ -472,7 +473,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="linkedinUrl"
-                        {...register('linkedin')}
+                      {...register('linkedin')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://linkedin.com/in/tuo-profilo"
                     />
@@ -484,7 +485,7 @@ const CallForSpeakers: NextPage = () => {
                     <input
                       type="url"
                       id="githubUrl"
-                        {...register('github')}
+                      {...register('github')}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="https://github.com/tuo-username"
                     />
@@ -511,7 +512,7 @@ const CallForSpeakers: NextPage = () => {
                   <MapPin className="w-5 h-5" />
                   Disponibilità Venue
                 </h3>
-                
+
                 <div>
                   <label htmlFor="has_venue" className="block text-sm font-medium text-gray-300 mb-2">
                     Hai accesso a uno spazio per ospitare eventi?
@@ -525,7 +526,7 @@ const CallForSpeakers: NextPage = () => {
                     <option value="yes">Sì, ho uno spazio disponibile</option>
                   </select>
                 </div>
-                
+
                 {hasVenue === 'yes' && (
                   <div className="mt-4 space-y-4 p-4 bg-gray-700/30 rounded-lg">
                     <div>
@@ -540,7 +541,7 @@ const CallForSpeakers: NextPage = () => {
                         placeholder="es. Innovation Hub Bari"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="venue_address" className="block text-sm font-medium text-gray-300 mb-2">
                         Indirizzo
@@ -553,7 +554,7 @@ const CallForSpeakers: NextPage = () => {
                         placeholder="es. Via Roma 123, 70100 Bari"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="venue_contact" className="block text-sm font-medium text-gray-300 mb-2">
                         Contatto Referente Venue
@@ -608,7 +609,7 @@ const CallForSpeakers: NextPage = () => {
                     <p>I dati non saranno condivisi con terze parti e saranno conservati solo per il tempo necessario alla valutazione e organizzazione degli eventi. È possibile richiedere la cancellazione dei propri dati in qualsiasi momento.</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <input
                     type="checkbox"

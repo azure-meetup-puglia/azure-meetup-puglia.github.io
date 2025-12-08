@@ -8,12 +8,8 @@ on:
   # Allow manual trigger
   workflow_dispatch:
 
-  # Run on push to main if the sync script changes
-  push:
-    branches:
-      - main
-    paths:
-      - 'scripts/sync-meetup-events.js'
+permissions:
+  contents: write
 
 jobs:
   sync-events:

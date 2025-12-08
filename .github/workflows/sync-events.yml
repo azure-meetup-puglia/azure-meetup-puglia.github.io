@@ -49,9 +49,22 @@ jobs:
           git push
 
       - name: Summary
+        id: summary
         run: |
           if [ "${{ steps.git-check.outputs.changed }}" == "true" ]; then
             echo "✅ Events synced and committed"
+            echo "deploy=true" >> $GITHUB_OUTPUT
           else
             echo "ℹ️  No changes detected, events are up to date"
           fi
+    outputs:
+      deploy: ${{ steps.summary.outputs.deploy }}
+
+  deploy:
+    needs: sync-events
+    if: needs.sync-events.outputs.deploy == 'true'
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

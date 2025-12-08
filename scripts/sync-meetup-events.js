@@ -68,6 +68,7 @@ async function fetchMeetupEvents() {
 
 /**
  * Fallback: Parse events from HTML page using __NEXT_DATA__ JSON
+ * Events are stored in __APOLLO_STATE__ with keys like "Event:123456"
  */
 async function fetchMeetupEventsFromHTML() {
   return new Promise((resolve, reject) => {
@@ -76,8 +77,8 @@ async function fetchMeetupEventsFromHTML() {
       path: `/${MEETUP_GROUP_URLNAME}/events/`,
       method: 'GET',
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; EventSync/1.0)',
-        'Accept': 'text/html'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
       }
     };
 
@@ -91,25 +92,35 @@ async function fetchMeetupEventsFromHTML() {
       res.on('end', () => {
         try {
           // Extract __NEXT_DATA__ JSON from HTML
-          const match = data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+          const match = data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s);
           if (match) {
             const nextData = JSON.parse(match[1]);
-
-            // Navigate to events data (structure may vary)
             const events = [];
 
-            // Try to extract events from pageProps
-            if (nextData.props && nextData.props.pageProps) {
-              const pageProps = nextData.props.pageProps;
-
-              // Look for events in various possible locations
-              if (pageProps.upcomingEvents) {
-                events.push(...pageProps.upcomingEvents);
-              } else if (pageProps.events) {
-                events.push(...pageProps.events);
-              } else if (pageProps.initialState && pageProps.initialState.events) {
-                events.push(...pageProps.initialState.events);
+            // Events are in __APOLLO_STATE__ with keys like "Event:123456"
+            if (nextData.props?.pageProps?.__APOLLO_STATE__) {
+              const apolloState = nextData.props.pageProps.__APOLLO_STATE__;
+              const eventKeys = Object.keys(apolloState).filter(k => k.startsWith('Event:'));
+              
+              for (const key of eventKeys) {
+                const event = apolloState[key];
+                if (event && event.title) {
+                  events.push({
+                    id: event.id,
+                    title: event.title,
+                    description: event.description || '',
+                    eventUrl: event.eventUrl,
+                    dateTime: event.dateTime,
+                    endTime: event.endTime,
+                    timezone: event.timezone,
+                    venue: event.venue,
+                    isOnline: event.isOnline,
+                    images: event.images
+                  });
+                }
               }
+              
+              console.log(`📍 Found ${events.length} events in Apollo state`);
             }
 
             if (events.length === 0) {
@@ -171,14 +182,77 @@ function readCurrentEvents() {
 
 /**
  * Convert Meetup event to our EventData format
- * This is a basic converter that works with the data structure we have
  */
-function convertMeetupEventToEventData(meetupEvent, existingEvents) {
-  // Since we can't reliably fetch from Meetup API without auth,
-  // we'll keep existing events and just return them
-  // This is a safety fallback
+function convertMeetupEventToEventData(meetupEvent) {
+  const startDate = meetupEvent.dateTime || new Date().toISOString();
+  const endDate = meetupEvent.endTime || new Date(new Date(startDate).getTime() + 3 * 60 * 60 * 1000).toISOString();
+  
+  // Build location
+  let location;
+  if (meetupEvent.isOnline) {
+    location = {
+      '@type': 'VirtualLocation',
+      name: 'Online Event',
+      url: meetupEvent.eventUrl
+    };
+  } else if (meetupEvent.venue) {
+    const venue = meetupEvent.venue;
+    location = {
+      '@type': 'Place',
+      name: venue.name || 'TBD',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: venue.address || '',
+        addressLocality: venue.city || 'Puglia',
+        addressRegion: 'Puglia',
+        postalCode: venue.postalCode || '',
+        addressCountry: 'IT'
+      }
+    };
+  } else {
+    location = {
+      '@type': 'Place',
+      name: 'TBD',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Puglia',
+        addressRegion: 'Puglia',
+        addressCountry: 'IT'
+      }
+    };
+  }
 
-  return existingEvents;
+  // Extract image
+  const images = [];
+  if (meetupEvent.images && meetupEvent.images.length > 0) {
+    images.push(meetupEvent.images[0].source || meetupEvent.images[0]);
+  } else {
+    images.push(DEFAULT_IMAGE);
+  }
+
+  return {
+    name: meetupEvent.title,
+    description: (meetupEvent.description || '').replace(/<[^>]*>/g, '').slice(0, 500),
+    startDate: startDate,
+    endDate: endDate,
+    eventStatus: 'EventScheduled',
+    eventAttendanceMode: meetupEvent.isOnline ? 'OnlineEventAttendanceMode' : 'OfflineEventAttendanceMode',
+    location: location,
+    image: images,
+    organizer: {
+      '@type': 'Organization',
+      name: 'Azure Meetup Puglia',
+      url: SITE_URL
+    },
+    offers: {
+      '@type': 'Offer',
+      url: meetupEvent.eventUrl,
+      price: '0',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      validFrom: new Date().toISOString().split('T')[0]
+    }
+  };
 }
 
 /**
@@ -339,10 +413,27 @@ async function syncEvents() {
       return;
     }
 
-    // If we got here, we have events but need manual review
-    console.log('⚠️  Meetup.com API structure may have changed');
-    console.log('ℹ️  Please add events manually to amp/data/events.ts');
-    console.log('ℹ️  Keeping existing events unchanged');
+    // Convert Meetup events to our format
+    const convertedEvents = meetupEvents.map(e => convertMeetupEventToEventData(e));
+    
+    // Merge with existing events (keep past events, update/add new ones)
+    const existingNames = new Set(currentEvents.map(e => e.name));
+    const newEvents = convertedEvents.filter(e => !existingNames.has(e.name));
+    
+    if (newEvents.length > 0) {
+      console.log(`🆕 Found ${newEvents.length} new event(s):`);
+      newEvents.forEach(e => console.log(`   - ${e.name}`));
+      
+      const allEvents = [...currentEvents, ...newEvents];
+      // Sort by date (newest first for upcoming, then past)
+      allEvents.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+      
+      const fileContent = generateEventsFileContent(allEvents);
+      fs.writeFileSync(EVENTS_FILE_PATH, fileContent, 'utf8');
+      console.log(`✅ Events file updated: ${EVENTS_FILE_PATH}`);
+    } else {
+      console.log('ℹ️  All Meetup events already exist in local file');
+    }
 
   } catch (error) {
     console.error('❌ Error syncing events:', error.message);

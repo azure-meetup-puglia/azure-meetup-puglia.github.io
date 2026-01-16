@@ -73,7 +73,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
     <article className={`bg-gray-800 rounded-xl border border-gray-700 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-blue-900/30 ${isPast ? 'opacity-75' : ''}`}>
       {event.image && event.image[0] && (
-        <div className="relative w-full h-48 bg-gray-900">
+        <div className="relative w-full h-64 bg-gray-900">
           <Image
             src={event.image[0]}
             alt={event.name}

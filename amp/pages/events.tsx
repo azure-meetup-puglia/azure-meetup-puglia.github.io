@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown, Mic, Star } from 'lucide-react';
 import { useState } from 'react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
 
@@ -244,6 +244,64 @@ const EventsPage: NextPage = () => {
               <li aria-current="page" className="text-blue-300">Eventi</li>
             </ol>
           </nav>
+
+          {/* Featured Event - Global Azure Puglia 2026 */}
+          <section id="featured-event" aria-labelledby="featured-event-title" className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 border border-blue-700/50">
+            <div className="absolute inset-0 bg-black/20"></div>
+            <div className="absolute top-4 right-4 z-20">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-yellow-500 text-yellow-900 text-xs font-bold rounded-full uppercase tracking-wide">
+                <Star className="w-3 h-3" aria-hidden="true" />
+                Featured
+              </span>
+            </div>
+            <div className="relative z-10 p-6 md:p-8 lg:p-10">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div className="flex-1">
+                  <span className="inline-block px-3 py-1 bg-blue-600/80 text-white text-xs font-semibold rounded-full mb-4">
+                    Prima Edizione in Puglia
+                  </span>
+                  <h2 id="featured-event-title" className="text-3xl md:text-4xl font-bold text-white mb-3">
+                    Global Azure Puglia 2026
+                  </h2>
+                  <p className="text-blue-200 mb-4 max-w-2xl">
+                    Un evento per approfondire i temi Azure in modo pratico e concreto, favorendo le connessioni nella community. Call for Speakers aperta!
+                  </p>
+                  <div className="flex flex-wrap gap-4 mb-6">
+                    <div className="flex items-center gap-2 text-gray-300">
+                      <Calendar className="w-4 h-4 text-blue-400" aria-hidden="true" />
+                      <span className="text-sm">17 Aprile 2026</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-300">
+                      <MapPin className="w-4 h-4 text-green-400" aria-hidden="true" />
+                      <span className="text-sm">Bari, Italia</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-300">
+                      <Users className="w-4 h-4 text-purple-400" aria-hidden="true" />
+                      <span className="text-sm">In Presenza</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href="/global-azure-puglia"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
+                  >
+                    Scopri di Piu
+                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                  </Link>
+                  <a
+                    href="https://sessionize.com/global-azure-puglia-2026/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-blue-900"
+                  >
+                    <Mic className="w-4 h-4" aria-hidden="true" />
+                    Proponi un Talk
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* Upcoming Events */}
           {upcomingEvents.length > 0 ? (

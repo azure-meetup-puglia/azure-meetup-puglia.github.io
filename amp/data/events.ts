@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2025-12-08T12:51:03.778Z
+ * Last synced: 2026-01-16T18:33:41.094Z
  * Auto-synced from Meetup.com
  */
 
@@ -52,6 +52,42 @@ export interface EventData {
  * Synced from Meetup.com
  */
 export const events: EventData[] = [
+  {
+    "name": "Azure Meetup Puglia #4 Virtual Meetup 26 Gennaio ore 18:00",
+    "description": "Siamo pronti per una prima parte del 2026 a dir poco esplosiva!\n\nAbbiamo appena aperto la Call for Speakers per [Global Azure Puglia 2026](https://sessionize.com/global-azure-puglia-2026/) e oggi annunciamo anche il primo evento 2026 di Azure Meetup Puglia!\n\n📍 Dove? Comodo comodo: online\n📆 Quando? Lunedì 26 gennaio\n🕕 Orario: 18:00 – 19:30 (ora italiana)\n📺 Live YouTube: [https://www.youtube.com/watch?v=2_qh9qYbTno](https://www.youtube.com/watch?v=2_qh9qYbTno)\n\nPotete registrarvi a questo link",
+    "startDate": "2026-01-26T18:00:00+01:00",
+    "endDate": "2026-01-26T19:30:00+01:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "TBD",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Puglia",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Azure Meetup Puglia",
+      "url": "https://azure-meetup-puglia.github.io/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.meetup.com/azure-meetup-puglia/events/312911379/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-01-16"
+    }
+  },
   {
     "name": "Santa Cloud Day - Christmas Edition - 20 dicembre",
     "description": "**🚨🚨**\n**L’evento è gratuito e la registrazione è attiva [SOLO tramite questo link dal portale di Global-AI](https://globalai.community/chapters/lecce/events/santa-cloud-day-christmas-edition/)! (l'RSVP della pagina del Meetup non è ancora attivo).**\n**🚨🚨**\n\nSanta Cloud Day - Christmas edition\n📍 Università del Salento – Polo Urbano STUDIUM 2000\nVia di Valesio 2, Lecce\n🗓 20 dicembre 2025\n⏰ 09:00 – 13:30\n\nLa [Global AI Community](https://globalai.community/chapters/lecce/events/santa-cloud-d",

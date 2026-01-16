@@ -310,7 +310,7 @@ const EventsPage: NextPage = () => {
                 <Calendar className="w-8 h-8 text-green-400" aria-hidden="true" />
                 Prossimi Eventi
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {upcomingEvents.map((event, index) => (
                   <EventCard key={index} event={event} />
                 ))}

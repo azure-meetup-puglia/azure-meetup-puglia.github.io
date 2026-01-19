@@ -202,7 +202,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
               </p>
               <p className="text-gray-300 leading-relaxed">
                 Sessioni da 45 minuti (+ Q&A) su Microsoft Azure, con focus su casi d'uso reali, lezioni apprese e soluzioni testate in produzione.
-                Topic: infrastruttura, sicurezza, data platform, AI, DevOps, IoT e molto altro.
+                Topic: sviluppo software, .NET, Web, infrastruttura, sicurezza, data platform, AI, MCP, Agents, DevOps, IoT e molto altro.
               </p>
             </div>
 

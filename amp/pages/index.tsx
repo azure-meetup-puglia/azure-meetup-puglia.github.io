@@ -294,58 +294,52 @@ const AzureMeetupPuglia: NextPage = () => {
 
         <footer className="mt-16 md:mt-24 pt-8 pb-6 border-t border-gray-700" role="contentinfo">
           <div className="max-w-6xl mx-auto px-4">
-            <nav className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-6" aria-label="Footer navigation">
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-6" aria-label="Footer navigation">
               <Link
                 href="/events"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
               >
                 <Calendar className="w-4 h-4" aria-hidden="true" />
                 Eventi
               </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
-              <Link
-                href="/code-of-conduct"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
-              >
-                <Code className="w-4 h-4" aria-hidden="true" />
-                Codice di Condotta
-              </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
-              <Link
-                href="/team"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
-              >
-                <Users className="w-4 h-4" aria-hidden="true" />
-                Il Team
-              </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
               <Link
                 href="/media-kit"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
               >
                 <FileText className="w-4 h-4" aria-hidden="true" />
                 Media Kit
               </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
+              <Link
+                href="/code-of-conduct"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
+              >
+                <Code className="w-4 h-4" aria-hidden="true" />
+                Codice di Condotta
+              </Link>
               <Link
                 href="/call-for-speakers"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
               >
                 <Mic className="w-4 h-4" aria-hidden="true" />
                 Call for Speakers
               </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
+              <Link
+                href="/team"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
+              >
+                <Users className="w-4 h-4" aria-hidden="true" />
+                Il Team
+              </Link>
               <Link
                 href="/privacy"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
               >
                 <Shield className="w-4 h-4" aria-hidden="true" />
                 Privacy
               </Link>
-              <span className='hidden md:inline text-gray-600' aria-hidden="true">|</span>
               <Link
                 href="/contatti"
-                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1"
+                className="text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-2 py-1 whitespace-nowrap"
               >
                 <Mail className="w-4 h-4" aria-hidden="true" />
                 Contatti

@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-01-16T18:33:41.094Z
+ * Last synced: 2026-02-03T06:52:13.566Z
  * Auto-synced from Meetup.com
  */
 
@@ -52,6 +52,42 @@ export interface EventData {
  * Synced from Meetup.com
  */
 export const events: EventData[] = [
+  {
+    "name": "Azure Meetup Puglia 5# - Data Masters - 26 febbraio - Bari",
+    "description": "**🚨🚨**\n**L’evento è gratuito e la registrazione è attiva tramite [questo link su EventBrite](https://www.eventbrite.it/e/azure-meetup-puglia-5-data-masters-26-febbraio-bari-tickets-1982208880120)! (l'RSVP della pagina del Meetup *non è ancora attivo*).**\n**🚨🚨**\n\nSiamo felici di annunciare il quinto appuntamento di ***Azure Meetup Puglia***!\n\nUnisciti a noi per una serata dedicata all'innovazione. Sarà un’occasione per incontrarci di persona, scambiare esperienze e approfondire temi caldi com",
+    "startDate": "2026-02-26T18:00:00+01:00",
+    "endDate": "2026-02-26T20:00:00+01:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "TBD",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Puglia",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Azure Meetup Puglia",
+      "url": "https://azure-meetup-puglia.github.io/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.meetup.com/azure-meetup-puglia/events/313178561/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-02-03"
+    }
+  },
   {
     "name": "Azure Meetup Puglia #4 Virtual Meetup 26 Gennaio ore 18:00",
     "description": "Siamo pronti per una prima parte del 2026 a dir poco esplosiva!\n\nAbbiamo appena aperto la Call for Speakers per [Global Azure Puglia 2026](https://sessionize.com/global-azure-puglia-2026/) e oggi annunciamo anche il primo evento 2026 di Azure Meetup Puglia!\n\n📍 Dove? Comodo comodo: online\n📆 Quando? Lunedì 26 gennaio\n🕕 Orario: 18:00 – 19:30 (ora italiana)\n📺 Live YouTube: [https://www.youtube.com/watch?v=2_qh9qYbTno](https://www.youtube.com/watch?v=2_qh9qYbTno)\n\nPotete registrarvi a questo link",

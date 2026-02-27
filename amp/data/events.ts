@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-02-03T06:52:13.566Z
+ * Last synced: 2026-02-27T06:54:45.277Z
  * Auto-synced from Meetup.com
  */
 
@@ -52,6 +52,42 @@ export interface EventData {
  * Synced from Meetup.com
  */
 export const events: EventData[] = [
+  {
+    "name": "Global Azure Puglia 2026 - 17 aprile - Bari",
+    "description": "**🚨🚨**\n**L’evento è gratuito previa registrazione tramite [EventBrite](https://www.eventbrite.it/e/global-azure-puglia-2026-17-aprile-bari-tickets-1983983044694)! (l'RSVP della pagina del Meetup *non è ancora attivo*).**\n**🚨🚨**\n\n## Unisciti a noi per il Global Azure Puglia 2026! 🚀\n\nPreparati per una giornata interamente dedicata all'innovazione e alla tecnologia.\nIl **Global Azure** arriva in Puglia con un evento imperdibile: un'intera giornata per incontrarci di persona, confrontarci e app",
+    "startDate": "2026-04-17T08:30:00+02:00",
+    "endDate": "2026-04-17T18:00:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "TBD",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Puglia",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Azure Meetup Puglia",
+      "url": "https://azure-meetup-puglia.github.io/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.meetup.com/azure-meetup-puglia/events/313527271/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-02-27"
+    }
+  },
   {
     "name": "Azure Meetup Puglia 5# - Data Masters - 26 febbraio - Bari",
     "description": "**🚨🚨**\n**L’evento è gratuito e la registrazione è attiva tramite [questo link su EventBrite](https://www.eventbrite.it/e/azure-meetup-puglia-5-data-masters-26-febbraio-bari-tickets-1982208880120)! (l'RSVP della pagina del Meetup *non è ancora attivo*).**\n**🚨🚨**\n\nSiamo felici di annunciare il quinto appuntamento di ***Azure Meetup Puglia***!\n\nUnisciti a noi per una serata dedicata all'innovazione. Sarà un’occasione per incontrarci di persona, scambiare esperienze e approfondire temi caldi com",

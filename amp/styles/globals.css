@@ -24,3 +24,57 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Sessionize embed dark theme overrides */
+.sessionize-embed {
+  --sz-bg: transparent;
+}
+
+.sessionize-embed .sessionize-grid,
+.sessionize-embed .sessionize-sessions,
+.sessionize-embed .sessionize-speakerwall {
+  background: transparent !important;
+}
+
+.sessionize-embed .sz-session--full {
+  background-color: rgba(31, 41, 55, 0.8) !important;
+  border-color: rgba(55, 65, 81, 0.5) !important;
+  color: #e5e7eb !important;
+}
+
+.sessionize-embed .sz-session__title {
+  color: #ffffff !important;
+}
+
+.sessionize-embed .sz-session__speakers,
+.sessionize-embed .sz-session__description {
+  color: #d1d5db !important;
+}
+
+.sessionize-embed .sz-speaker__name {
+  color: #ffffff !important;
+}
+
+.sessionize-embed .sz-speaker__tagline,
+.sessionize-embed .sz-speaker__sessions {
+  color: #9ca3af !important;
+}
+
+.sessionize-embed .sz-grid__header,
+.sessionize-embed .sz-grid__room {
+  background-color: rgba(30, 58, 138, 0.5) !important;
+  color: #93c5fd !important;
+}
+
+.sessionize-embed .sz-grid__timeslot {
+  background-color: rgba(31, 41, 55, 0.6) !important;
+  color: #9ca3af !important;
+}
+
+.sessionize-embed a {
+  color: #60a5fa !important;
+}
+
+.sessionize-embed .sz-speaker__photo {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}

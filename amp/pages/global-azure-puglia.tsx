@@ -1,8 +1,113 @@
 import type { NextPage } from 'next';
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List } from 'lucide-react';
+
+interface SessionizeEmbedProps {
+  src: string;
+  id: string;
+}
+
+const SessionizeEmbed: React.FC<SessionizeEmbedProps> = ({ src, id }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.innerHTML = '';
+    setLoading(true);
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.async = true;
+    script.onload = () => {
+      setTimeout(() => setLoading(false), 500);
+    };
+    script.onerror = () => setLoading(false);
+    container.appendChild(script);
+
+    return () => {
+      if (container) {
+        container.innerHTML = '';
+      }
+    };
+  }, [src]);
+
+  return (
+    <div className="relative">
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+          <span className="ml-3 text-gray-400">Caricamento...</span>
+        </div>
+      )}
+      <div
+        ref={containerRef}
+        id={`sessionize-${id}`}
+        className="sessionize-embed"
+      />
+    </div>
+  );
+};
+
+const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
+
+const tabs = [
+  { id: 'programma', label: 'Programma', icon: LayoutGrid, src: `${SESSIONIZE_BASE}/GridSmart` },
+  { id: 'sessioni', label: 'Sessioni', icon: List, src: `${SESSIONIZE_BASE}/Sessions` },
+  { id: 'speaker', label: 'Speaker', icon: Users, src: `${SESSIONIZE_BASE}/SpeakerWall` },
+] as const;
+
+const SessionizeTabs: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<string>('programma');
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-4" role="tablist" aria-label="Sezioni evento">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`panel-${tab.id}`}
+              onClick={() => setActiveTab(tab.id)}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                isActive
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-gray-700/50 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+              }`}
+            >
+              <Icon className="w-4 h-4" aria-hidden="true" />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {tabs.map((tab) => (
+        <div
+          key={tab.id}
+          id={`panel-${tab.id}`}
+          role="tabpanel"
+          aria-labelledby={tab.id}
+          className={activeTab === tab.id ? '' : 'hidden'}
+        >
+          {activeTab === tab.id && (
+            <SessionizeEmbed src={tab.src} id={tab.id} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const GlobalAzurePugliaPage: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io";
@@ -279,59 +384,15 @@ const GlobalAzurePugliaPage: NextPage = () => {
             </div>
           </section>
 
-          {/* Agenda Section */}
+          {/* Agenda Section with Sessionize Embeds */}
           <section className="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-lg">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Clock className="w-6 h-6 text-blue-400" aria-hidden="true" />
-              Programma della Giornata
+              Programma, Sessioni e Speaker
             </h2>
-            <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-blue-500">
-                <span className="text-blue-400 font-mono font-bold min-w-[60px]">08:30</span>
-                <div>
-                  <p className="text-white font-semibold">Welcome e Registrazione</p>
-                  <p className="text-gray-400 text-sm">Accoglienza partecipanti e check-in</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-purple-500">
-                <span className="text-purple-400 font-mono font-bold min-w-[60px]">09:00</span>
-                <div>
-                  <p className="text-white font-semibold">Keynote di Apertura</p>
-                  <p className="text-gray-400 text-sm">Un keynote di alto profilo per aprire la giornata</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-green-500">
-                <span className="text-green-400 font-mono font-bold min-w-[60px]">10:00</span>
-                <div>
-                  <p className="text-white font-semibold">Sessioni Tecniche e Workshop</p>
-                  <p className="text-gray-400 text-sm">2 track paralleli con sessioni da 45 min e workshop pratici</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-yellow-500">
-                <span className="text-yellow-400 font-mono font-bold min-w-[60px]">13:00</span>
-                <div>
-                  <p className="text-white font-semibold">Pausa Pranzo e Networking</p>
-                  <p className="text-gray-400 text-sm">Un momento per connettersi con la community</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-green-500">
-                <span className="text-green-400 font-mono font-bold min-w-[60px]">14:00</span>
-                <div>
-                  <p className="text-white font-semibold">Sessioni Pomeridiane</p>
-                  <p className="text-gray-400 text-sm">Continua con 2 track paralleli di sessioni tecniche</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-gray-900/50 rounded-lg border-l-4 border-blue-500">
-                <span className="text-blue-400 font-mono font-bold min-w-[60px]">18:00</span>
-                <div>
-                  <p className="text-white font-semibold">Chiusura e Networking Finale</p>
-                  <p className="text-gray-400 text-sm">Saluti finali e momento di networking</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-gray-500 text-sm mt-4 text-center">
-              L&apos;agenda dettagliata con le singole sessioni sarà pubblicata a breve.
-            </p>
+
+            {/* Tabs */}
+            <SessionizeTabs />
           </section>
 
           {/* Sponsor Section */}

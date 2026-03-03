@@ -11,45 +11,78 @@ interface SessionizeEmbedProps {
 }
 
 const SessionizeEmbed: React.FC<SessionizeEmbedProps> = ({ src, id }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loading, setLoading] = useState(true);
+  const [height, setHeight] = useState(400);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    container.innerHTML = '';
     setLoading(true);
 
-    const script = document.createElement('script');
-    script.src = src;
-    script.type = 'text/javascript';
-    script.async = true;
-    script.onload = () => {
-      setTimeout(() => setLoading(false), 500);
-    };
-    script.onerror = () => setLoading(false);
-    container.appendChild(script);
+    const resizeObserver = new ResizeObserver(() => {
+      const iframe = iframeRef.current;
+      if (iframe?.contentDocument?.body) {
+        const newHeight = iframe.contentDocument.body.scrollHeight;
+        if (newHeight > 0) setHeight(newHeight + 20);
+      }
+    });
 
-    return () => {
-      if (container) {
-        container.innerHTML = '';
+    const handleLoad = () => {
+      const iframe = iframeRef.current;
+      if (iframe?.contentDocument?.body) {
+        resizeObserver.observe(iframe.contentDocument.body);
+        // Poll for height changes as Sessionize renders async
+        const interval = setInterval(() => {
+          if (iframe.contentDocument?.body) {
+            const newHeight = iframe.contentDocument.body.scrollHeight;
+            if (newHeight > 50) {
+              setHeight(newHeight + 20);
+              setLoading(false);
+            }
+          }
+        }, 300);
+        setTimeout(() => clearInterval(interval), 10000);
       }
     };
+
+    const iframe = iframeRef.current;
+    if (iframe) {
+      iframe.addEventListener('load', handleLoad);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+      if (iframe) iframe.removeEventListener('load', handleLoad);
+    };
   }, [src]);
+
+  const srcdoc = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { margin: 0; padding: 8px; background: transparent; color: #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    a { color: #60a5fa !important; }
+  </style>
+</head>
+<body>
+  <script type="text/javascript" src="${src}"><\/script>
+</body>
+</html>`;
 
   return (
     <div className="relative">
       {loading && (
-        <div className="flex items-center justify-center py-12">
+        <div className="absolute inset-0 flex items-center justify-center py-12 z-10">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
           <span className="ml-3 text-gray-400">Caricamento...</span>
         </div>
       )}
-      <div
-        ref={containerRef}
+      <iframe
+        ref={iframeRef}
         id={`sessionize-${id}`}
-        className="sessionize-embed"
+        srcDoc={srcdoc}
+        style={{ width: '100%', height: `${height}px`, border: 'none', overflow: 'hidden' }}
+        title={`Sessionize ${id}`}
+        sandbox="allow-scripts allow-same-origin"
       />
     </div>
   );

@@ -232,7 +232,7 @@ function convertMeetupEventToEventData(meetupEvent) {
 
   return {
     name: meetupEvent.title,
-    description: (meetupEvent.description || '').replace(/<[^>]*>/g, '').slice(0, 500),
+    description: (meetupEvent.description || '').replace(/<[^>]*?>/g, '').replace(/<[^>]*$/g, '').slice(0, 500),
     startDate: startDate,
     endDate: endDate,
     eventStatus: 'EventScheduled',

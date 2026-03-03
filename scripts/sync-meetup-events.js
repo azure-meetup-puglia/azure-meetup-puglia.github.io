@@ -17,6 +17,21 @@ const SITE_URL = 'https://azure-meetup-puglia.github.io/';
 const DEFAULT_IMAGE = 'https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp';
 
 /**
+ * Strip all HTML tags from a string, applying repeatedly to handle
+ * nested or concatenated tag patterns (e.g. "<<script>script>").
+ */
+function stripHtmlTags(str) {
+  const tagPattern = /<[^>]*>/g;
+  let result = str;
+  let previous;
+  do {
+    previous = result;
+    result = result.replace(tagPattern, '');
+  } while (result !== previous);
+  return result;
+}
+
+/**
  * Fetch events from Meetup.com page
  * Uses a simpler approach by fetching the JSON embedded in the page
  */
@@ -232,7 +247,7 @@ function convertMeetupEventToEventData(meetupEvent) {
 
   return {
     name: meetupEvent.title,
-    description: (meetupEvent.description || '').replace(/<[^>]*?>/g, '').replace(/<[^>]*$/g, '').slice(0, 500),
+    description: stripHtmlTags(meetupEvent.description || '').slice(0, 500),
     startDate: startDate,
     endDate: endDate,
     eventStatus: 'EventScheduled',

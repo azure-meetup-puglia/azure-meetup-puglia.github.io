@@ -9,6 +9,17 @@ const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 function useSessionizeData<T>(endpoint: string) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,6 +66,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
 
 // --- Schedule Grid (Sessionize style with rowSpan for workshops) ---
 const ScheduleGrid = () => {
+  const isMobile = useIsMobile();
   const { data, loading, error } = useSessionizeData<any[]>('GridSmart');
   if (loading) return <LoadingSpinner />;
   if (error || !data) return <ErrorMessage message={error || 'Dati non disponibili'} />;
@@ -64,8 +76,8 @@ const ScheduleGrid = () => {
 
   const rooms = day.rooms as any[];
   const numRooms = rooms.length;
-  const CONTAINER_HEIGHT = 1600;
-  const TIME_COL = 52;
+  const CONTAINER_HEIGHT = isMobile ? 1000 : 1600;
+  const TIME_COL = isMobile ? 36 : 52;
   const GAP = 4;
 
   // Use exact session times from rooms[].sessions (no slot-based workarounds needed)
@@ -105,6 +117,68 @@ const ScheduleGrid = () => {
     return numRooms === 1 ? '100%' : `calc(${100 / numRooms}% - ${GAP / 2}px)`;
   }
 
+  // Mobile: simple chronological list grouped by time slot
+  if (isMobile) {
+    const timeSlots = day.timeSlots as any[];
+    return (
+      <div className="rounded-xl overflow-hidden" style={{ background: '#112240', padding: '12px 10px 16px' }}>
+        <div className="text-center py-2 mb-3 text-base font-semibold" style={{ color: '#5ba4e6' }}>
+          {formatDate(day.date)}
+        </div>
+        <div style={{ display: 'flex', gap: GAP, marginBottom: 8 }}>
+          {rooms.map((room: any) => (
+            <div key={room.id} style={{ flex: 1, textAlign: 'center', padding: '4px 4px', border: '1px solid #0078d4', color: '#0078d4', borderRadius: 6, fontSize: 10, fontWeight: 700 }}>
+              {room.name.replace(/^Room \d+ - /i, '')}
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {timeSlots.map((slot: any, si: number) => {
+            const slotRooms = slot.rooms as any[];
+            const firstSess = slotRooms[0]?.session;
+            if (!firstSess) return null;
+            const isPlenum = firstSess.isPlenumSession;
+            const isService = firstSess.isServiceSession;
+            const time = slot.slotStart?.substring(0, 5);
+
+            // Full-width row (plenum/service)
+            if (isPlenum || (isService && slotRooms.length === 1)) {
+              const isKt = !isService;
+              return (
+                <div key={si} style={{ background: isKt ? '#104581' : '#0a1929', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
+                  <span style={{ fontSize: 10, color: '#8cb4d8', marginRight: 6 }}>{time}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: isKt ? '#e0e0e0' : '#8cb4d8' }}>{firstSess.title}</span>
+                  {firstSess.speakers?.length > 0 && (
+                    <div style={{ fontSize: 10, color: '#8cb4d8', marginTop: 2 }}>{firstSess.speakers.map((s: any) => s.name).join(', ')}</div>
+                  )}
+                </div>
+              );
+            }
+
+            // Multi-room row
+            return (
+              <div key={si} style={{ display: 'flex', gap: 4 }}>
+                {slotRooms.map((room: any, ri: number) => {
+                  const sess = room.session;
+                  if (!sess) return <div key={ri} style={{ flex: 1 }} />;
+                  return (
+                    <div key={ri} style={{ flex: 1, background: '#104581', borderRadius: 8, padding: '6px 7px' }}>
+                      <div style={{ fontSize: 9, color: '#8cb4d8', marginBottom: 2 }}>{time} → {getDuration(sess.startsAt, sess.endsAt)} min</div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: '#e0e0e0', lineHeight: 1.3 }}>{sess.title}</div>
+                      {sess.speakers?.length > 0 && (
+                        <div style={{ fontSize: 9, color: '#8cb4d8', marginTop: 2 }}>{sess.speakers.map((s: any) => s.name).join(', ')}</div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: '#112240', padding: '16px 12px 20px' }}>
       <div className="text-center py-2 mb-3 text-lg font-semibold" style={{ color: '#5ba4e6' }}>
@@ -113,11 +187,15 @@ const ScheduleGrid = () => {
 
       {/* Room column headers */}
       <div style={{ display: 'flex', paddingLeft: TIME_COL + GAP, gap: GAP, marginBottom: 8 }}>
-        {rooms.map((room: any) => (
-          <div key={room.id} style={{ flex: 1, textAlign: 'center', padding: '6px 8px', border: '1px solid #0078d4', color: '#0078d4', borderRadius: 6, fontSize: 13, fontWeight: 500 }}>
-            {room.name}
-          </div>
-        ))}
+        {rooms.map((room: any) => {
+          // On mobile, strip "Room N - " prefix to save space
+          const displayName = isMobile ? room.name.replace(/^Room \d+ - /i, '') : room.name;
+          return (
+            <div key={room.id} style={{ flex: 1, textAlign: 'center', padding: isMobile ? '4px 4px' : '6px 8px', border: '1px solid #0078d4', color: '#0078d4', borderRadius: 6, fontSize: isMobile ? 11 : 13, fontWeight: 700 }}>
+              {displayName}
+            </div>
+          );
+        })}
       </div>
 
       {/* Main timeline */}
@@ -148,19 +226,19 @@ const ScheduleGrid = () => {
                     position: 'absolute', top: top + GAP / 2,
                     left: colLeft(ri), width: colWidth(), height,
                     background: isSvc ? '#0a1929' : '#104581',
-                    borderRadius: 8, padding: '5px 8px', overflow: 'hidden', boxSizing: 'border-box',
+                    borderRadius: 8, padding: isMobile ? '3px 5px' : '5px 8px', overflow: 'hidden', boxSizing: 'border-box',
                     display: 'flex', flexDirection: 'column',
                     justifyContent: isSvc ? 'center' : 'flex-start',
                     textAlign: isSvc ? 'center' : 'left', zIndex: 1,
                   }}>
-                    <div style={{ fontSize: 10, color: '#8cb4d8', marginBottom: 2 }}>
+                    <div style={{ fontSize: isMobile ? 9 : 10, color: '#8cb4d8', marginBottom: 1 }}>
                       {formatTime(sess.startsAt)} → {dur} min
                     </div>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: isSvc ? '#8cb4d8' : '#e0e0e0', lineHeight: 1.3 }}>
+                    <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 600, color: isSvc ? '#8cb4d8' : '#e0e0e0', lineHeight: 1.2 }}>
                       {sess.title}
                     </div>
                     {sess.speakers?.length > 0 && (
-                      <div style={{ fontSize: 10, color: '#8cb4d8', marginTop: 2 }}>
+                      <div style={{ fontSize: isMobile ? 9 : 10, color: '#8cb4d8', marginTop: 1 }}>
                         {sess.speakers.map((s: any) => s.name).join(', ')}
                       </div>
                     )}
@@ -177,7 +255,7 @@ const ScheduleGrid = () => {
             const isKt = !sess.isServiceSession;
             return (
               <div key={sess.id} style={{
-                position: 'absolute', top: top + GAP / 2, left: 0, right: GAP, height,
+                position: 'absolute', top: top + GAP / 2, left: 0, right: 0, height,
                 background: isKt ? '#104581' : '#0a1929',
                 borderRadius: 8, padding: '6px 12px', overflow: 'hidden', boxSizing: 'border-box',
                 display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', zIndex: 2,

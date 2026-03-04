@@ -1,99 +1,290 @@
 import type { NextPage } from 'next';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List } from 'lucide-react';
 
-interface SessionizeEmbedProps {
-  src: string;
-  id: string;
-}
+const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
 
-const SessionizeEmbed: React.FC<SessionizeEmbedProps> = ({ src, id }) => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+function useSessionizeData<T>(endpoint: string) {
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
-  const [height, setHeight] = useState(400);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
+    fetch(`${SESSIONIZE_BASE}/${endpoint}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Errore nel caricamento');
+        return res.json();
+      })
+      .then(json => { setData(json); setLoading(false); })
+      .catch(err => { setError(err.message); setLoading(false); });
+  }, [endpoint]);
 
-    const resizeObserver = new ResizeObserver(() => {
-      const iframe = iframeRef.current;
-      if (iframe?.contentDocument?.body) {
-        const newHeight = iframe.contentDocument.body.scrollHeight;
-        if (newHeight > 0) setHeight(newHeight + 20);
-      }
-    });
+  return { data, loading, error };
+}
 
-    const handleLoad = () => {
-      const iframe = iframeRef.current;
-      if (iframe?.contentDocument?.body) {
-        resizeObserver.observe(iframe.contentDocument.body);
-        // Poll for height changes as Sessionize renders async
-        const interval = setInterval(() => {
-          if (iframe.contentDocument?.body) {
-            const newHeight = iframe.contentDocument.body.scrollHeight;
-            if (newHeight > 50) {
-              setHeight(newHeight + 20);
-              setLoading(false);
-            }
-          }
-        }, 300);
-        setTimeout(() => clearInterval(interval), 10000);
-      }
-    };
+function formatTime(iso: string) {
+  return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+}
 
-    const iframe = iframeRef.current;
-    if (iframe) {
-      iframe.addEventListener('load', handleLoad);
-    }
+function getDuration(startsAt: string, endsAt: string) {
+  const start = new Date(startsAt);
+  const end = new Date(endsAt);
+  return Math.round((end.getTime() - start.getTime()) / 60000);
+}
 
-    return () => {
-      resizeObserver.disconnect();
-      if (iframe) iframe.removeEventListener('load', handleLoad);
-    };
-  }, [src]);
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
 
-  const srcdoc = `<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { margin: 0; padding: 8px; background: transparent; color: #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-    a { color: #60a5fa !important; }
-  </style>
-</head>
-<body>
-  <script type="text/javascript" src="${src}"><\/script>
-</body>
-</html>`;
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center py-12">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+    <span className="ml-3 text-gray-400">Caricamento...</span>
+  </div>
+);
+
+const ErrorMessage = ({ message }: { message: string }) => (
+  <p className="text-center text-red-400 py-8">{message}</p>
+);
+
+// --- Schedule Grid (Sessionize style with rowSpan for workshops) ---
+const ScheduleGrid = () => {
+  const { data, loading, error } = useSessionizeData<any[]>('GridSmart');
+  if (loading) return <LoadingSpinner />;
+  if (error || !data) return <ErrorMessage message={error || 'Dati non disponibili'} />;
+
+  const day = data[0];
+  if (!day) return <ErrorMessage message="Nessun programma disponibile" />;
+
+  const rooms = day.rooms as any[];
+  const numRooms = rooms.length;
+  const CONTAINER_HEIGHT = 1600;
+  const TIME_COL = 52;
+  const GAP = 4;
+
+  // Use exact session times from rooms[].sessions (no slot-based workarounds needed)
+  const allSessions = rooms.flatMap((r: any) => r.sessions as any[]);
+  const startMs = Math.min(...allSessions.map((s: any) => new Date(s.startsAt).getTime()));
+  const endMs = Math.max(...allSessions.map((s: any) => new Date(s.endsAt).getTime()));
+  const totalMs = endMs - startMs;
+
+  function toTop(iso: string): number {
+    return ((new Date(iso).getTime() - startMs) / totalMs) * CONTAINER_HEIGHT;
+  }
+  function toHeight(s: string, e: string): number {
+    return ((new Date(e).getTime() - new Date(s).getTime()) / totalMs) * CONTAINER_HEIGHT;
+  }
+
+  // Hourly time labels
+  const labels: { label: string; top: number }[] = [];
+  const cur = new Date(startMs);
+  cur.setMinutes(0, 0, 0);
+  while (cur.getTime() <= endMs) {
+    const top = toTop(cur.toISOString());
+    if (top >= 0) labels.push({ label: cur.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }), top });
+    cur.setHours(cur.getHours() + 1);
+  }
+
+  // Deduplicated plenum sessions (full-width, from any room)
+  const seenIds = new Set<string>();
+  const plenumSessions = allSessions.filter((s: any) => {
+    if (s.isPlenumSession && !seenIds.has(s.id)) { seenIds.add(s.id); return true; }
+    return false;
+  });
+
+  function colLeft(ri: number): string {
+    return numRooms === 1 ? '0' : `calc(${(ri * 100) / numRooms}% + ${ri > 0 ? GAP / 2 : 0}px)`;
+  }
+  function colWidth(): string {
+    return numRooms === 1 ? '100%' : `calc(${100 / numRooms}% - ${GAP / 2}px)`;
+  }
 
   return (
-    <div className="relative">
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center py-12 z-10">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
-          <span className="ml-3 text-gray-400">Caricamento...</span>
+    <div className="rounded-xl overflow-hidden" style={{ background: '#112240', padding: '16px 12px 20px' }}>
+      <div className="text-center py-2 mb-3 text-lg font-semibold" style={{ color: '#5ba4e6' }}>
+        {formatDate(day.date)}
+      </div>
+
+      {/* Room column headers */}
+      <div style={{ display: 'flex', paddingLeft: TIME_COL + GAP, gap: GAP, marginBottom: 8 }}>
+        {rooms.map((room: any) => (
+          <div key={room.id} style={{ flex: 1, textAlign: 'center', padding: '6px 8px', border: '1px solid #0078d4', color: '#0078d4', borderRadius: 6, fontSize: 13, fontWeight: 500 }}>
+            {room.name}
+          </div>
+        ))}
+      </div>
+
+      {/* Main timeline */}
+      <div style={{ position: 'relative', height: CONTAINER_HEIGHT }}>
+        {/* Time labels */}
+        {labels.map(({ label, top }) => (
+          <div key={label} style={{ position: 'absolute', top: top - 8, left: 0, width: TIME_COL, textAlign: 'right', paddingRight: 8, fontSize: 11, color: '#5ba4e6', fontWeight: 500, lineHeight: '16px', zIndex: 3 }}>
+            {label}
+          </div>
+        ))}
+        {/* Horizontal lines */}
+        {labels.map(({ label, top }) => (
+          <div key={`line-${label}`} style={{ position: 'absolute', top, left: TIME_COL, right: 0, height: 1, background: 'rgba(91,164,230,0.12)' }} />
+        ))}
+
+        <div style={{ position: 'absolute', left: TIME_COL + GAP, right: 0, top: 0, bottom: 0 }}>
+          {/* Per-room sessions (non-plenum) */}
+          {rooms.map((room: any, ri: number) =>
+            (room.sessions as any[])
+              .filter((s: any) => !s.isPlenumSession)
+              .map((sess: any) => {
+                const top = toTop(sess.startsAt);
+                const height = toHeight(sess.startsAt, sess.endsAt) - GAP;
+                const dur = getDuration(sess.startsAt, sess.endsAt);
+                const isSvc = sess.isServiceSession;
+                return (
+                  <div key={`${room.id}-${sess.id}`} style={{
+                    position: 'absolute', top: top + GAP / 2,
+                    left: colLeft(ri), width: colWidth(), height,
+                    background: isSvc ? '#0a1929' : '#104581',
+                    borderRadius: 8, padding: '5px 8px', overflow: 'hidden', boxSizing: 'border-box',
+                    display: 'flex', flexDirection: 'column',
+                    justifyContent: isSvc ? 'center' : 'flex-start',
+                    textAlign: isSvc ? 'center' : 'left', zIndex: 1,
+                  }}>
+                    <div style={{ fontSize: 10, color: '#8cb4d8', marginBottom: 2 }}>
+                      {formatTime(sess.startsAt)} → {dur} min
+                    </div>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: isSvc ? '#8cb4d8' : '#e0e0e0', lineHeight: 1.3 }}>
+                      {sess.title}
+                    </div>
+                    {sess.speakers?.length > 0 && (
+                      <div style={{ fontSize: 10, color: '#8cb4d8', marginTop: 2 }}>
+                        {sess.speakers.map((s: any) => s.name).join(', ')}
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+          )}
+
+          {/* Plenum sessions — full width overlay */}
+          {plenumSessions.map((sess: any) => {
+            const top = toTop(sess.startsAt);
+            const height = toHeight(sess.startsAt, sess.endsAt) - GAP;
+            const dur = getDuration(sess.startsAt, sess.endsAt);
+            const isKt = !sess.isServiceSession;
+            return (
+              <div key={sess.id} style={{
+                position: 'absolute', top: top + GAP / 2, left: 0, right: GAP, height,
+                background: isKt ? '#104581' : '#0a1929',
+                borderRadius: 8, padding: '6px 12px', overflow: 'hidden', boxSizing: 'border-box',
+                display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', zIndex: 2,
+              }}>
+                <div style={{ fontSize: 11, color: '#8cb4d8', marginBottom: 2 }}>
+                  {formatTime(sess.startsAt)} → {dur} min
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: isKt ? '#e0e0e0' : '#8cb4d8', lineHeight: 1.3 }}>
+                  {sess.title}
+                </div>
+                {sess.speakers?.length > 0 && (
+                  <div style={{ fontSize: 12, color: '#8cb4d8', marginTop: 2 }}>
+                    {sess.speakers.map((s: any) => s.name).join(', ')}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-      )}
-      <iframe
-        ref={iframeRef}
-        id={`sessionize-${id}`}
-        srcDoc={srcdoc}
-        style={{ width: '100%', height: `${height}px`, border: 'none', overflow: 'hidden' }}
-        title={`Sessionize ${id}`}
-        sandbox="allow-scripts allow-same-origin"
-      />
+      </div>
     </div>
   );
 };
 
-const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
+// --- Sessions List ---
+const SessionsList = () => {
+  const { data, loading, error } = useSessionizeData<any[]>('Sessions');
+  if (loading) return <LoadingSpinner />;
+  if (error || !data) return <ErrorMessage message={error || 'Dati non disponibili'} />;
 
-const tabs = [
-  { id: 'programma', label: 'Programma', icon: LayoutGrid, src: `${SESSIONIZE_BASE}/GridSmart` },
-  { id: 'sessioni', label: 'Sessioni', icon: List, src: `${SESSIONIZE_BASE}/Sessions` },
-  { id: 'speaker', label: 'Speaker', icon: Users, src: `${SESSIONIZE_BASE}/SpeakerWall` },
+  const sessions = (data[0]?.sessions || []).filter((s: any) => !s.isServiceSession);
+
+  return (
+    <div className="rounded-xl overflow-hidden" style={{ background: '#0d2137' }}>
+      <div className="p-4 space-y-3">
+        {sessions.map((session: any) => {
+          const duration = getDuration(session.startsAt, session.endsAt);
+          return (
+            <div key={session.id} className="rounded-lg p-5" style={{ background: '#104581' }}>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                {session.room && (
+                  <span className="px-2 py-0.5 rounded text-white text-xs font-semibold" style={{ background: '#0078d4' }}>
+                    {session.room.toUpperCase()}
+                  </span>
+                )}
+                <span className="text-xs" style={{ color: '#8cb4d8' }}>
+                  {formatTime(session.startsAt)} → {duration} min
+                </span>
+              </div>
+              <h3 className="font-semibold text-base mb-2" style={{ color: '#e0e0e0' }}>{session.title}</h3>
+              {session.description && (
+                <p className="text-sm leading-relaxed mb-3" style={{ color: '#8cb4d8' }}>{session.description}</p>
+              )}
+              {session.speakers?.length > 0 && (
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#a0c4e8' }}>
+                  <Users className="w-4 h-4" aria-hidden="true" />
+                  {session.speakers.map((s: any) => s.name).join(', ')}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// --- Speaker Wall ---
+const SpeakerWall = () => {
+  const { data, loading, error } = useSessionizeData<any[]>('SpeakerWall');
+  if (loading) return <LoadingSpinner />;
+  if (error || !data) return <ErrorMessage message={error || 'Dati non disponibili'} />;
+
+  return (
+    <div className="rounded-xl overflow-hidden p-4" style={{ background: '#0d2137' }}>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {data.map((speaker: any) => (
+          <div key={speaker.id} className="rounded-lg p-4 text-center" style={{ background: '#104581' }}>
+            {speaker.profilePicture && (
+              <img
+                src={speaker.profilePicture}
+                alt={speaker.fullName}
+                className="w-24 h-24 rounded-full mx-auto mb-3 object-cover"
+                style={{ borderWidth: '3px', borderStyle: 'solid', borderColor: '#0078d4' }}
+              />
+            )}
+            <p className="font-semibold text-sm" style={{ color: '#e0e0e0' }}>{speaker.fullName}</p>
+            {speaker.tagLine && (
+              <p className="text-xs mt-1" style={{ color: '#8cb4d8' }}>{speaker.tagLine}</p>
+            )}
+            {speaker.isTopSpeaker && (
+              <span className="inline-block mt-2 text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#0078d4', color: '#ffffff' }}>
+                Keynote
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// --- Tabs ---
+const tabConfig = [
+  { id: 'programma', label: 'Programma', icon: LayoutGrid },
+  { id: 'sessioni', label: 'Sessioni', icon: List },
+  { id: 'speaker', label: 'Speaker', icon: Users },
 ] as const;
 
 const SessionizeTabs: React.FC = () => {
@@ -102,7 +293,7 @@ const SessionizeTabs: React.FC = () => {
   return (
     <div>
       <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-4" role="tablist" aria-label="Sezioni evento">
-        {tabs.map((tab) => {
+        {tabConfig.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
@@ -112,11 +303,10 @@ const SessionizeTabs: React.FC = () => {
               aria-selected={isActive}
               aria-controls={`panel-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                isActive
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'bg-gray-700/50 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
-              }`}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${isActive
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'bg-gray-700/50 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                }`}
             >
               <Icon className="w-4 h-4" aria-hidden="true" />
               {tab.label}
@@ -125,22 +315,16 @@ const SessionizeTabs: React.FC = () => {
         })}
       </div>
 
-      {tabs.map((tab) => (
-        <div
-          key={tab.id}
-          id={`panel-${tab.id}`}
-          role="tabpanel"
-          aria-labelledby={tab.id}
-          className={activeTab === tab.id ? '' : 'hidden'}
-        >
-          {activeTab === tab.id && (
-            <SessionizeEmbed src={tab.src} id={tab.id} />
-          )}
-        </div>
-      ))}
+      <div role="tabpanel">
+        {activeTab === 'programma' && <ScheduleGrid />}
+        {activeTab === 'sessioni' && <SessionsList />}
+        {activeTab === 'speaker' && <SpeakerWall />}
+      </div>
     </div>
   );
 };
+
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const GlobalAzurePugliaPage: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io";

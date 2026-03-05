@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-02-27T06:54:45.277Z
+ * Last synced: 2026-03-05T06:52:37.099Z
  * Auto-synced from Meetup.com
  */
 
@@ -86,6 +86,42 @@ export const events: EventData[] = [
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock",
       "validFrom": "2026-02-27"
+    }
+  },
+  {
+    "name": "GitHub Copilot Dev Days Lecce - 30 marzo",
+    "description": "**🚨🚨**\n**L’evento è gratuito previa registrazione tramite [EventBrite](https://www.eventbrite.it/e/github-copilot-dev-days-lecce-30-marzo-tickets-1984458840813)! (l'RSVP della pagina del Meetup *non è ancora attivo*).**\n**🚨🚨**\n\n🚀 **GitHub Copilot Dev Days arrivano in Puglia!**\nPortiamo anche a **Lecce** i *GitHub Copilot Dev Days*, l’iniziativa globale *community-led* dedicata all’AI-assisted coding con **GitHub Copilot**.\n\n📍 **Dove:** Officine Cantelmo – **Mediateca**, Lecce\n🗓 **Quando:*",
+    "startDate": "2026-03-30T17:30:00+02:00",
+    "endDate": "2026-03-30T20:30:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "TBD",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Puglia",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Azure Meetup Puglia",
+      "url": "https://azure-meetup-puglia.github.io/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.meetup.com/azure-meetup-puglia/events/313631083/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-03-05"
     }
   },
   {

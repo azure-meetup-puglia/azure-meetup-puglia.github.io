@@ -690,6 +690,91 @@ const GlobalAzurePugliaPage: NextPage = () => {
             <SessionizeTabs />
           </section>
 
+          {/* Grazie ai nostri Sponsor */}
+          <section className="bg-slate-600 p-8 rounded-xl border border-slate-500 shadow-lg">
+            <div className="text-center mb-10">
+              <p className="text-blue-300 uppercase tracking-widest text-xs font-semibold mb-3">Con il supporto di</p>
+              <h2 className="text-3xl font-bold text-white mb-3">Grazie ai nostri Sponsor</h2>
+              <p className="text-slate-200 max-w-2xl mx-auto leading-relaxed">
+                Global Azure Puglia 2026 è reso possibile grazie al contributo di aziende che credono nella community tech locale e nell&apos;importanza di condividere cultura tecnologica sul territorio.
+              </p>
+            </div>
+
+            {/* Gold Sponsors */}
+            <div className="mb-10">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/60"></div>
+                <h3 className="text-lg font-bold tracking-wide px-4" style={{ color: '#B8860B' }}>
+                  Sponsor Gold
+                </h3>
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/60"></div>
+              </div>
+              <div className="flex justify-center">
+                <a
+                  href="https://ugolopez.it"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-10 py-8 border border-yellow-500/40 hover:border-yellow-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10"
+                  aria-label="Ugo Lopez - Sponsor Gold"
+                >
+                  <Image
+                    src="/img/UgoLopezLogo.png"
+                    alt="Ugo Lopez"
+                    width={220}
+                    height={80}
+                    className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    style={{ maxHeight: 80 }}
+                  />
+                </a>
+              </div>
+            </div>
+
+            {/* Silver Sponsors */}
+            <div>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gray-400/60"></div>
+                <h3 className="text-lg font-bold tracking-wide px-4" style={{ color: '#707070' }}>
+                  Sponsor Silver
+                </h3>
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gray-400/60"></div>
+              </div>
+              <div className="flex flex-wrap justify-center gap-6">
+                <a
+                  href="https://codearchitects.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-8 py-6 border border-slate-500/40 hover:border-slate-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10"
+                  aria-label="Code Architects - Sponsor Silver"
+                >
+                  <Image
+                    src="/img/CodeArchitectsLogo.png"
+                    alt="Code Architects"
+                    width={150}
+                    height={54}
+                    className="object-contain opacity-85 group-hover:opacity-100 transition-opacity"
+                    style={{ maxHeight: 54 }}
+                  />
+                </a>
+                <a
+                  href="https://www.eusoft.it"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-8 py-6 border border-slate-500/40 hover:border-slate-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10"
+                  aria-label="Eusoft - Sponsor Silver"
+                >
+                  <Image
+                    src="/img/EusoftLogo.svg"
+                    alt="Eusoft"
+                    width={150}
+                    height={54}
+                    className="object-contain opacity-85 group-hover:opacity-100 transition-opacity"
+                    style={{ maxHeight: 54 }}
+                  />
+                </a>
+              </div>
+            </div>
+          </section>
+
           {/* Sponsor Section */}
           <section className="bg-gradient-to-br from-yellow-900/30 via-gray-800 to-yellow-900/30 p-8 rounded-xl border border-yellow-700/30 shadow-lg">
             <div className="text-center mb-8">

@@ -704,7 +704,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
             <div className="mb-10">
               <div className="flex items-center justify-center gap-3 mb-6">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/60"></div>
-                <h3 className="text-lg font-bold tracking-wide px-4" style={{ color: '#B8860B' }}>
+                <h3 className="text-2xl font-bold tracking-wide px-4" style={{ color: '#FFD700' }}>
                   Sponsor Gold
                 </h3>
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/60"></div>
@@ -714,7 +714,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                   href="https://ugolopez.it"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-10 py-8 border border-yellow-500/40 hover:border-yellow-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10"
+                  className="group flex items-center justify-center bg-slate-900 rounded-xl px-10 py-8 border border-yellow-500/50 hover:border-yellow-400 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/20"
                   aria-label="Ugo Lopez - Sponsor Gold"
                 >
                   <Image
@@ -733,7 +733,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
             <div>
               <div className="flex items-center justify-center gap-3 mb-6">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gray-400/60"></div>
-                <h3 className="text-lg font-bold tracking-wide px-4" style={{ color: '#707070' }}>
+                <h3 className="text-2xl font-bold tracking-wide px-4" style={{ color: '#D0D0D0' }}>
                   Sponsor Silver
                 </h3>
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gray-400/60"></div>
@@ -743,7 +743,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                   href="https://codearchitects.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-8 py-6 border border-slate-500/40 hover:border-slate-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10"
+                  className="group flex items-center justify-center bg-slate-900 rounded-xl px-8 py-6 border border-slate-600 hover:border-slate-400 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/20"
                   aria-label="Code Architects - Sponsor Silver"
                 >
                   <Image
@@ -759,7 +759,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                   href="https://www.eusoft.it"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center bg-slate-800/60 rounded-xl px-8 py-6 border border-slate-500/40 hover:border-slate-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/10"
+                  className="group flex items-center justify-center bg-slate-900 rounded-xl px-8 py-6 border border-slate-600 hover:border-slate-400 transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/20"
                   aria-label="Eusoft - Sponsor Silver"
                 >
                   <Image

@@ -8,6 +8,7 @@ import { ArrowLeft, MessageSquare, Star, CheckCircle, AlertCircle } from 'lucide
 
 interface FeedbackFormData {
   // Sezione 1 - Profilo e partecipazione
+  event_title: string;
   email: string;
   participation_type: string;
   which_talk?: string;
@@ -206,6 +207,23 @@ const Feedback: NextPage = () => {
                 <h2 className="text-2xl font-bold text-white mb-6 pb-3 border-b border-gray-600">
                   1. Profilo e Partecipazione
                 </h2>
+
+                {/* Event Title */}
+                <div className="mb-6">
+                  <label htmlFor="event_title" className="block text-sm font-medium text-gray-300 mb-2">
+                    Titolo dell'evento *
+                  </label>
+                  <input
+                    type="text"
+                    id="event_title"
+                    {...register('event_title', { required: 'Indica il titolo dell\'evento' })}
+                    placeholder="es. Azure Meetup Puglia - Aprile 2026"
+                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.event_title && (
+                    <p className="text-red-400 text-sm mt-1">{errors.event_title.message}</p>
+                  )}
+                </div>
 
                 {/* Email */}
                 <div className="mb-6">

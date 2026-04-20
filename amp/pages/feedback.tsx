@@ -585,7 +585,7 @@ const Feedback: NextPage = () => {
                 {/* Best Moment */}
                 <div className="mb-6">
                   <label htmlFor="best_moment" className="block text-sm font-medium text-gray-300 mb-2">
-                    Il momento migliore della serata
+                    Il momento migliore dell'evento
                   </label>
                   <input
                     type="text"

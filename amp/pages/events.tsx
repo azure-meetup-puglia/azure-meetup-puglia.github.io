@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown, Mic, Star, Code2 } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown, Star, Code2 } from 'lucide-react';
 import { useState } from 'react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
 
@@ -249,9 +249,9 @@ const EventsPage: NextPage = () => {
           <section id="featured-event" aria-labelledby="featured-event-title" className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 border border-blue-700/50">
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="absolute top-4 right-4 z-20">
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-yellow-500 text-yellow-900 text-xs font-bold rounded-full uppercase tracking-wide">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-500 text-green-950 text-xs font-bold rounded-full uppercase tracking-wide">
                 <Star className="w-3 h-3" aria-hidden="true" />
-                Featured
+                Concluso · Grazie!
               </span>
             </div>
             <div className="relative z-10 p-6 md:p-8 lg:p-10">
@@ -263,8 +263,11 @@ const EventsPage: NextPage = () => {
                   <h2 id="featured-event-title" className="text-3xl md:text-4xl font-bold text-white mb-3">
                     Global Azure Puglia 2026
                   </h2>
+                  <p className="text-blue-200 mb-2 max-w-2xl">
+                    Grazie a tutte e tutti! La prima edizione di Global Azure in Puglia è andata in archivio: una giornata intensa di sessioni, workshop e community.
+                  </p>
                   <p className="text-blue-200 mb-4 max-w-2xl">
-                    Un evento per approfondire i temi Azure in modo pratico e concreto, favorendo le connessioni nella community. Call for Speakers aperta!
+                    Un grazie speciale a speaker, sponsor, volontari e partecipanti che hanno reso possibile tutto questo. Ci vediamo alla prossima edizione!
                   </p>
                   <div className="flex flex-wrap gap-4 mb-6">
                     <div className="flex items-center gap-2 text-gray-300">
@@ -286,18 +289,9 @@ const EventsPage: NextPage = () => {
                     href="/global-azure-puglia"
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
                   >
-                    Scopri di Piu
+                    Rivivi l&apos;Evento
                     <ExternalLink className="w-4 h-4" aria-hidden="true" />
                   </Link>
-                  <a
-                    href="https://sessionize.com/global-azure-puglia-2026/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-blue-900"
-                  >
-                    <Mic className="w-4 h-4" aria-hidden="true" />
-                    Proponi un Talk
-                  </a>
                 </div>
               </div>
             </div>
@@ -358,9 +352,8 @@ const EventsPage: NextPage = () => {
 
               <div
                 id="past-events-content"
-                className={`transition-all duration-300 ease-in-out ${
-                  isPastEventsOpen ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-                }`}
+                className={`transition-all duration-300 ease-in-out ${isPastEventsOpen ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                  }`}
               >
                 <div className="p-6 pt-0">
                   <p className="text-gray-400 text-sm mb-6 italic">

@@ -459,8 +459,8 @@ const GlobalAzurePugliaPage: NextPage = () => {
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
         {/* Meta Tags Essenziali */}
-        <title>Global Azure Puglia 2026 | 17 Aprile - Bari | 2 Track, 12+ Sessioni</title>
-        <meta name="description" content="Global Azure Puglia 2026 - La prima edizione dell'evento Global Azure in Puglia. Venerdì 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote di apertura. Iscriviti gratuitamente!" />
+        <title>Global Azure Puglia 2026 | 17 Aprile - Bari | Evento Concluso</title>
+        <meta name="description" content="Global Azure Puglia 2026 - La prima edizione dell'evento Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
         <meta name="keywords" content="Global Azure Puglia, Global Azure 2026, Azure Bari, Microsoft Azure Event, Cloud Computing Puglia, Azure Conference Italy, DevOps Event Bari, AI Azure Puglia" />
         <meta name="author" content="Azure Meetup Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -476,8 +476,8 @@ const GlobalAzurePugliaPage: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="event" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
-        <meta property="og:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari" />
-        <meta property="og:description" content="La prima edizione di Global Azure in Puglia. 2 Track, 12+ Sessioni, Workshop e Keynote. Venerdì 17 Aprile a Bari. Iscriviti gratuitamente!" />
+        <meta property="og:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
+        <meta property="og:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
         <meta property="og:image" content={eventImageUrl} />
         <meta property="og:image:alt" content="Global Azure Puglia 2026 - Evento Microsoft Azure" />
         <meta property="og:image:width" content="1200" />
@@ -489,8 +489,8 @@ const GlobalAzurePugliaPage: NextPage = () => {
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari" />
-        <meta name="twitter:description" content="La prima edizione di Global Azure in Puglia. 2 Track, 12+ Sessioni, Workshop e Keynote. Iscriviti gratuitamente!" />
+        <meta name="twitter:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
+        <meta name="twitter:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile. Grazie a tutta la community!" />
         <meta name="twitter:image" content={eventImageUrl} />
         <meta name="twitter:image:alt" content="Global Azure Puglia 2026" />
 
@@ -547,14 +547,17 @@ const GlobalAzurePugliaPage: NextPage = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
             <div className="relative z-10 p-8 md:p-12 lg:p-16 text-center">
-              <span className="inline-block px-4 py-2 bg-blue-600/80 text-white text-sm font-semibold rounded-full mb-6">
-                Prima Edizione in Puglia
+              <span className="inline-block px-4 py-2 bg-green-600/80 text-white text-sm font-semibold rounded-full mb-6">
+                Evento Concluso · Grazie a tutte e tutti!
               </span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
                 Global Azure Puglia 2026
               </h1>
-              <p className="text-xl md:text-2xl text-blue-200 max-w-3xl mx-auto mb-8">
-                Una giornata intera dedicata a Microsoft Azure: sessioni tecniche, workshop pratici e networking con la community
+              <p className="text-xl md:text-2xl text-blue-200 max-w-3xl mx-auto mb-4">
+                La prima edizione di Global Azure in Puglia è andata in archivio: una giornata intensa di sessioni tecniche, workshop pratici e networking con la community.
+              </p>
+              <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto mb-8">
+                Un grazie di cuore a <strong className="text-white">speaker</strong>, <strong className="text-white">sponsor</strong>, <strong className="text-white">volontari</strong> e a tutti i <strong className="text-white">partecipanti</strong> che hanno reso possibile tutto questo. Ci vediamo alla prossima edizione!
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
@@ -592,16 +595,13 @@ const GlobalAzurePugliaPage: NextPage = () => {
                 </div>
               </div>
 
-              <a
-                href={meetupUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/feedback"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-blue-600/30"
               >
-                <Ticket className="w-6 h-6" aria-hidden="true" />
-                Iscriviti Gratuitamente
-                <ExternalLink className="w-5 h-5" aria-hidden="true" />
-              </a>
+                Lascia il tuo feedback
+                <ArrowLeft className="w-5 h-5 rotate-180" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </section>
@@ -627,9 +627,9 @@ const GlobalAzurePugliaPage: NextPage = () => {
                 Info Evento
               </h2>
               <p className="text-gray-300 leading-relaxed mb-6">
-                <strong className="text-white">Global Azure Puglia 2026</strong> rappresenta la prima edizione di Global Azure nella nostra regione.
-                Questo evento fa parte dell&apos;iniziativa globale <strong className="text-blue-300">Global Azure</strong>, dove community di tutto il mondo
-                partecipano simultaneamente durante il 16-18 Aprile 2026.
+                <strong className="text-white">Global Azure Puglia 2026</strong> è stata la prima edizione di Global Azure nella nostra regione.
+                L&apos;evento si è inserito nell&apos;iniziativa globale <strong className="text-blue-300">Global Azure</strong>, in cui le community di tutto il mondo
+                hanno partecipato simultaneamente nei giorni 16-18 Aprile 2026.
               </p>
               <p className="text-gray-300 leading-relaxed mb-6">
                 Una giornata intera con 2 track paralleli, oltre 12 sessioni tecniche, workshop pratici e un keynote di apertura di alto profilo.
@@ -659,22 +659,21 @@ const GlobalAzurePugliaPage: NextPage = () => {
               </div>
             </div>
 
-            {/* Call for Speakers - Chiusa */}
+            {/* Grazie agli Speaker */}
             <div className="bg-gray-800/60 p-8 rounded-xl border border-gray-700/50 shadow-lg">
               <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                <Mic className="w-6 h-6 text-gray-500" aria-hidden="true" />
-                Call for Speakers
-                <span className="text-xs font-medium bg-red-600/80 text-white px-2 py-1 rounded-full">Chiusa</span>
+                <Mic className="w-6 h-6 text-blue-400" aria-hidden="true" />
+                Grazie agli Speaker
               </h2>
-              <p className="text-gray-400 leading-relaxed mb-6">
-                La Call for Speakers per Global Azure Puglia 2026 è chiusa. Ringraziamo tutti i professionisti che hanno inviato le loro proposte!
+              <p className="text-gray-300 leading-relaxed mb-6">
+                Un grazie enorme a tutte le speaker e agli speaker che hanno condiviso esperienze, demo e best practice con la community pugliese.
               </p>
-              <p className="text-gray-400 leading-relaxed mb-6">
-                Stiamo lavorando alla definizione dell&apos;agenda con le sessioni selezionate. Resta aggiornato per scoprire il programma completo.
+              <p className="text-gray-300 leading-relaxed mb-6">
+                Senza la loro generosità e competenza, Global Azure Puglia 2026 non sarebbe stato possibile.
               </p>
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-gray-400">
                 <CheckCircle className="w-5 h-5 text-green-500" aria-hidden="true" />
-                <span className="text-sm">Proposte ricevute e in fase di valutazione</span>
+                <span className="text-sm">Sessioni e materiali disponibili nel programma qui sotto</span>
               </div>
             </div>
           </section>
@@ -775,22 +774,22 @@ const GlobalAzurePugliaPage: NextPage = () => {
             </div>
           </section>
 
-          {/* Sponsor Section */}
+          {/* Sponsor Section - Prossima edizione */}
           <section className="bg-gradient-to-br from-yellow-900/30 via-gray-800 to-yellow-900/30 p-8 rounded-xl border border-yellow-700/30 shadow-lg">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-white mb-3 flex items-center justify-center gap-3">
                 <Award className="w-7 h-7 text-yellow-400" aria-hidden="true" />
-                Diventa Sponsor
+                Sponsorizza la prossima edizione
               </h2>
               <p className="text-xl text-yellow-200 max-w-2xl mx-auto">
-                Supporta la prima edizione di Global Azure in Puglia e dai visibilità al tuo brand nella community tech
+                Ti è piaciuto Global Azure Puglia? Supporta la prossima edizione e dai visibilità al tuo brand nella community tech del Sud Italia.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="space-y-6">
                 <p className="text-gray-300 leading-relaxed">
-                  <strong className="text-white">Global Azure Puglia 2026</strong> è un&apos;opportunità unica per entrare in contatto diretto
+                  <strong className="text-white">Global Azure Puglia</strong> è un&apos;opportunità unica per entrare in contatto diretto
                   con professionisti IT, sviluppatori e decision maker del territorio. Una giornata intera, in presenza,
                   con un pubblico qualificato e appassionato di tecnologie cloud.
                 </p>
@@ -839,26 +838,22 @@ const GlobalAzurePugliaPage: NextPage = () => {
             </div>
           </section>
 
-          {/* Registration CTA Section */}
+          {/* Thank You CTA Section */}
           <section className="bg-gradient-to-r from-blue-900 to-purple-900 p-8 md:p-12 rounded-xl text-center">
-            <h2 className="text-3xl font-bold text-white mb-3">Non perdere questo evento!</h2>
+            <h2 className="text-3xl font-bold text-white mb-3">Grazie a tutte e tutti!</h2>
             <p className="text-xl text-gray-200 mb-4 max-w-2xl mx-auto">
-              La prima edizione di Global Azure in Puglia ti aspetta. Una giornata intera di sessioni tecniche, workshop e networking.
+              La prima edizione di Global Azure in Puglia è stata possibile grazie a voi: speaker, sponsor, volontari e partecipanti.
             </p>
             <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-              L&apos;ingresso è gratuito ma i posti sono limitati. Iscriviti subito per assicurarti il tuo posto!
+              Aiutaci a migliorare le prossime edizioni: condividi il tuo feedback o resta in contatto con la community sui nostri canali.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href={meetupUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/feedback"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 text-lg font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900 shadow-lg"
               >
-                <Ticket className="w-6 h-6" aria-hidden="true" />
-                Iscriviti su Meetup
-                <ExternalLink className="w-5 h-5" aria-hidden="true" />
-              </a>
+                Lascia il tuo feedback
+              </Link>
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-6 py-4 bg-transparent border-2 border-white/30 hover:border-white/60 text-white font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"

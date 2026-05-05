@@ -17,12 +17,12 @@ const LinkCard: React.FC<LinkCardProps> = ({ href, title, description, Icon, isE
     href={href}
     target={isExternal ? "_blank" : "_self"}
     rel={isExternal ? "noopener noreferrer" : undefined}
-    className="group flex flex-col items-center justify-center p-6 bg-gray-800 rounded-xl border border-gray-700 hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-blue-900/50 text-center h-full focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+    className="group flex h-full flex-col items-center justify-center rounded-xl border border-gray-700 bg-gray-800 p-5 text-center shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-gray-700 hover:shadow-blue-900/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 sm:p-6"
     aria-label={`${title}: ${description}`}
   >
-    <Icon className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" aria-hidden="true" />
-    <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-blue-100">{title}</h3>
-    <p className="text-gray-300 text-sm group-hover:text-gray-200">{description}</p>
+    <Icon className="mb-3 h-10 w-10 text-blue-400 transition-colors group-hover:text-blue-300 sm:mb-4 sm:h-12 sm:w-12" aria-hidden="true" />
+    <h3 className="mb-2 text-lg font-semibold text-white group-hover:text-blue-100 sm:text-xl">{title}</h3>
+    <p className="text-sm leading-relaxed text-gray-300 group-hover:text-gray-200">{description}</p>
   </a>
 );
 
@@ -31,6 +31,12 @@ const AzureMeetupPuglia: NextPage = () => {
   const imageUrl = "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp";
 
   const communityLinks = [
+    {
+      href: "https://www.linkedin.com/company/azure-meetup-puglia/",
+      title: "Pagina LinkedIn",
+      description: "Segui la pagina ufficiale per aggiornamenti, novita e contenuti della community",
+      Icon: Linkedin
+    },
     {
       href: "https://www.linkedin.com/groups/10098125/",
       title: "LinkedIn Group",
@@ -48,6 +54,12 @@ const AzureMeetupPuglia: NextPage = () => {
       title: "Canale Telegram",
       description: "Notifiche eventi e discussioni della community Azure Puglia",
       Icon: Send
+    },
+    {
+      href: siteUrl,
+      title: "Sito Web",
+      description: "Consulta eventi, risorse e pagine ufficiali di Azure Meetup Puglia",
+      Icon: Info
     }
   ];
 
@@ -311,11 +323,11 @@ const AzureMeetupPuglia: NextPage = () => {
             <h2 id="unisciti-title" className="text-3xl font-semibold text-center mb-10 text-blue-400">
               Entra nella Community!
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:mx-auto sm:grid sm:max-w-4xl sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:max-w-7xl lg:grid-cols-5">
               {communityLinks.map((link, index) => (
                 <div
                   key={link.title}
-                  className={`${communityLinks.length === 3 && index === 2
+                  className={`min-w-[260px] snap-start sm:min-w-0 ${communityLinks.length === 3 && index === 2
                     ? 'sm:col-span-2 sm:max-w-md sm:mx-auto lg:col-span-1 lg:max-w-none'
                     : ''
                     }`}

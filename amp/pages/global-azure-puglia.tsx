@@ -605,7 +605,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                 </Link>
                 <div className="relative">
                   <span className="absolute -top-3 left-4 inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-xs font-bold uppercase tracking-wide text-gray-950 shadow-lg">
-                    Novita
+                    Novita'
                   </span>
                   <Link
                     href="/gallery-azure-meetup-puglia"
@@ -630,7 +630,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                 </a>
               </div>
               <p className="mt-4 text-sm text-blue-200">
-                Novita: abbiamo pubblicato la gallery fotografica ufficiale dell'evento.
+                Novita': abbiamo pubblicato la gallery fotografica ufficiale dell'evento.
               </p>
             </div>
           </div>

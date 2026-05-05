@@ -92,7 +92,7 @@ const GalleryAzureMeetupPugliaPage: NextPage<InferGetStaticPropsType<typeof getS
 
                     <div className="text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-400 text-gray-950 text-sm font-bold uppercase tracking-wide mb-4">
-                            Nuovita
+                            Novita'
                         </div>
                         <div className="inline-block p-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full mb-4 shadow-lg" role="img" aria-label="Gallery Azure Meetup Puglia">
                             <Images className="w-12 h-12 text-white" aria-hidden="true" />

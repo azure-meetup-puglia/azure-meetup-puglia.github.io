@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List, Images } from 'lucide-react';
 
 const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
 
@@ -595,7 +595,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
                 <Link
                   href="/feedback"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-blue-600/30"
@@ -603,6 +603,18 @@ const GlobalAzurePugliaPage: NextPage = () => {
                   Lascia il tuo feedback
                   <ArrowLeft className="w-5 h-5 rotate-180" aria-hidden="true" />
                 </Link>
+                <div className="relative">
+                  <span className="absolute -top-3 left-4 inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-xs font-bold uppercase tracking-wide text-gray-950 shadow-lg">
+                    Novita
+                  </span>
+                  <Link
+                    href="/gallery-azure-meetup-puglia"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-300 to-orange-400 hover:from-amber-200 hover:to-orange-300 text-gray-950 text-lg font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-orange-500/20"
+                  >
+                    <Images className="w-5 h-5" aria-hidden="true" />
+                    Guarda la Gallery
+                  </Link>
+                </div>
                 <a
                   href="https://github.com/azure-meetup-puglia/eventi-meetup/tree/main/17-aprile-globalazure2026"
                   target="_blank"
@@ -617,6 +629,9 @@ const GlobalAzurePugliaPage: NextPage = () => {
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
+              <p className="mt-4 text-sm text-blue-200">
+                Novita: abbiamo pubblicato la gallery fotografica ufficiale dell'evento.
+              </p>
             </div>
           </div>
         </section>

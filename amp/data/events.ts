@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-03-05T06:52:37.099Z
+ * Last synced: 2026-06-04T14:23:52.450Z
  * Auto-synced from Meetup.com
  */
 
@@ -52,6 +52,42 @@ export interface EventData {
  * Synced from Meetup.com
  */
 export const events: EventData[] = [
+  {
+    "name": "Build //localhost:Lecce",
+    "description": "Evento della community Global AI Lecce: Build //localhost:Lecce (Lecce, Italy).",
+    "startDate": "2026-06-18T18:00:00+02:00",
+    "endDate": "2026-06-18T21:00:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Lecce, Italy",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Lecce",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://globalai.community/media/4wwkntrd/lecce.png?rmode=pad&width=480&height=270"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Global AI Lecce",
+      "url": "https://globalai.community/chapters/lecce/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://globalai.community/events/build-localhost/soqu637z/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-06-04"
+    }
+  },
   {
     "name": "Global Azure Puglia 2026 - 17 aprile - Bari",
     "description": "**🚨🚨**\n**L’evento è gratuito previa registrazione tramite [EventBrite](https://www.eventbrite.it/e/global-azure-puglia-2026-17-aprile-bari-tickets-1983983044694)! (l'RSVP della pagina del Meetup *non è ancora attivo*).**\n**🚨🚨**\n\n## Unisciti a noi per il Global Azure Puglia 2026! 🚀\n\nPreparati per una giornata interamente dedicata all'innovazione e alla tecnologia.\nIl **Global Azure** arriva in Puglia con un evento imperdibile: un'intera giornata per incontrarci di persona, confrontarci e app",
@@ -317,6 +353,78 @@ export const events: EventData[] = [
         "description": "Organizer, Azure Meetup Puglia"
       }
     ]
+  },
+  {
+    "name": "AZURE MEETUP PUGLIA 20 0TTOBRE BARI",
+    "description": "Evento della community Global AI Lecce: AZURE MEETUP PUGLIA 20 0TTOBRE BARI (Bari, Italia).",
+    "startDate": "2025-10-20T18:15:00+02:00",
+    "endDate": "2025-10-20T21:30:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Bari, Italia",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Bari",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://globalai.community/media/bmcjwr0p/highres_530271179.jpg?rmode=pad&width=480&height=270"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Global AI Lecce",
+      "url": "https://globalai.community/chapters/lecce/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://globalai.community/chapters/lecce/events/azure-meetup-puglia-20-0ttobre-bari/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-06-04"
+    }
+  },
+  {
+    "name": "Global AI Community Day",
+    "description": "Evento della community Global AI Lecce: Global AI Community Day (Lecce, Italy).",
+    "startDate": "2025-09-05T14:30:00+02:00",
+    "endDate": "2025-09-05T18:30:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Lecce, Italy",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Lecce",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://globalai.community/media/yriel0gc/global-ai-lecce_621_sticker.png?rmode=pad&width=480&height=270"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Global AI Lecce",
+      "url": "https://globalai.community/chapters/lecce/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://globalai.community/chapters/lecce/events/global-ai-community-day/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-06-04"
+    }
   }
 ];
 

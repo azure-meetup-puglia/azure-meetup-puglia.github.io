@@ -116,7 +116,7 @@ async function fetchMeetupEventsFromHTML() {
             if (nextData.props?.pageProps?.__APOLLO_STATE__) {
               const apolloState = nextData.props.pageProps.__APOLLO_STATE__;
               const eventKeys = Object.keys(apolloState).filter(k => k.startsWith('Event:'));
-              
+
               for (const key of eventKeys) {
                 const event = apolloState[key];
                 if (event && event.title) {
@@ -134,7 +134,7 @@ async function fetchMeetupEventsFromHTML() {
                   });
                 }
               }
-              
+
               console.log(`📍 Found ${events.length} events in Apollo state`);
             }
 
@@ -162,6 +162,189 @@ async function fetchMeetupEventsFromHTML() {
 
     req.end();
   });
+}
+
+// Configuration for the Global AI Lecce chapter page
+const GLOBALAI_LECCE_HOST = 'globalai.community';
+const GLOBALAI_LECCE_PATH = '/chapters/lecce/';
+const GLOBALAI_BASE_URL = `https://${GLOBALAI_LECCE_HOST}`;
+
+const MONTH_NAMES = {
+  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
+};
+
+/**
+ * Returns the last day-of-month number that is a Sunday for the given month.
+ */
+function lastSundayOfMonth(year, monthIndex) {
+  const lastDay = new Date(Date.UTC(year, monthIndex + 1, 0));
+  return lastDay.getUTCDate() - lastDay.getUTCDay();
+}
+
+/**
+ * Determine the Central European timezone offset for a given calendar date,
+ * accounting for European DST (CEST +02:00 vs CET +01:00).
+ */
+function centralEuropeOffset(year, monthIndex, day) {
+  const date = Date.UTC(year, monthIndex, day);
+  const dstStart = Date.UTC(year, 2, lastSundayOfMonth(year, 2)); // last Sunday March
+  const dstEnd = Date.UTC(year, 9, lastSundayOfMonth(year, 9)); // last Sunday October
+  return date >= dstStart && date < dstEnd ? '+02:00' : '+01:00';
+}
+
+/**
+ * Decode a small set of HTML entities found in the Global AI page text.
+ */
+function decodeHtmlEntities(str) {
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ');
+}
+
+/**
+ * Build an ISO 8601 datetime string from date parts, a HH:mm time and the
+ * proper Central European offset.
+ */
+function buildIsoDate(year, monthIndex, day, time) {
+  const [hh, mm] = time.split(':');
+  const mo = String(monthIndex + 1).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  const offset = centralEuropeOffset(year, monthIndex, day);
+  return `${year}-${mo}-${dd}T${hh.padStart(2, '0')}:${mm}:00${offset}`;
+}
+
+/**
+ * Fetch and parse events from the Global AI Lecce chapter page.
+ * The page is rendered server-side with `.gai-day` / `.gai-event` blocks.
+ */
+async function fetchGlobalAILecceEvents() {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: GLOBALAI_LECCE_HOST,
+      path: GLOBALAI_LECCE_PATH,
+      method: 'GET',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try {
+          resolve(parseGlobalAILecceEvents(data));
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+
+    req.on('error', (error) => reject(error));
+    req.end();
+  });
+}
+
+/**
+ * Parse the Global AI Lecce HTML into EventData objects.
+ */
+function parseGlobalAILecceEvents(html) {
+  const events = [];
+
+  // Each day group carries the date header followed by one or more events.
+  const dayBlocks = html.split('<div class="gai-day">').slice(1);
+
+  for (const block of dayBlocks) {
+    const dayMatch = block.match(/<div class="gai-day-num">\s*(\d+)\s*<\/div>/);
+    const monthMatch = block.match(/<div class="gai-day-month[^"]*">\s*([^<]+?)\s*<\/div>/);
+    if (!dayMatch || !monthMatch) continue;
+
+    const day = parseInt(dayMatch[1], 10);
+    const [monthName, yearStr] = decodeHtmlEntities(monthMatch[1]).trim().split(/\s+/);
+    const monthIndex = MONTH_NAMES[monthName.toLowerCase()];
+    const year = parseInt(yearStr, 10);
+    if (monthIndex === undefined || Number.isNaN(year)) continue;
+
+    // Extract each event anchor within this day block.
+    const eventPattern = /<a href="([^"]+)" class="gai-event[\s\S]*?<\/a>/g;
+    let eventMatch;
+    while ((eventMatch = eventPattern.exec(block)) !== null) {
+      const eventHtml = eventMatch[0];
+      const href = eventMatch[1];
+
+      const timeMatch = eventHtml.match(/<div class="gai-event-time">\s*(\d{1,2}:\d{2})/);
+      const endMatch = eventHtml.match(/<span>\s*[–-]\s*(\d{1,2}:\d{2})\s*<\/span>/);
+      const titleMatch = eventHtml.match(/<h3 class="gai-event-title">\s*([\s\S]*?)\s*<\/h3>/);
+      const locationMatch = eventHtml.match(/<span class="gai-event-location">[\s\S]*?<\/svg>\s*([^<]+?)\s*<\/span>/);
+      const onlineMatch = /gai-tag-online|Online/i.test(eventHtml);
+      const imgMatch = eventHtml.match(/<img src="([^"]+)"/);
+
+      if (!titleMatch) continue;
+
+      const title = decodeHtmlEntities(stripHtmlTags(titleMatch[1])).trim();
+      const startTime = timeMatch ? timeMatch[1] : '09:00';
+      const startDate = buildIsoDate(year, monthIndex, day, startTime);
+      const endDate = endMatch
+        ? buildIsoDate(year, monthIndex, day, endMatch[1])
+        : new Date(new Date(startDate).getTime() + 3 * 60 * 60 * 1000).toISOString();
+
+      const locationText = locationMatch ? decodeHtmlEntities(locationMatch[1]).trim() : 'Lecce, Italia';
+      const city = locationText.split(',')[0].trim() || 'Lecce';
+      const eventUrl = href.startsWith('http') ? href : `${GLOBALAI_BASE_URL}${href}`;
+      const imageUrl = imgMatch
+        ? (imgMatch[1].startsWith('http') ? imgMatch[1] : `${GLOBALAI_BASE_URL}${decodeHtmlEntities(imgMatch[1])}`)
+        : DEFAULT_IMAGE;
+
+      events.push({
+        name: title,
+        description: `Evento della community Global AI Lecce: ${title} (${locationText}).`,
+        startDate,
+        endDate,
+        eventStatus: 'EventScheduled',
+        eventAttendanceMode: onlineMatch ? 'OnlineEventAttendanceMode' : 'OfflineEventAttendanceMode',
+        location: onlineMatch
+          ? { '@type': 'VirtualLocation', name: 'Online Event', url: eventUrl }
+          : {
+            '@type': 'Place',
+            name: locationText,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: '',
+              addressLocality: city,
+              addressRegion: 'Puglia',
+              postalCode: '',
+              addressCountry: 'IT'
+            }
+          },
+        image: [imageUrl],
+        organizer: {
+          '@type': 'Organization',
+          name: 'Global AI Lecce',
+          url: `${GLOBALAI_BASE_URL}${GLOBALAI_LECCE_PATH}`
+        },
+        offers: {
+          '@type': 'Offer',
+          url: eventUrl,
+          price: '0',
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          validFrom: new Date().toISOString().split('T')[0]
+        }
+      });
+    }
+  }
+
+  console.log(`📍 Found ${events.length} event(s) on Global AI Lecce`);
+  return events;
 }
 
 /**
@@ -201,7 +384,7 @@ function readCurrentEvents() {
 function convertMeetupEventToEventData(meetupEvent) {
   const startDate = meetupEvent.dateTime || new Date().toISOString();
   const endDate = meetupEvent.endTime || new Date(new Date(startDate).getTime() + 3 * 60 * 60 * 1000).toISOString();
-  
+
   // Build location
   let location;
   if (meetupEvent.isOnline) {
@@ -383,6 +566,44 @@ export function getPastEvents(events: EventData[]): EventData[] {
 }
 
 /**
+ * Normalize an event name for fuzzy duplicate detection:
+ * lowercase, strip accents and any non-alphanumeric characters.
+ */
+function normalizeEventName(name) {
+  return name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+/**
+ * Decide whether a fetched event already exists among the current events.
+ * Matches on the offer URL, exact name, or same calendar day with a
+ * normalized-name containment (handles e.g. "Santa Cloud Day - Christmas
+ * edition" vs "Santa Cloud Day - Christmas Edition - 20 dicembre").
+ */
+function isDuplicateEvent(candidate, existingEvents) {
+  const candName = normalizeEventName(candidate.name);
+  const candDay = (candidate.startDate || '').slice(0, 10);
+  const candUrl = candidate.offers && candidate.offers.url;
+
+  return existingEvents.some((existing) => {
+    if (candUrl && existing.offers && existing.offers.url === candUrl) return true;
+
+    const exName = normalizeEventName(existing.name);
+    if (exName === candName) return true;
+
+    const exDay = (existing.startDate || '').slice(0, 10);
+    if (candDay && exDay === candDay && candName && exName &&
+      (exName.includes(candName) || candName.includes(exName))) {
+      return true;
+    }
+    return false;
+  });
+}
+
+/**
  * Main sync function
  */
 async function syncEvents() {
@@ -402,17 +623,26 @@ async function syncEvents() {
       console.log(`📅 Found ${meetupEvents.length} events on Meetup.com`);
     } catch (error) {
       console.warn(`⚠️  Could not fetch from Meetup.com: ${error.message}`);
-      console.log('ℹ️  Keeping existing events unchanged');
-
-      // Keep existing events
-      const fileContent = generateEventsFileContent(currentEvents);
-      fs.writeFileSync(EVENTS_FILE_PATH, fileContent, 'utf8');
-      console.log(`✅ Events file maintained: ${EVENTS_FILE_PATH}`);
-      return;
     }
 
-    if (meetupEvents.length === 0) {
-      console.log('ℹ️  No new events from Meetup, keeping all existing events (including past events)');
+    // Try to fetch from the Global AI Lecce chapter page
+    console.log(`🔗 URL: ${GLOBALAI_BASE_URL}${GLOBALAI_LECCE_PATH}`);
+    let globalAiEvents = [];
+    try {
+      globalAiEvents = await fetchGlobalAILecceEvents();
+    } catch (error) {
+      console.warn(`⚠️  Could not fetch from Global AI Lecce: ${error.message}`);
+    }
+
+    // Convert all fetched events to our EventData format.
+    // Meetup events need conversion; Global AI events are already EventData.
+    const convertedEvents = [
+      ...meetupEvents.map(e => convertMeetupEventToEventData(e)),
+      ...globalAiEvents
+    ];
+
+    if (convertedEvents.length === 0) {
+      console.log('ℹ️  No events fetched from any source, keeping all existing events (including past events)');
 
       // Keep ALL events (both upcoming and past) to show event history
       const now = new Date();
@@ -428,26 +658,24 @@ async function syncEvents() {
       return;
     }
 
-    // Convert Meetup events to our format
-    const convertedEvents = meetupEvents.map(e => convertMeetupEventToEventData(e));
-    
-    // Merge with existing events (keep past events, update/add new ones)
-    const existingNames = new Set(currentEvents.map(e => e.name));
-    const newEvents = convertedEvents.filter(e => !existingNames.has(e.name));
-    
+    // Merge with existing events (keep past events, update/add new ones).
+    // Past events are kept in the file and split into the "past events"
+    // section automatically by getPastEvents() based on their endDate.
+    const newEvents = convertedEvents.filter(e => !isDuplicateEvent(e, currentEvents));
+
     if (newEvents.length > 0) {
       console.log(`🆕 Found ${newEvents.length} new event(s):`);
       newEvents.forEach(e => console.log(`   - ${e.name}`));
-      
+
       const allEvents = [...currentEvents, ...newEvents];
       // Sort by date (newest first for upcoming, then past)
       allEvents.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
-      
+
       const fileContent = generateEventsFileContent(allEvents);
       fs.writeFileSync(EVENTS_FILE_PATH, fileContent, 'utf8');
       console.log(`✅ Events file updated: ${EVENTS_FILE_PATH}`);
     } else {
-      console.log('ℹ️  All Meetup events already exist in local file');
+      console.log('ℹ️  All fetched events already exist in local file');
     }
 
   } catch (error) {

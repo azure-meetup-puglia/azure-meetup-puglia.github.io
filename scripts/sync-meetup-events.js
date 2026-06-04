@@ -195,18 +195,24 @@ function centralEuropeOffset(year, monthIndex, day) {
 
 /**
  * Decode a small set of HTML entities found in the Global AI page text.
+ * A single pass is used so that the output of one replacement can never be
+ * re-interpreted as another entity (avoids double-unescaping).
  */
 function decodeHtmlEntities(str) {
-  return str
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&#x27;/g, "'")
-    .replace(/&apos;/g, "'")
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&nbsp;/g, ' ');
+  const named = {
+    '&amp;': '&',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&lt;': '<',
+    '&gt;': '>',
+    '&nbsp;': ' '
+  };
+  return str.replace(/&#x([0-9a-fA-F]+);|&#(\d+);|&(?:amp|quot|apos|lt|gt|nbsp);/g,
+    (match, hex, dec) => {
+      if (hex !== undefined) return String.fromCodePoint(parseInt(hex, 16));
+      if (dec !== undefined) return String.fromCodePoint(parseInt(dec, 10));
+      return named[match];
+    });
 }
 
 /**

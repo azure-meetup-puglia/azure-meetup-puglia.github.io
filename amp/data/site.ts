@@ -12,3 +12,6 @@ export const OG_IMAGE_WIDTH = '640';
 export const OG_IMAGE_HEIGHT = '336';
 export const OG_IMAGE_TYPE = 'image/png';
 export const OG_IMAGE_ALT = 'Azure Meetup Puglia - Community Microsoft Azure';
+
+/** Square organization logo, used by og:logo and the JSON-LD Organization schema. */
+export const OG_LOGO = `${SITE_URL}img/azure-meetup-puglia-logo_hq.png`;

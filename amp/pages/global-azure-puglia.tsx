@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List, Images } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
 
@@ -477,6 +477,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="event" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
         <meta property="og:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
         <meta property="og:image" content={OG_IMAGE} />

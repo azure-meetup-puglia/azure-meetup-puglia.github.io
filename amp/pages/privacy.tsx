@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, Shield } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, SITE_URL } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO, SITE_URL } from '../data/site';
 
 export default function Privacy() {
     const pageUrl = `${SITE_URL}privacy`;
@@ -18,6 +18,7 @@ export default function Privacy() {
                 {/* Open Graph / Facebook */}
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:logo" content={OG_LOGO} />
                 <meta property="og:title" content="Informativa Privacy | Azure Meetup Puglia" />
                 <meta property="og:description" content="Come trattiamo i dati personali dei partecipanti agli eventi, in conformità all'art. 13 GDPR." />
                 <meta property="og:url" content={pageUrl} />

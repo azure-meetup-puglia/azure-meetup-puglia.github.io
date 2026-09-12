@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, Utensils, CheckCircle, Heart, Mail } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 const GlobalAzurePugliaPranzo: NextPage = () => {
   const siteUrl = 'https://azure-meetup-puglia.github.io/';
@@ -20,6 +20,7 @@ const GlobalAzurePugliaPranzo: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Conferma Pranzo | Global Azure Puglia 2026" />
         <meta property="og:description" content="Le conferme per il pranzo del Global Azure Puglia 2026 sono chiuse. Grazie a tutta la community!" />
         <meta property="og:url" content={`${siteUrl}global-azure-puglia-pranzo`} />

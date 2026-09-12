@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Linkedin, Send, Users, Info, Code, UsersRound, Calendar, Lightbulb, Handshake, FileText, Mic, Shield, Mail, MapPin, ArrowRight, Ticket } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 interface LinkCardProps {
   href: string;
@@ -71,7 +71,7 @@ const AzureMeetupPuglia: NextPage = () => {
     "name": "Azure Meetup Puglia",
     "description": "Community pugliese dedicata al Cloud Microsoft Azure",
     "url": siteUrl,
-    "logo": `${siteUrl}/logo.png`,
+    "logo": OG_LOGO,
     "sameAs": [
       "https://www.linkedin.com/groups/10098125/",
       "https://www.meetup.com/azure-meetup-puglia",
@@ -111,6 +111,7 @@ const AzureMeetupPuglia: NextPage = () => {
         {/* Open Graph / Facebook */}
         < meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Azure Meetup Puglia | Community Cloud Microsoft Azure" />
         <meta property="og:description" content="Community pugliese per professionisti Microsoft Azure. Meetup tecnici, networking e crescita professionale nel cloud computing." />
         <meta property="og:image" content={OG_IMAGE} />

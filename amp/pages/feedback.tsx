@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, MessageSquare, Star, CheckCircle, AlertCircle } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 interface FeedbackFormData {
   // Sezione 1 - Profilo e partecipazione
@@ -128,6 +128,7 @@ const Feedback: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Feedback Evento | Azure Meetup Puglia" />
         <meta property="og:description" content="Condividi il tuo feedback sull'evento Azure Meetup Puglia. La tua opinione ci aiuta a migliorare." />
         <meta property="og:url" content={`${siteUrl}feedback`} />

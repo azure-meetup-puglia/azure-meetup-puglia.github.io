@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, Users, Calendar, FileText, AlertCircle, CheckCircle, MapPin, Link as LinkIcon } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 interface FormData {
   first_name: string;
@@ -134,6 +134,7 @@ const CallForSpeakers: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
         <meta property="og:description" content="Hai expertise su Azure, .NET, Cloud, AI o qualsiasi tema tech? Proponi il tuo talk alla community più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
         <meta property="og:image" content={OG_IMAGE} />

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { Linkedin, ArrowLeft } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, SITE_URL } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO, SITE_URL } from '../data/site';
 
 interface TeamMember {
     name: string;
@@ -62,6 +62,7 @@ export default function TeamPage() {
                 {/* Open Graph / Facebook */}
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:logo" content={OG_LOGO} />
                 <meta property="og:title" content="Il Team | Azure Meetup Puglia" />
                 <meta property="og:description" content="Chi organizza Azure Meetup Puglia: founder e organizer della community Microsoft Azure pugliese." />
                 <meta property="og:url" content={pageUrl} />

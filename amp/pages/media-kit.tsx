@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, CheckCircle, ClipboardList, Shield, HelpCircle, Zap, Download, FileText, Image as ImageIcon } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 const MediaKit: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
@@ -18,6 +18,7 @@ const MediaKit: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Media Kit - Azure Meetup Puglia" />
         <meta property="og:description" content="Informazioni per partner, sponsor e aziende interessate a collaborare con la community cloud pugliese." />
         <meta property="og:url" content={`${siteUrl}media-kit`} />

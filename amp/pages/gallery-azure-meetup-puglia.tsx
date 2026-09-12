@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft, Images } from 'lucide-react';
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 interface GalleryImage {
     alt: string;
@@ -63,6 +63,7 @@ const GalleryAzureMeetupPugliaPage: NextPage<InferGetStaticPropsType<typeof getS
                 <link rel="canonical" href={pageUrl} />
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:logo" content={OG_LOGO} />
                 <meta property="og:title" content="Gallery Azure Meetup Puglia" />
                 <meta property="og:description" content="Le foto del Global Azure Puglia 2026 raccolte in una gallery navigabile." />
                 <meta property="og:url" content={pageUrl} />

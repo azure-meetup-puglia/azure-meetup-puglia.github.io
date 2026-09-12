@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, SITE_URL } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO, SITE_URL } from '../data/site';
 
 export default function CodeOfConduct() {
     const pageUrl = `${SITE_URL}code-of-conduct`;
@@ -18,6 +18,7 @@ export default function CodeOfConduct() {
                 {/* Open Graph / Facebook */}
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:logo" content={OG_LOGO} />
                 <meta property="og:title" content="Codice di Condotta | Azure Meetup Puglia" />
                 <meta property="og:description" content="Un ambiente sicuro, accogliente e inclusivo per tutti i membri della community Azure Meetup Puglia." />
                 <meta property="og:url" content={pageUrl} />

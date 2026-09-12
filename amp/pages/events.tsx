@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown, Star, Code2 } from 'lucide-react';
 import { useState } from 'react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
-import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, OG_LOGO } from '../data/site';
 
 interface EventCardProps {
   event: EventData;
@@ -179,6 +179,7 @@ const EventsPage: NextPage = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Eventi Azure Meetup Puglia" />
         <meta property="og:description" content="Partecipa ai nostri eventi su Microsoft Azure, Cloud Computing e tecnologie correlate." />
         <meta property="og:image" content={OG_IMAGE} />

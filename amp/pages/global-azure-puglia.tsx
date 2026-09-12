@@ -460,8 +460,8 @@ const GlobalAzurePugliaPage: NextPage = () => {
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
         {/* Meta Tags Essenziali */}
-        <title>Global Azure Puglia 2026 | 17 Aprile - Bari | Evento Concluso</title>
-        <meta name="description" content="Global Azure Puglia 2026 - La prima edizione dell'evento Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
+        <title>Global Azure Puglia 2026 | 17 Aprile, Bari - Concluso</title>
+        <meta name="description" content="Global Azure Puglia 2026: la prima edizione si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote." />
         <meta name="keywords" content="Global Azure Puglia, Global Azure 2026, Azure Bari, Microsoft Azure Event, Cloud Computing Puglia, Azure Conference Italy, DevOps Event Bari, AI Azure Puglia" />
         <meta name="author" content="Azure Meetup Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -479,7 +479,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
-        <meta property="og:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
+        <meta property="og:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni e Workshop." />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:secure_url" content={OG_IMAGE} />
         <meta property="og:image:type" content={OG_IMAGE_TYPE} />

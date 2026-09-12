@@ -94,8 +94,8 @@ const AzureMeetupPuglia: NextPage = () => {
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
         {/* Meta Tags Essenziali */}
-        < title > Azure Meetup Puglia | Community Cloud Microsoft Azure - Bari, Lecce, Brindisi</title >
-        <meta name="description" content="Community tech pugliese dedicata a Microsoft Azure. Meetup tecnici, networking e formazione cloud per professionisti IT in Puglia. Eventi a Bari, Lecce, Brindisi." />
+        <title>Azure Meetup Puglia | Community Cloud Microsoft Azure</title>
+        <meta name="description" content="Community tech pugliese dedicata a Microsoft Azure. Meetup tecnici, networking e formazione cloud a Bari, Lecce e Brindisi." />
         <meta name="keywords" content="Azure Meetup Puglia, Microsoft Azure User Group, Cloud Computing, Bari, Brindisi, Foggia, Lecce, Taranto, Barletta, Andria, Trani, Community Tech, Tecnologia, DevOps, AI, Machine Learning, Software development, Programming, Coding" />
         <meta name="author" content="Azure Meetup Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -113,7 +113,7 @@ const AzureMeetupPuglia: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="Azure Meetup Puglia | Community Cloud Microsoft Azure" />
-        <meta property="og:description" content="Community pugliese per professionisti Microsoft Azure. Meetup tecnici, networking e crescita professionale nel cloud computing." />
+        <meta property="og:description" content="Community pugliese Microsoft Azure: meetup tecnici, networking e crescita professionale nel cloud." />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:secure_url" content={OG_IMAGE} />
         <meta property="og:image:type" content={OG_IMAGE_TYPE} />

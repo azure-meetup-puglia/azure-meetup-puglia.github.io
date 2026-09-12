@@ -10,7 +10,7 @@ const MediaKit: NextPage = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
-        <title>Media Kit - Azure Meetup Puglia | Informazioni per Partner e Sponsor</title>
+        <title>Media Kit - Azure Meetup Puglia | Partner e Sponsor</title>
         <meta name="description" content="Media Kit ufficiale di Azure Meetup Puglia. Informazioni per partner, sponsor e aziende interessate a collaborare con la nostra community cloud." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`${siteUrl}media-kit`} />

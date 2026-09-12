@@ -120,7 +120,7 @@ const CallForSpeakers: NextPage = () => {
       <Head>
         {/* Meta Tags Essenziali */}
         <title>Diventa Speaker | Azure Meetup Puglia - Proponi il tuo Talk</title>
-        <meta name="description" content="Proponi il tuo talk su Azure, Cloud, AI, .NET, DevOps o qualsiasi tema tech! Condividi le tue conoscenze con la community pugliese. Form sempre aperto per speaker da Bari, Lecce, Brindisi, Foggia e tutta la Puglia." />
+        <meta name="description" content="Proponi il tuo talk su Azure, Cloud, AI, .NET o DevOps. Form sempre aperto per speaker da Bari, Lecce, Brindisi, Foggia e tutta la Puglia." />
         <meta name="keywords" content="Call for Speakers, Azure Meetup Puglia, Microsoft Azure, .NET, C#, Blazor, Cloud Computing, DevOps, Docker, Kubernetes, AI, Machine Learning, sviluppo software, Speaker, Tech Talk, Bari, Lecce, Brindisi, Foggia, Taranto, Community Tech Puglia" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -136,7 +136,7 @@ const CallForSpeakers: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:logo" content={OG_LOGO} />
         <meta property="og:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
-        <meta property="og:description" content="Hai expertise su Azure, .NET, Cloud, AI o qualsiasi tema tech? Proponi il tuo talk alla community più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
+        <meta property="og:description" content="Hai expertise su Azure, .NET, Cloud o AI? Proponi il tuo talk alla community pugliese. Form sempre aperto 🚀" />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:secure_url" content={OG_IMAGE} />
         <meta property="og:image:type" content={OG_IMAGE_TYPE} />

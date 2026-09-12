@@ -166,7 +166,7 @@ const EventsPage: NextPage = () => {
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
       <Head>
         {/* Meta Tags Essenziali */}
-        <title>Eventi | Azure Meetup Puglia - Incontri, Workshop e Conferenze Azure</title>
+        <title>Eventi | Azure Meetup Puglia - Workshop e Conferenze</title>
         <meta name="description" content="Scopri gli eventi Azure Meetup Puglia: meetup tecnici, workshop e conferenze su Microsoft Azure, Cloud Computing, DevOps e AI in Puglia." />
         <meta name="keywords" content="Azure Events Puglia, Azure Meetup, Microsoft Azure, Cloud Events, Tech Meetups Bari, DevOps Events, AI Workshop Puglia" />
         <meta name="author" content="Azure Meetup Puglia" />

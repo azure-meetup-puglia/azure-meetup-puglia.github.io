@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, MessageSquare, Star, CheckCircle, AlertCircle } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface FeedbackFormData {
   // Sezione 1 - Profilo e partecipazione
@@ -123,6 +124,27 @@ const Feedback: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="canonical" href={`${siteUrl}feedback`} />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:title" content="Feedback Evento | Azure Meetup Puglia" />
+        <meta property="og:description" content="Condividi il tuo feedback sull'evento Azure Meetup Puglia. La tua opinione ci aiuta a migliorare." />
+        <meta property="og:url" content={`${siteUrl}feedback`} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+        <meta property="og:locale" content="it_IT" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Feedback Evento | Azure Meetup Puglia" />
+        <meta name="twitter:description" content="Raccontaci com'è andato l'evento: bastano due minuti." />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
       </Head>
 
       <div className="p-4 md:p-8">

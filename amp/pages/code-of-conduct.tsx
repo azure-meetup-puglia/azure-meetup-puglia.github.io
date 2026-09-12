@@ -2,23 +2,50 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, SITE_URL } from '../data/site';
 
 export default function CodeOfConduct() {
+    const pageUrl = `${SITE_URL}code-of-conduct`;
+
     return (
         <div className="min-h-screen bg-gray-900 text-gray-200 font-sans p-4 md:p-8">
             <Head>
                 <title>Codice di Condotta | Azure Meetup Puglia</title>
+                <meta name="description" content="Il Codice di Condotta di Azure Meetup Puglia: un ambiente sicuro, accogliente e inclusivo per tutti i membri della community." />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={pageUrl} />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:title" content="Codice di Condotta | Azure Meetup Puglia" />
+                <meta property="og:description" content="Un ambiente sicuro, accogliente e inclusivo per tutti i membri della community Azure Meetup Puglia." />
+                <meta property="og:url" content={pageUrl} />
+                <meta property="og:image" content={OG_IMAGE} />
+                <meta property="og:image:secure_url" content={OG_IMAGE} />
+                <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+                <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+                <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+                <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+                <meta property="og:locale" content="it_IT" />
+
+                {/* Twitter Card */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Codice di Condotta | Azure Meetup Puglia" />
+                <meta name="twitter:description" content="Le regole che rendono la nostra community un posto sicuro e inclusivo." />
+                <meta name="twitter:image" content={OG_IMAGE} />
+                <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
             </Head>
 
             <div className="max-w-4xl mx-auto space-y-8">
-                <Link 
+                <Link
                     href="/"
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-6"
                 >
                     <ArrowLeft className="w-4 h-4" />
                     Torna alla Home
                 </Link>
-                
+
                 <h1 className="text-4xl font-bold text-blue-400 text-center">Codice di Condotta</h1>
 
                 <p>
@@ -89,9 +116,9 @@ export default function CodeOfConduct() {
                         </a>
                     </li>
                 </ul>
-                
+
                 <footer className="mt-16 pt-8 pb-6 border-t border-gray-700 text-center">
-                    <Link 
+                    <Link
                         href="/"
                         className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
                     >

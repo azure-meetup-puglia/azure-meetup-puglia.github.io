@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Linkedin, Send, Users, Info, Code, UsersRound, Calendar, Lightbulb, Handshake, FileText, Mic, Shield, Mail, MapPin, ArrowRight, Ticket } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface LinkCardProps {
   href: string;
@@ -112,10 +113,12 @@ const AzureMeetupPuglia: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:title" content="Azure Meetup Puglia | Community Cloud Microsoft Azure" />
         <meta property="og:description" content="Community pugliese per professionisti Microsoft Azure. Meetup tecnici, networking e crescita professionale nel cloud computing." />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:image:alt" content="Azure Meetup Puglia - Community Microsoft Azure" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="675" />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
         <meta property="og:url" content={siteUrl} />
         <meta property="og:locale" content="it_IT" />
 
@@ -123,8 +126,8 @@ const AzureMeetupPuglia: NextPage = () => {
         < meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Azure Meetup Puglia | Community Cloud Microsoft" />
         <meta name="twitter:description" content="Community pugliese Microsoft Azure. Meetup tecnici e networking per professionisti cloud." />
-        <meta name="twitter:image" content={imageUrl} />
-        <meta name="twitter:image:alt" content="Azure Meetup Puglia Community" />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
 
         {/* Additional Meta Tags */}
         < meta name="theme-color" content="#1f2937" />

@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, Utensils, CheckCircle, Heart, Mail } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 const GlobalAzurePugliaPranzo: NextPage = () => {
   const siteUrl = 'https://azure-meetup-puglia.github.io/';
@@ -15,6 +16,27 @@ const GlobalAzurePugliaPranzo: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="canonical" href={`${siteUrl}global-azure-puglia-pranzo`} />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:title" content="Conferma Pranzo | Global Azure Puglia 2026" />
+        <meta property="og:description" content="Le conferme per il pranzo del Global Azure Puglia 2026 sono chiuse. Grazie a tutta la community!" />
+        <meta property="og:url" content={`${siteUrl}global-azure-puglia-pranzo`} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+        <meta property="og:locale" content="it_IT" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Conferma Pranzo | Global Azure Puglia 2026" />
+        <meta name="twitter:description" content="Le conferme per il pranzo del Global Azure Puglia 2026 sono chiuse." />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
       </Head>
 
       <div className="p-4 md:p-8">

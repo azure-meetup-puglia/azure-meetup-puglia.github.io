@@ -2,14 +2,39 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, Shield } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH, SITE_URL } from '../data/site';
 
 export default function Privacy() {
+    const pageUrl = `${SITE_URL}privacy`;
+
     return (
         <div className="min-h-screen bg-gray-900 text-gray-200 font-sans p-4 md:p-8">
             <Head>
                 <title>Informativa Privacy | Azure Meetup Puglia</title>
                 <meta name="description" content="Informativa Privacy per gli eventi di Azure Meetup Puglia in conformità all'art. 13 GDPR" />
                 <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={pageUrl} />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="Azure Meetup Puglia" />
+                <meta property="og:title" content="Informativa Privacy | Azure Meetup Puglia" />
+                <meta property="og:description" content="Come trattiamo i dati personali dei partecipanti agli eventi, in conformità all'art. 13 GDPR." />
+                <meta property="og:url" content={pageUrl} />
+                <meta property="og:image" content={OG_IMAGE} />
+                <meta property="og:image:secure_url" content={OG_IMAGE} />
+                <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+                <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+                <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+                <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+                <meta property="og:locale" content="it_IT" />
+
+                {/* Twitter Card */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Informativa Privacy | Azure Meetup Puglia" />
+                <meta name="twitter:description" content="Informativa privacy degli eventi Azure Meetup Puglia." />
+                <meta name="twitter:image" content={OG_IMAGE} />
+                <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
             </Head>
 
             <div className="max-w-4xl mx-auto space-y-8">

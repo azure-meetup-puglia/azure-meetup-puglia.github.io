@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Calendar, MapPin, Clock, ExternalLink, Mic, Award, Building2, CheckCircle, Ticket, Users, LayoutGrid, List, Images } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 const SESSIONIZE_BASE = "https://sessionize.com/api/v2/b481sscy/view";
 
@@ -478,10 +479,12 @@ const GlobalAzurePugliaPage: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
         <meta property="og:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile a Bari. 2 Track, 12+ Sessioni, Workshop e Keynote. Grazie a tutta la community!" />
-        <meta property="og:image" content={eventImageUrl} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
         <meta property="og:image:alt" content="Global Azure Puglia 2026 - Evento Microsoft Azure" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="675" />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:locale" content="it_IT" />
         <meta property="event:start_time" content="2026-04-17T08:30:00+02:00" />
@@ -491,7 +494,7 @@ const GlobalAzurePugliaPage: NextPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Global Azure Puglia 2026 - 17 Aprile, Bari · Evento Concluso" />
         <meta name="twitter:description" content="La prima edizione di Global Azure in Puglia si è svolta il 17 Aprile. Grazie a tutta la community!" />
-        <meta name="twitter:image" content={eventImageUrl} />
+        <meta name="twitter:image" content={OG_IMAGE} />
         <meta name="twitter:image:alt" content="Global Azure Puglia 2026" />
 
         {/* Additional Meta Tags */}

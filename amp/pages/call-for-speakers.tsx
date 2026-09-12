@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, Users, Calendar, FileText, AlertCircle, CheckCircle, MapPin, Link as LinkIcon } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface FormData {
   first_name: string;
@@ -135,10 +136,12 @@ const CallForSpeakers: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
         <meta property="og:description" content="Hai expertise su Azure, .NET, Cloud, AI o qualsiasi tema tech? Proponi il tuo talk alla community più attiva della Puglia! Form sempre aperto, eventi in tutta la regione 🚀" />
-        <meta property="og:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
         <meta property="og:image:alt" content="Azure Meetup Puglia - Call for Speakers" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
         <meta property="og:url" content={`${siteUrl}call-for-speakers`} />
         <meta property="og:locale" content="it_IT" />
 
@@ -148,7 +151,7 @@ const CallForSpeakers: NextPage = () => {
         <meta name="twitter:creator" content="@AzurePuglia" />
         <meta name="twitter:title" content="🎤 Diventa Speaker - Azure Meetup Puglia" />
         <meta name="twitter:description" content="Proponi il tuo talk su Azure, .NET, Cloud, AI o qualsiasi tema tech! Form sempre aperto per speaker da tutta la Puglia 🚀" />
-        <meta name="twitter:image" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        <meta name="twitter:image" content={OG_IMAGE} />
         <meta name="twitter:image:alt" content="Azure Meetup Puglia - Diventa Speaker" />
 
         {/* Additional Meta */}
@@ -160,7 +163,7 @@ const CallForSpeakers: NextPage = () => {
         <meta property="article:published_time" content={new Date().toISOString()} />
 
         {/* WhatsApp/Telegram preview */}
-        <meta property="og:image:secure_url" content="https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp" />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />

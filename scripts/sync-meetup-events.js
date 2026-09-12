@@ -492,6 +492,8 @@ export interface EventData {
     url?: string; // For virtual events
   };
   image?: string[];
+  sameAs?: string[]; // Alternate registration pages for the same event (Luma, Eventbrite...)
+  standalone?: boolean; // Keep as its own event even if another one shares the same day
   organizer: {
     '@type': 'Organization';
     name: string;
@@ -571,42 +573,93 @@ export function getPastEvents(events: EventData[]): EventData[] {
   return template;
 }
 
+// Manually curated entries win over any scraped source; Meetup wins over
+// Global AI/Luma because it is where we keep venue, time and mailing details.
+const SOURCE_PRIORITY = { manual: 3, meetup: 2, globalai: 1 };
+
 /**
- * Normalize an event name for fuzzy duplicate detection:
- * lowercase, strip accents and any non-alphanumeric characters.
+ * Identify which source produced an event, so merges keep the richer record.
  */
-function normalizeEventName(name) {
-  return name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '');
+function detectEventSource(event) {
+  const url = (event.offers && event.offers.url) || '';
+  const organizer = (event.organizer && event.organizer.url) || '';
+  if (/meetup\.com/i.test(url)) return 'meetup';
+  if (/lu\.ma|luma\.com|globalai\.community/i.test(url + organizer)) return 'globalai';
+  return 'manual';
 }
 
 /**
- * Decide whether a fetched event already exists among the current events.
- * Matches on the offer URL, exact name, or same calendar day with a
- * normalized-name containment (handles e.g. "Santa Cloud Day - Christmas
- * edition" vs "Santa Cloud Day - Christmas Edition - 20 dicembre").
+ * The community never runs two distinct events on the same day, so a shared
+ * calendar day is enough to treat two records as the same real-world event
+ * regardless of which platform they were published on.
+ *
+ * Set `"standalone": true` by hand on an event that legitimately shares a day
+ * with another one (a separately ticketed workshop or lunch) to keep the sync
+ * from collapsing it.
  */
-function isDuplicateEvent(candidate, existingEvents) {
-  const candName = normalizeEventName(candidate.name);
-  const candDay = (candidate.startDate || '').slice(0, 10);
-  const candUrl = candidate.offers && candidate.offers.url;
+function isSameEvent(a, b) {
+  if (a.standalone || b.standalone) return false;
+  const dayA = (a.startDate || '').slice(0, 10);
+  const dayB = (b.startDate || '').slice(0, 10);
+  return Boolean(dayA) && dayA === dayB;
+}
 
-  return existingEvents.some((existing) => {
-    if (candUrl && existing.offers && existing.offers.url === candUrl) return true;
+/**
+ * Combine two records of the same event: the higher-priority source drives
+ * name, dates and registration URL, while missing or placeholder fields are
+ * filled from the other record. All registration links are kept in `sameAs`.
+ */
+function mergeEvents(a, b) {
+  const [primary, secondary] = SOURCE_PRIORITY[detectEventSource(b)] > SOURCE_PRIORITY[detectEventSource(a)]
+    ? [b, a]
+    : [a, b];
 
-    const exName = normalizeEventName(existing.name);
-    if (exName === candName) return true;
+  const merged = { ...secondary, ...primary };
 
-    const exDay = (existing.startDate || '').slice(0, 10);
-    if (candDay && exDay === candDay && candName && exName &&
-      (exName.includes(candName) || candName.includes(exName))) {
-      return true;
+  if ((secondary.description || '').length > (primary.description || '').length) {
+    merged.description = secondary.description;
+  }
+
+  const primaryVenue = primary.location && primary.location.name;
+  if (!primaryVenue || primaryVenue === 'TBD') {
+    const secondaryVenue = secondary.location && secondary.location.name;
+    if (secondaryVenue && secondaryVenue !== 'TBD') merged.location = secondary.location;
+  }
+
+  const primaryImage = (primary.image || [])[0];
+  if (!primaryImage || primaryImage === DEFAULT_IMAGE) {
+    const secondaryImage = (secondary.image || [])[0];
+    if (secondaryImage && secondaryImage !== DEFAULT_IMAGE) merged.image = secondary.image;
+  }
+
+  const alternates = new Set([
+    ...(primary.sameAs || []),
+    ...(secondary.sameAs || [])
+  ]);
+  if (secondary.offers && secondary.offers.url) alternates.add(secondary.offers.url);
+  const primaryUrl = merged.offers && merged.offers.url;
+  alternates.delete(primaryUrl);
+  if (alternates.size > 0) merged.sameAs = [...alternates];
+
+  return merged;
+}
+
+/**
+ * Collapse a list of events, merging every group that describes the same
+ * real-world event. Earlier entries keep their position in the list.
+ */
+function dedupeEvents(events, onMerge) {
+  const result = [];
+  for (const event of events) {
+    const index = result.findIndex(existing => isSameEvent(existing, event));
+    if (index === -1) {
+      result.push(event);
+      continue;
     }
-    return false;
-  });
+    if (onMerge) onMerge(result[index], event);
+    result[index] = mergeEvents(result[index], event);
+  }
+  return result;
 }
 
 /**
@@ -665,18 +718,53 @@ async function syncEvents() {
     }
 
     // Merge with existing events (keep past events, update/add new ones).
-    // Past events are kept in the file and split into the "past events"
-    // section automatically by getPastEvents() based on their endDate.
-    const newEvents = convertedEvents.filter(e => !isDuplicateEvent(e, currentEvents));
+    // Deduplication runs over existing + fetched events together, so two
+    // records of the same event coming from different platforms in the same
+    // run are collapsed instead of both being appended.
+    const merges = [];
+    const onMerge = (kept, dropped) => merges.push({
+      kept: kept.name,
+      dropped: dropped.name,
+      day: (kept.startDate || '').slice(0, 10)
+    });
+
+    // First collapse duplicates already sitting in the file, then fold in
+    // whatever the sources returned.
+    const allEvents = dedupeEvents(currentEvents, onMerge);
+    const newIndexes = [];
+
+    for (const candidate of convertedEvents) {
+      const index = allEvents.findIndex(existing => isSameEvent(existing, candidate));
+      if (index === -1) {
+        newIndexes.push(allEvents.length);
+        allEvents.push(candidate);
+        continue;
+      }
+      onMerge(allEvents[index], candidate);
+      allEvents[index] = mergeEvents(allEvents[index], candidate);
+    }
+
+    const newEvents = newIndexes.map(i => allEvents[i]);
+
+    if (merges.length > 0) {
+      console.log(`🔗 ${merges.length} record(s) collassati come duplicati (stesso giorno):`);
+      merges.forEach(m => console.log(`   - scartato "${m.dropped}" — stesso giorno (${m.day}) di "${m.kept}"`));
+      console.log('   ↳ se uno di questi era un evento diverso, aggiungi "standalone": true in events.ts');
+    }
 
     if (newEvents.length > 0) {
       console.log(`🆕 Found ${newEvents.length} new event(s):`);
       newEvents.forEach(e => console.log(`   - ${e.name}`));
+    }
 
-      const allEvents = [...currentEvents, ...newEvents];
-      // Sort by date (newest first for upcoming, then past)
-      allEvents.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+    // Sort by date (newest first for upcoming, then past)
+    allEvents.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 
+    const hasChanges = JSON.stringify(allEvents) !== JSON.stringify(
+      [...currentEvents].sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+    );
+
+    if (hasChanges) {
       const fileContent = generateEventsFileContent(allEvents);
       fs.writeFileSync(EVENTS_FILE_PATH, fileContent, 'utf8');
       console.log(`✅ Events file updated: ${EVENTS_FILE_PATH}`);

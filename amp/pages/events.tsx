@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Calendar, MapPin, Clock, Users, ExternalLink, Video, ArrowLeft, ChevronDown, Star, Code2 } from 'lucide-react';
 import { useState } from 'react';
 import { events, EventData, generateEventsListSchema, getUpcomingEvents, getPastEvents } from '../data/events';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface EventCardProps {
   event: EventData;
@@ -151,7 +152,6 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 const EventsPage: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
   const pageUrl = `${siteUrl}events`;
-  const imageUrl = "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp";
 
   const upcomingEvents = getUpcomingEvents(events);
   const pastEvents = getPastEvents(events);
@@ -181,7 +181,12 @@ const EventsPage: NextPage = () => {
         <meta property="og:site_name" content="Azure Meetup Puglia" />
         <meta property="og:title" content="Eventi Azure Meetup Puglia" />
         <meta property="og:description" content="Partecipa ai nostri eventi su Microsoft Azure, Cloud Computing e tecnologie correlate." />
-        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:locale" content="it_IT" />
 
@@ -189,7 +194,8 @@ const EventsPage: NextPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Eventi Azure Meetup Puglia" />
         <meta name="twitter:description" content="Meetup tecnici e workshop su Microsoft Azure in Puglia" />
-        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
 
         {/* Theme */}
         <meta name="theme-color" content="#1f2937" />

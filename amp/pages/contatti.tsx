@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useWeb3Forms from '@web3forms/react';
 import { ArrowLeft, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface ContactFormData {
   nome: string;
@@ -77,6 +78,27 @@ const Contatti: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="canonical" href={`${siteUrl}contatti`} />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:title" content="Contatti | Azure Meetup Puglia" />
+        <meta property="og:description" content="Contattaci per informazioni, proposte di collaborazione o per ospitare un meetup Azure in Puglia." />
+        <meta property="og:url" content={`${siteUrl}contatti`} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+        <meta property="og:locale" content="it_IT" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contatti | Azure Meetup Puglia" />
+        <meta name="twitter:description" content="Scrivici per collaborazioni, ospitalità o informazioni sulla community." />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
       </Head>
 
       <div className="p-4 md:p-8">

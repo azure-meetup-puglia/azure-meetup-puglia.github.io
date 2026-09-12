@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, MapPin, Users, Calendar, TrendingUp, Handshake, Building2, Gift, CheckCircle, ClipboardList, Shield, HelpCircle, Zap, Download, FileText, Image as ImageIcon } from 'lucide-react';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 const MediaKit: NextPage = () => {
   const siteUrl = "https://azure-meetup-puglia.github.io/";
@@ -13,6 +14,27 @@ const MediaKit: NextPage = () => {
         <meta name="description" content="Media Kit ufficiale di Azure Meetup Puglia. Informazioni per partner, sponsor e aziende interessate a collaborare con la nostra community cloud." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`${siteUrl}media-kit`} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Azure Meetup Puglia" />
+        <meta property="og:title" content="Media Kit - Azure Meetup Puglia" />
+        <meta property="og:description" content="Informazioni per partner, sponsor e aziende interessate a collaborare con la community cloud pugliese." />
+        <meta property="og:url" content={`${siteUrl}media-kit`} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:secure_url" content={OG_IMAGE} />
+        <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+        <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+        <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+        <meta property="og:locale" content="it_IT" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Media Kit - Azure Meetup Puglia" />
+        <meta name="twitter:description" content="Tutte le informazioni per partner e sponsor della community." />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
       </Head>
 
       <div className="p-4 md:p-8">
@@ -34,7 +56,7 @@ const MediaKit: NextPage = () => {
               Azure Meetup Puglia
             </p>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Community tecnica indipendente su Microsoft Azure, cloud-native, AI e DevOps. 
+              Community tecnica indipendente su Microsoft Azure, cloud-native, AI e DevOps.
               Eventi mensili, formato snello, 100% volontario. Nessuna fee: lavoriamo con partnership in-kind.
             </p>
           </div>
@@ -276,7 +298,7 @@ const MediaKit: NextPage = () => {
                   <li>• Accesso a use case, demo, tecnologie</li>
                   <li>• Ispirazione e confronto</li>
                 </ul>
-                
+
                 <div className="mt-4 bg-green-900/20 border border-green-600 rounded-lg p-3">
                   <p className="text-green-200 text-sm">
                     <strong>Inclusività:</strong> Eventi e materiali concepiti per accessibilità (spazi senza barriere, sottotitoli per online quando possibile)
@@ -288,7 +310,7 @@ const MediaKit: NextPage = () => {
             <div className="mt-6 bg-blue-900/20 border border-blue-600 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-white mb-2">🤝 Collaborazioni</h3>
               <p className="text-gray-300">
-                Collaboriamo attivamente con <strong className="text-blue-300">Global AI Community</strong> (<a href="https://globalai.community/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">globalai.community</a>) per i capitoli di Bari e Lecce. 
+                Collaboriamo attivamente con <strong className="text-blue-300">Global AI Community</strong> (<a href="https://globalai.community/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">globalai.community</a>) per i capitoli di Bari e Lecce.
                 <span className="text-yellow-200"> A breve aggiungeremo altre community tech sul territorio</span> per ampliare l'offerta formativa.
               </p>
             </div>
@@ -357,13 +379,13 @@ const MediaKit: NextPage = () => {
               <TrendingUp className="w-6 h-6" />
               Misurazione & Reportistica
             </h2>
-            
+
             <div className="bg-blue-900/20 border border-blue-600 rounded-lg p-4 mb-6">
               <p className="text-blue-200">
                 Dopo ogni evento condividiamo un <strong className="text-white">Event Recap</strong> con:
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <ul className="space-y-2 text-gray-300">
                 <li>• Iscritti su Meetup.com e <strong className="text-white">check-in</strong> partecipanti</li>
@@ -481,7 +503,7 @@ const MediaKit: NextPage = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 bg-gray-600 rounded-lg p-3">
                   <p className="text-xs text-gray-300">
                     <strong className="text-white">Requisiti minimi:</strong> Wi-Fi stabile (≥ 50/10 Mbps) • prese elettriche • accesso disabili • assistenza IT di sala
@@ -520,7 +542,7 @@ const MediaKit: NextPage = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 bg-green-900/20 border border-green-600/30 rounded-lg p-3">
                   <p className="text-xs text-green-200">
                     <strong>Focus Azure, zero sales pitch:</strong> i contenuti sono tecnici, indipendenti e curati per garantire qualità e imparzialità.
@@ -536,7 +558,7 @@ const MediaKit: NextPage = () => {
               <ClipboardList className="w-6 h-6" />
               Checklist per ospitare un evento
             </h2>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h3 className="text-lg font-semibold text-white mb-4">📅 Tempistiche</h3>
@@ -547,7 +569,7 @@ const MediaKit: NextPage = () => {
                   <li><strong className="text-yellow-200">T+1 giorno:</strong> recap e reportistica</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold text-white mb-4">🛠️ Setup tecnico</h3>
                 <ul className="space-y-2 text-gray-300 text-sm">
@@ -555,7 +577,7 @@ const MediaKit: NextPage = () => {
                   <li>• Audio/microfoni; clicker; tavolo per demo</li>
                   <li>• Guest Wi-Fi o rete dedicata; credenziali su slide</li>
                 </ul>
-                
+
                 <h3 className="text-lg font-semibold text-white mb-2 mt-4">♿ Accessibilità & sicurezza</h3>
                 <ul className="space-y-2 text-gray-300 text-sm">
                   <li>• Indicazioni ingresso; accesso disabili; policy foto</li>
@@ -609,11 +631,11 @@ const MediaKit: NextPage = () => {
             </h2>
             <div className="text-gray-300 space-y-4">
               <p>
-                Siamo una community <strong className="text-white">inclusiva e rispettosa</strong>. 
+                Siamo una community <strong className="text-white">inclusiva e rispettosa</strong>.
                 Zero tolleranza per comportamenti molesti o discriminatori.
               </p>
               <p>
-                Gli speaker evitano contenuti offensivi o pitch puramente commerciali. 
+                Gli speaker evitano contenuti offensivi o pitch puramente commerciali.
               </p>
               <p>
                 <strong className="text-yellow-200">Segnalazioni:</strong> direttamente agli organizzatori in loco o via DM sui canali ufficiali.
@@ -632,22 +654,22 @@ const MediaKit: NextPage = () => {
                 <p className="font-semibold text-white mb-1">Gli eventi sono gratuiti?</p>
                 <p className="text-gray-300">Sì, tutti gli eventi sono completamente gratuiti.</p>
               </div>
-              
+
               <div>
                 <p className="font-semibold text-white mb-1">Registrate gli eventi?</p>
                 <p className="text-gray-300">In presenza no; online sì. Foto: solo platea/ambienti, no aree sensibili. Nessuna registrazione salvo accordi.</p>
               </div>
-              
+
               <div>
                 <p className="font-semibold text-white mb-1">Possiamo fare recruiting?</p>
                 <p className="text-gray-300">Sì: desk dedicato se predisposto e concordato, job board nei post-evento.</p>
               </div>
-              
+
               <div>
                 <p className="font-semibold text-white mb-1">Chi seleziona gli speaker?</p>
                 <p className="text-gray-300">Program committee; Call for Speakers sempre aperta.</p>
               </div>
-              
+
               <div>
                 <p className="font-semibold text-white mb-1">Come vi contattiamo?</p>
                 <p className="text-gray-300">Via LinkedIn (Azure Meetup Puglia) o pagina Meetup dell'evento.</p>

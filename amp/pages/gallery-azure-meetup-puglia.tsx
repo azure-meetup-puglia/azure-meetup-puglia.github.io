@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft, Images } from 'lucide-react';
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
+import { OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_HEIGHT, OG_IMAGE_TYPE, OG_IMAGE_WIDTH } from '../data/site';
 
 interface GalleryImage {
     alt: string;
@@ -49,7 +50,6 @@ const GalleryAzureMeetupPugliaPage: NextPage<InferGetStaticPropsType<typeof getS
     const [activeIndex, setActiveIndex] = useState(-1);
     const siteUrl = 'https://azure-meetup-puglia.github.io/';
     const pageUrl = `${siteUrl}gallery-azure-meetup-puglia`;
-    const previewImage = images[0]?.src ? `${siteUrl}${images[0].src.replace(/^\//, '')}` : undefined;
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-200 font-sans">
@@ -66,11 +66,18 @@ const GalleryAzureMeetupPugliaPage: NextPage<InferGetStaticPropsType<typeof getS
                 <meta property="og:title" content="Gallery Azure Meetup Puglia" />
                 <meta property="og:description" content="Le foto del Global Azure Puglia 2026 raccolte in una gallery navigabile." />
                 <meta property="og:url" content={pageUrl} />
-                {previewImage && <meta property="og:image" content={previewImage} />}
+                <meta property="og:image" content={OG_IMAGE} />
+                <meta property="og:image:secure_url" content={OG_IMAGE} />
+                <meta property="og:image:type" content={OG_IMAGE_TYPE} />
+                <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+                <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+                <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+                <meta property="og:locale" content="it_IT" />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Gallery Azure Meetup Puglia" />
                 <meta name="twitter:description" content="Sfoglia la gallery fotografica del Global Azure Puglia 2026." />
-                {previewImage && <meta name="twitter:image" content={previewImage} />}
+                <meta name="twitter:image" content={OG_IMAGE} />
+                <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
             </Head>
 
             <a

@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-09-12T21:24:00.671Z
+ * Last synced: 2026-09-12T21:33:57.780Z
  * Auto-synced from Meetup.com
  */
 
@@ -27,6 +27,8 @@ export interface EventData {
     url?: string; // For virtual events
   };
   image?: string[];
+  sameAs?: string[]; // Alternate registration pages for the same event (Luma, Eventbrite...)
+  standalone?: boolean; // Keep as its own event even if another one shares the same day
   organizer: {
     '@type': 'Organization';
     name: string;
@@ -61,11 +63,11 @@ export const events: EventData[] = [
     "eventAttendanceMode": "OfflineEventAttendanceMode",
     "location": {
       "@type": "Place",
-      "name": "TBD",
+      "name": "Lecce, Italia",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "",
-        "addressLocality": "Puglia",
+        "addressLocality": "Lecce",
         "addressRegion": "Puglia",
         "postalCode": "",
         "addressCountry": "IT"
@@ -86,47 +88,14 @@ export const events: EventData[] = [
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock",
       "validFrom": "2026-09-12"
-    }
-  },
-  {
-    "name": "Dev Days Lecce",
-    "description": "Evento della community Global AI Lecce: Dev Days Lecce (Lecce, Italia).",
-    "startDate": "2026-10-23T09:00:00+02:00",
-    "endDate": "2026-10-23T10:00:00.000Z",
-    "eventStatus": "EventScheduled",
-    "eventAttendanceMode": "OfflineEventAttendanceMode",
-    "location": {
-      "@type": "Place",
-      "name": "Lecce, Italia",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "",
-        "addressLocality": "Lecce",
-        "addressRegion": "Puglia",
-        "postalCode": "",
-        "addressCountry": "IT"
-      }
     },
-    "image": [
-      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
-    ],
-    "organizer": {
-      "@type": "Organization",
-      "name": "Global AI Lecce",
-      "url": "https://globalai.community/chapters/lecce/"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://luma.com/uyyudkfu",
-      "price": "0",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock",
-      "validFrom": "2026-09-12"
-    }
+    "sameAs": [
+      "https://luma.com/uyyudkfu"
+    ]
   },
   {
     "name": "Build //localhost:Lecce",
-    "description": "Evento della community Global AI Lecce: Build //localhost:Lecce (Lecce, Italy).",
+    "description": "Evento della community Global AI Lecce: Build //localhost:Lecce (Lecce, Italia).",
     "startDate": "2026-06-18T18:00:00+02:00",
     "endDate": "2026-06-18T21:00:00+02:00",
     "eventStatus": "EventScheduled",
@@ -158,7 +127,10 @@ export const events: EventData[] = [
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock",
       "validFrom": "2026-06-04"
-    }
+    },
+    "sameAs": [
+      "https://globalai.community/e/trahdmqs"
+    ]
   },
   {
     "name": "Global Azure Puglia 2026 - 17 aprile - Bari",
@@ -313,18 +285,18 @@ export const events: EventData[] = [
     "eventAttendanceMode": "OfflineEventAttendanceMode",
     "location": {
       "@type": "Place",
-      "name": "TBD",
+      "name": "Lecce, Italia",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "",
-        "addressLocality": "Puglia",
+        "addressLocality": "Lecce",
         "addressRegion": "Puglia",
         "postalCode": "",
         "addressCountry": "IT"
       }
     },
     "image": [
-      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+      "https://globalai.community/img/event/gvmzv2ji/3e653e391acb4cba99be974b2db43754.png?w=600&h=600&mode=pad&format=webp"
     ],
     "organizer": {
       "@type": "Organization",
@@ -338,11 +310,14 @@ export const events: EventData[] = [
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock",
       "validFrom": "2025-12-08"
-    }
+    },
+    "sameAs": [
+      "https://globalai.community/e/gvmzv2ji"
+    ]
   },
   {
     "name": "Azure Meetup Puglia #2 - Desotech - 24 novembre",
-    "description": "Secondo incontro di Azure Meetup Puglia presso Desotech ad Altamura. Sessioni tecniche su Cloud Computing, Microsoft Azure, Intelligenza Artificiale, Software Development e DevOps. L'evento è gratuito con posti limitati. In collaborazione con Improove, ogni partecipante riceverà dei gadget. Networking e drinks inclusi.",
+    "description": "**🚨🚨**\n**L’evento è gratuito e la registrazione è attiva tramite [questo link su EventBrite](https://www.eventbrite.it/e/azure-meetup-puglia-desotech-24-novembre-tickets-1830963183169?aff=oddtdtcreator)! (l'RSVP della pagina del Meetup non è ancora attivo).**\n**🚨🚨**\n\nSiamo felici di annunciare il secondo appuntamento di ***Azure Meetup Puglia***!\nUn’occasione per conoscerci di persona, condividere esperienze e parlare di Cloud, Microsoft Azure, sviluppo e intelligenza artificiale.\n\nGrazie al",
     "startDate": "2025-11-24T18:30:00+01:00",
     "endDate": "2025-11-24T21:30:00+01:00",
     "eventStatus": "EventScheduled",
@@ -381,11 +356,14 @@ export const events: EventData[] = [
         "name": "Carlo Sacchi",
         "description": "Organizer, Azure Meetup Puglia"
       }
+    ],
+    "sameAs": [
+      "https://www.meetup.com/azure-meetup-puglia/events/311557721/"
     ]
   },
   {
     "name": "Nasce Azure Meetup Puglia - Kick Off meeting @ BIP Bari - 20 Ottobre",
-    "description": "Primo incontro inaugurale di Azure Meetup Puglia presso BIP a Bari. Due sessioni tecniche: deployment di applicazioni PHP su Azure App Service con GitHub Actions, e fondamenti di LLMs e Copilot in Microsoft 365. Evento in presenza con networking, gadget omaggio grazie alla partnership con Improove, e refreshments.",
+    "description": "**🚨🚨 L’evento è gratuito e la registrazione è attiva tramite [questo link su EventBrite](https://www.eventbrite.it/e/nasce-azure-meetup-puglia-kick-off-meeting-bip-bari-20-ottobre-ore-18-tickets-1666469468039)! (l'RSVP della pagina del Meetup non è ancora attivo).🚨🚨**\n\nSiamo felici di annunciare il primo appuntamento di ***Azure Meetup Puglia***!\nUn’occasione per conoscerci di persona, condividere esperienze e parlare di Cloud, Microsoft Azure, sviluppo e intelligenza artificiale.\n\nGrazie al",
     "startDate": "2025-10-20T18:30:00+02:00",
     "endDate": "2025-10-20T21:30:00+02:00",
     "eventStatus": "EventScheduled",
@@ -403,7 +381,7 @@ export const events: EventData[] = [
       }
     },
     "image": [
-      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+      "https://globalai.community/media/bmcjwr0p/highres_530271179.jpg?rmode=pad&width=480&height=270"
     ],
     "organizer": {
       "@type": "Organization",
@@ -424,47 +402,15 @@ export const events: EventData[] = [
         "name": "Carlo Sacchi",
         "description": "Organizer, Azure Meetup Puglia"
       }
+    ],
+    "sameAs": [
+      "https://globalai.community/chapters/lecce/events/azure-meetup-puglia-20-0ttobre-bari/",
+      "https://www.eventbrite.it/e/nasce-azure-meetup-puglia-kick-off-meeting-bip-bari-20-ottobre-tickets-1666469468039"
     ]
   },
   {
-    "name": "AZURE MEETUP PUGLIA 20 0TTOBRE BARI",
-    "description": "Evento della community Global AI Lecce: AZURE MEETUP PUGLIA 20 0TTOBRE BARI (Bari, Italia).",
-    "startDate": "2025-10-20T18:15:00+02:00",
-    "endDate": "2025-10-20T21:30:00+02:00",
-    "eventStatus": "EventScheduled",
-    "eventAttendanceMode": "OfflineEventAttendanceMode",
-    "location": {
-      "@type": "Place",
-      "name": "Bari, Italia",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "",
-        "addressLocality": "Bari",
-        "addressRegion": "Puglia",
-        "postalCode": "",
-        "addressCountry": "IT"
-      }
-    },
-    "image": [
-      "https://globalai.community/media/bmcjwr0p/highres_530271179.jpg?rmode=pad&width=480&height=270"
-    ],
-    "organizer": {
-      "@type": "Organization",
-      "name": "Global AI Lecce",
-      "url": "https://globalai.community/chapters/lecce/"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://globalai.community/chapters/lecce/events/azure-meetup-puglia-20-0ttobre-bari/",
-      "price": "0",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock",
-      "validFrom": "2026-06-04"
-    }
-  },
-  {
     "name": "Global AI Community Day",
-    "description": "Evento della community Global AI Lecce: Global AI Community Day (Lecce, Italy).",
+    "description": "Evento della community Global AI Lecce: Global AI Community Day (Lecce, Italia).",
     "startDate": "2025-09-05T14:30:00+02:00",
     "endDate": "2025-09-05T18:30:00+02:00",
     "eventStatus": "EventScheduled",
@@ -496,7 +442,10 @@ export const events: EventData[] = [
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock",
       "validFrom": "2026-06-04"
-    }
+    },
+    "sameAs": [
+      "https://globalai.community/e/xnufvejo"
+    ]
   }
 ];
 

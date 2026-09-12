@@ -29,6 +29,14 @@ const teamMembers: TeamMember[] = [
         linkedin: "https://www.linkedin.com/in/carlo-sacchi/"
     },
     {
+        name: "Vito",
+        surname: "Macina",
+        role: "Organizer",
+        job: "Digital Specialist & Microsoft MVP",
+        photoUrl: "/img/vito.png",
+        linkedin: "https://www.linkedin.com/in/vmacina/"
+    },
+    {
         name: "Marco",
         surname: "Mansi",
         role: "Organizer",
@@ -47,14 +55,14 @@ export default function TeamPage() {
             </Head>
 
             <div className="max-w-6xl mx-auto space-y-12">
-                <Link 
+                <Link
                     href="/"
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-6"
                 >
                     <ArrowLeft className="w-4 h-4" />
                     Torna alla Home
                 </Link>
-                
+
                 <h1 className="text-4xl font-bold text-blue-400 text-center">Il Team</h1>
                 <p className="text-center text-gray-400 max-w-xl mx-auto text-lg">
                     Scopri chi c'è dietro la community Azure Meetup Puglia. Persone appassionate di cloud, tecnologie Microsoft e voglia di condividere.
@@ -91,9 +99,9 @@ export default function TeamPage() {
                         </div>
                     ))}
                 </div>
-                
+
                 <footer className="mt-16 pt-8 pb-6 border-t border-gray-700 text-center">
-                    <Link 
+                    <Link
                         href="/"
                         className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
                     >

@@ -2,7 +2,7 @@
  * Events data with JSON-LD Schema.org Event format
  * This data structure is designed to be automatically detected by dev.events
  *
- * Last synced: 2026-06-04T14:23:52.450Z
+ * Last synced: 2026-09-12T21:24:00.671Z
  * Auto-synced from Meetup.com
  */
 
@@ -52,6 +52,78 @@ export interface EventData {
  * Synced from Meetup.com
  */
 export const events: EventData[] = [
+  {
+    "name": "Dev Days Lecce - 23 ottobre (RSVP su LUMA)",
+    "description": "**🚨🚨**\n**L’evento è gratuito previa registrazione unicamente tramite questo link su [LUMA](https://luma.com/uyyudkfu): [https://luma.com/uyyudkfu](https://luma.com/uyyudkfu) !**\n**🚨🚨**\n\n🚀 **GitHub Copilot Dev Days tornano in Puglia!**\nRitornano a **Lecce** i *GitHub Copilot Dev Days*, l’iniziativa globale *community-led* dedicata all’AI-assisted coding con **GitHub Copilot**.\n\n**Dev Days, cosa sono?**\n✨ Dev Days è un’iniziativa globale, in presenza e guidata dalla community, che si svolge d",
+    "startDate": "2026-10-23T17:30:00+02:00",
+    "endDate": "2026-10-23T21:00:00+02:00",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "TBD",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Puglia",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Azure Meetup Puglia",
+      "url": "https://azure-meetup-puglia.github.io/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.meetup.com/azure-meetup-puglia/events/316482993/",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-09-12"
+    }
+  },
+  {
+    "name": "Dev Days Lecce",
+    "description": "Evento della community Global AI Lecce: Dev Days Lecce (Lecce, Italia).",
+    "startDate": "2026-10-23T09:00:00+02:00",
+    "endDate": "2026-10-23T10:00:00.000Z",
+    "eventStatus": "EventScheduled",
+    "eventAttendanceMode": "OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Lecce, Italia",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Lecce",
+        "addressRegion": "Puglia",
+        "postalCode": "",
+        "addressCountry": "IT"
+      }
+    },
+    "image": [
+      "https://secure.meetupstatic.com/photos/event/c/4/f/d/clean_527690429.webp"
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "Global AI Lecce",
+      "url": "https://globalai.community/chapters/lecce/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://luma.com/uyyudkfu",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2026-09-12"
+    }
+  },
   {
     "name": "Build //localhost:Lecce",
     "description": "Evento della community Global AI Lecce: Build //localhost:Lecce (Lecce, Italy).",

@@ -24,7 +24,7 @@ const teamMembers: TeamMember[] = [
         name: "Carlo",
         surname: "Sacchi",
         role: "Founder & Organizer",
-        job: "Azure Cloud Engineer & DevOps, Azure Italia Podcast Founder",
+        job: "Azure Cloud Engineer & DevOps, Microsoft MVP, Azure Italia Podcast Founder",
         photoUrl: "/img/carlo.jpeg",
         linkedin: "https://www.linkedin.com/in/carlo-sacchi/"
     },
